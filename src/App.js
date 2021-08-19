@@ -1,25 +1,51 @@
-import logo from './logo.svg';
-import './App.css';
+import { Redirect, Route, Switch } from "react-router-dom";
+
+import Layout from "./Layouts";
+import {
+    SignUpPage,
+    LoginPage,
+    ForgotPasswordPage,
+    UpdatePasswordPage,
+} from "./Pages";
+import { Footer } from "./Components";
+import { PrivateRoute } from "./Components";
+import { TokenService } from "./services";
+import Confirmation from "./Layouts/Confirmation";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    return (
+        <>
+            <div className="wrapper h-full">
+                <Switch>
+                    <Route
+                        exact
+                        path="/"
+                        render={() =>
+                            !!TokenService.getToken() ? (
+                                <Redirect to="/home" />
+                            ) : (
+                                <Redirect to="/login" />
+                            )
+                        }
+                    />
+                    <PrivateRoute path="/home" component={Layout} />
+                    <Route path="/login" component={LoginPage} />
+                    <Route path="/signup" component={SignUpPage} />
+                    <Route
+                        path="/forgot-password"
+                        component={ForgotPasswordPage}
+                    />
+                    <Route
+                        path="/update-password"
+                        component={UpdatePasswordPage}
+                    />
+                    <Route component={Error} />
+                </Switch>
+                <Footer />
+                <Confirmation />
+            </div>
+        </>
+    );
 }
 
 export default App;
