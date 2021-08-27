@@ -15,6 +15,12 @@ import SignUp from "./SignUp";
 import ForgotPassword from "./ForgotPassword";
 import ResetPassword from "./ResetPassword";
 
+import Profile from "./Profile";
+import AppointmentList from "./Appointment/AppointmentList";
+import AppointmentDetail from "./Appointment/AppointmentDetail";
+import PatientList from "./Patient/PatientList";
+import PatientDetail from "./Patient/PatientDetail";
+
 export {
     //Common
     Header,
@@ -33,4 +39,10 @@ export {
     SignUp,
     ForgotPassword,
     ResetPassword,
+    //Home
+    Profile,
+    AppointmentList,
+    AppointmentDetail,
+    PatientList,
+    PatientDetail,
 };

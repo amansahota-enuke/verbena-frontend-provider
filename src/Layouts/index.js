@@ -6,6 +6,7 @@ import CommonPage from "../Pages/common";
 import { Header, LeftMenu, Error } from "../Components";
 import selector from "../redux/selector";
 import { UserActions } from "../redux/slice/user.slice";
+import { AppointmentPage, ProfilePage, PatientPage } from "../Pages";
 
 const Layout = ({ match }) => {
     const dispatch = useDispatch();
@@ -38,6 +39,18 @@ const Layout = ({ match }) => {
                     <Route
                         path={`${match.path}/common`}
                         component={CommonPage}
+                    />
+                    <Route
+                        path={`${match.path}/appointments`}
+                        component={AppointmentPage}
+                    />
+                    <Route
+                        path={`${match.path}/patients`}
+                        component={PatientPage}
+                    />
+                    <Route
+                        path={`${match.path}/profile`}
+                        component={ProfilePage}
                     />
                     <Route component={Error} />
                 </Switch>

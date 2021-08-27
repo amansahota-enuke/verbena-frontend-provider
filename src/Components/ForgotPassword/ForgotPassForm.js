@@ -14,7 +14,7 @@ const initialValues = {
 const validationSchema = yup.object({
     email: yup
         .string()
-        .required("Email is required field")
+        .required("Email is a required field")
         .email("Invalid email"),
 });
 

@@ -22,14 +22,12 @@ export default function Example() {
     };
 
     const user = useSelector(selector.user);
-    const [profileImage, setProfileImage] = useState(
-        process.env.REACT_APP_API_SERVER_URL + user.profile_image_path || ""
-    );
+    const [profileImage, setProfileImage] = useState("");
 
     useEffect(() => {
-        if (user.profile_image_path) {
+        if (user.profile_logo) {
             setProfileImage(
-                process.env.REACT_APP_API_SERVER_URL + user.profile_image_path
+                process.env.REACT_APP_API_SERVER_URL + user.profile_logo
             );
         }
     }, [user]);
@@ -38,10 +36,10 @@ export default function Example() {
         return name.charAt(0).toUpperCase() + name.substring(1).toLowerCase();
     };
 
-    const openConfirmation = () => {
-        dispatch(ConfirmationActions.setConfirmationType(confirmationConstants.START_APPOINTMENT));
-        dispatch(ConfirmationActions.openConfirmation());
-    };
+    // const openConfirmation = () => {
+    //     dispatch(ConfirmationActions.setConfirmationType(confirmationConstants.START_APPOINTMENT));
+    //     dispatch(ConfirmationActions.openConfirmation());
+    // };
 
     return (
         <Menu as="div" className="relative">
@@ -94,7 +92,7 @@ export default function Example() {
                                         </Link>
                                     )}
                                 </Menu.Item>
-                                <Menu.Item>
+                                {/* <Menu.Item>
                                     {({ active }) => (
                                         <button
                                             onClick={openConfirmation}
@@ -108,7 +106,7 @@ export default function Example() {
                                             Open Modal
                                         </button>
                                     )}
-                                </Menu.Item>
+                                </Menu.Item> */}
                                 <form onSubmit={(e) => handleSubmit(e)}>
                                     <Menu.Item>
                                         {({ active }) => (

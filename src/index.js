@@ -5,6 +5,7 @@ import { Provider } from "react-redux";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "react-datepicker/dist/react-datepicker.css";
+import 'react-phone-number-input/style.css'
 
 import "./index.css";
 import App from "./App";

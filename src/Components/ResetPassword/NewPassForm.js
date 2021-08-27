@@ -25,10 +25,10 @@ function NewPassForm(props) {
         },
         resolver: yupResolver(
             yup.object({
-                password: yup.string().required("Password is required field"),
+                password: yup.string().required("Password is a required field"),
                 confirmPassword: yup
                     .string()
-                    .required("Confirm Passsword is required field")
+                    .required("Confirm Passsword is a required field")
                     .oneOf([yup.ref("password"), null], "Password must match"),
             })
         ),

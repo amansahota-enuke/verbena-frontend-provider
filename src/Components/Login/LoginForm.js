@@ -14,9 +14,9 @@ const initialValues = {
 
 const validationSchema = Yup.object({
     email: Yup.string()
-        .required("Email is required Field")
+        .required("Email is a required Field")
         .email("Invalid email"),
-    password: Yup.string().required("Password is required Field"),
+    password: Yup.string().required("Password is a required Field"),
 });
 
 const LoginForm = (props) => {
