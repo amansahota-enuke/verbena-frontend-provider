@@ -1,7 +1,71 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import ReactDatePicker from "react-datepicker";
+import ReactPaginate from "react-paginate";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useRouteMatch } from "react-router-dom";
+import moment from "moment";
+
 import { FullWidthContainer } from "../..";
+import statusConstants from "../../../constants/status.constants";
+import selector from "../../../redux/selector";
+import { AppointmentActions } from "../../../redux/slice/appointment.slice";
+import ButtonLoader from "../../Common/ButtonLoader";
 
 function AppointmentList() {
+    const dispatch = useDispatch();
+    const { path } = useRouteMatch();
+    const appointmentStatus = useSelector(selector.appointmentStatus);
+    const appointmentCount = useSelector(selector.appointmentCount);
+    const appointmentList = useSelector(selector.appointmentList);
+
+    const [pageCount, setPageCount] = useState(1);
+    const [appointmentId, setAppointmentId] = useState("");
+    const [patientName, setPatientName] = useState("");
+    const [patientNumber, setPatientNumber] = useState("");
+    const [patientEmail, setPatientEmail] = useState("");
+    const [startDate, setStartDate] = useState("");
+    const [endDate, setEndDate] = useState("");
+
+    const getAppointment = async (page = null) => {
+        const actionResult = await dispatch(
+            AppointmentActions.fetchAppointmentList({
+                ...(page && { page }),
+                ...(appointmentId && { appointment_id: appointmentId }),
+                ...(patientName && { patient_name: patientName }),
+                ...(patientNumber && { patient_number: patientNumber }),
+                ...(patientEmail && { patient_email: patientEmail }),
+                ...(startDate && { start_date: startDate }),
+                ...(endDate && { end_date: endDate }),
+            })
+        );
+
+        if (!actionResult.hasOwnProperty("error")) {
+            setPageCount(Math.ceil(Number(appointmentCount) / 10));
+        }
+    };
+
+    const handlePageChange = ({ selected }) => {
+        getAppointment(selected);
+    };
+
+    useEffect(() => {
+        getAppointment();
+    }, []);
+
+    const parseName = (name) => {
+        return name.charAt(0).toUpperCase() + name.substring(1).toLowerCase();
+    };
+
+    const resetSearch = () => {
+        setAppointmentId("");
+        setPatientName("");
+        setPatientNumber("");
+        setPatientEmail("");
+        setStartDate("");
+        setEndDate("");
+        getAppointment();
+    };
+
     return (
         <FullWidthContainer>
             <div className="bg-white rounded-md mb-6">
@@ -17,7 +81,10 @@ function AppointmentList() {
                                 type="text"
                                 className="custom-input input-border-color border text-justify"
                                 placeholder="Appointment ID"
-                                name=""
+                                value={appointmentId}
+                                onChange={(e) =>
+                                    setAppointmentId(e.target.value)
+                                }
                             />
                         </div>
                         <div className="relative">
@@ -25,7 +92,8 @@ function AppointmentList() {
                                 type="text"
                                 className="custom-input input-border-color border text-justify"
                                 placeholder="Patient Name"
-                                name=""
+                                value={patientName}
+                                onChange={(e) => setPatientName(e.target.value)}
                             />
                         </div>
                         <div className="relative">
@@ -33,7 +101,10 @@ function AppointmentList() {
                                 type="text"
                                 className="custom-input input-border-color border text-justify"
                                 placeholder="Patient Mobile"
-                                name=""
+                                value={patientNumber}
+                                onChange={(e) =>
+                                    setPatientNumber(e.target.value)
+                                }
                             />
                         </div>
                         <div className="relative">
@@ -41,38 +112,41 @@ function AppointmentList() {
                                 type="text"
                                 className="custom-input input-border-color border text-justify"
                                 placeholder="Patient Email"
-                                name=""
+                                value={patientEmail}
+                                onChange={(e) =>
+                                    setPatientEmail(e.target.value)
+                                }
                             />
                         </div>
                         <div className="relative">
-                            <input
-                                type="text"
+                            <ReactDatePicker
                                 className="custom-input input-border-color border text-justify"
-                                placeholder="Start Date"
-                                name=""
+                                selected={startDate}
+                                onChange={(date) => setStartDate(date)}
+                                placeholderText="Start Date"
                             />
-                            <i className="fa fa-calendar light-gray-color absolute input-icon calendar"></i>
                         </div>
                         <div className="relative">
-                            <input
-                                type="text"
+                            <ReactDatePicker
                                 className="custom-input input-border-color border text-justify"
-                                placeholder="End Date"
-                                name=""
+                                selected={endDate}
+                                onChange={(date) => setEndDate(date)}
+                                placeholderText="End Date"
                             />
-                            <i className="fa fa-calendar light-gray-color absolute input-icon calendar"></i>
                         </div>
                         <div className="relative">
                             <div className="flex">
                                 <button
                                     type="button"
                                     className="btn-search calibre-bold font-18 uppercase primary-bg-color text-white mr-3"
+                                    onClick={() => getAppointment()}
                                 >
                                     Search
                                 </button>
                                 <button
                                     type="button"
                                     className="btn-reset calibre-bold font-18 uppercase primary-light-bg-color primary-text-color mr-3"
+                                    onClick={resetSearch}
                                 >
                                     Reset
                                 </button>
@@ -132,36 +206,65 @@ function AppointmentList() {
                             </tr>
                         </thead>
                         <tbody className="bg-white divide-y divide-gray-200">
-                            <tr>
-                                <td className="px-6 dark-gray-color py-4 whitespace-nowrap text-center font-18">
-                                    Joe Smith
-                                </td>
-                                <td className="px-6 dark-gray-color py-4 whitespace-nowrap text-center font-18">
-                                    9878325064
-                                </td>
-                                <td className="px-6 dark-gray-color py-4 whitespace-nowrap text-center font-18">
-                                    64921
-                                </td>
-                                <td className="px-6 dark-gray-color py-4 whitespace-nowrap text-center font-18">
-                                    joesmith@gmail.com
-                                </td>
-                                <td className="px-6 dark-gray-color py-4 whitespace-nowrap text-center font-18">
-                                    Pimlpe Treatment
-                                </td>
-                                <td className="px-6 dark-gray-color py-4 whitespace-nowrap text-center font-18">
-                                    20-8-2021 | 02:30PM
-                                </td>
-                                <td className="px-6 dark-gray-color py-4 whitespace-nowrap text-center font-18">
-                                    <a
-                                        href="#"
-                                        className="text-indigo-600 hover:text-indigo-900"
-                                    >
-                                        <i className="fas fa-eye"></i>
-                                    </a>
-                                </td>
-                            </tr>
+                            {appointmentStatus === statusConstants.PENDING ? (
+                                <ButtonLoader color="#000" />
+                            ) : appointmentList.length === 0 ? (
+                                <p>No Upcoming Appointments</p>
+                            ) : (
+                                appointmentList.map((appointment) => (
+                                    <tr key={appointment.id}>
+                                        <td className="px-6 dark-gray-color py-4 whitespace-nowrap text-center font-18">
+                                            {`${parseName(
+                                                appointment.patient.first_name
+                                            )} ${parseName(
+                                                appointment.patient.last_name
+                                            )}`}
+                                        </td>
+                                        <td className="px-6 dark-gray-color py-4 whitespace-nowrap text-center font-18">
+                                            {appointment.patient.mobile_number}
+                                        </td>
+                                        <td className="px-6 dark-gray-color py-4 whitespace-nowrap text-center font-18">
+                                            {appointment.id}
+                                        </td>
+                                        <td className="px-6 dark-gray-color py-4 whitespace-nowrap text-center font-18">
+                                            {appointment.patient.email}
+                                        </td>
+                                        <td className="px-6 dark-gray-color py-4 whitespace-nowrap text-center font-18">
+                                            {appointment.appointment_reason_text
+                                                ? appointment.appointment_reason_text
+                                                : appointment.appointment_reason
+                                                      .name}
+                                        </td>
+                                        <td className="px-6 dark-gray-color py-4 whitespace-nowrap text-center font-18">
+                                            {moment(
+                                                appointment.appointment_datetime
+                                            ).format("MM-DD-YYYY | hh:mm A")}
+                                        </td>
+                                        <td className="px-6 dark-gray-color py-4 whitespace-nowrap text-center font-18">
+                                            <Link
+                                                to={`${path}/${appointment.id}`}
+                                                className="text-indigo-600 hover:text-indigo-900"
+                                            >
+                                                <i className="fas fa-eye"></i>
+                                            </Link>
+                                        </td>
+                                    </tr>
+                                ))
+                            )}
                         </tbody>
                     </table>
+                    <ReactPaginate
+                        previousLabel={"previous"}
+                        nextLabel={"next"}
+                        breakLabel={"..."}
+                        breakClassName={"break-me"}
+                        pageCount={pageCount}
+                        marginPagesDisplayed={2}
+                        pageRangeDisplayed={5}
+                        onPageChange={handlePageChange}
+                        containerClassName={"pagination"}
+                        activeClassName={"active"}
+                    />
                 </div>
             </div>
         </FullWidthContainer>
