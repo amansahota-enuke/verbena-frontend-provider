@@ -135,6 +135,7 @@ const SignUpForm = (props) => {
     });
 
     const signUp = async (payload) => {
+        setProcessing(true);
         const formData = new FormData(); // Currently empty
 
         for (const key in payload) {
@@ -151,6 +152,7 @@ const SignUpForm = (props) => {
             formData.append("practice_logo", practiceLogo, practiceLogo.name);
 
         const actionResult = await dispatch(UserActions.signUp(formData));
+        setProcessing(false);
         if (!actionResult.hasOwnProperty("error")) {
             history.push("/home");
         }
@@ -273,6 +275,7 @@ const SignUpForm = (props) => {
                                                                 ? profileLogoUrl
                                                                 : "images/profile-dummy.png"
                                                         }
+                                                        alt=""
                                                     />
                                                 </div>
                                                 <div>
@@ -317,6 +320,7 @@ const SignUpForm = (props) => {
                                                                 ? practiceLogoUrl
                                                                 : "images/card-dummy.png"
                                                         }
+                                                        alt=""
                                                     />
                                                 </div>
                                                 <div>

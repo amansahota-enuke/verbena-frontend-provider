@@ -1,12 +1,13 @@
 import { Dialog, Transition } from "@headlessui/react";
 import React from "react";
 import { Fragment } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 import confirmationConstants from "../../constants/confirmation.constants";
 import selector from "../../redux/selector";
-import { ConfirmationActions } from "../../redux/slice/confirmation.slice";
-import TestConfirmation from "./TestConfirmation";
+import StartAppointment from "./StartAppointment";
+import RescheduleAppointment from "./RescheduleAppointment";
+import CancelAppointment from "./CancelAppointment";
 
 const Confirmation = () => {
     const isOpen = useSelector(selector.confirmationStatus);
@@ -63,8 +64,12 @@ const SelectedConfirmation = () => {
     const confirmationType = useSelector(selector.confirmationType);
 
     switch (confirmationType) {
-        case "Test_value":
-            return <TestConfirmation />;
+        case confirmationConstants.RESCHEDULE_APPOINTMENT:
+            return <RescheduleAppointment />;
+        case confirmationConstants.CANCEL_APPOINTMENT:
+            return <CancelAppointment />;
+        case confirmationConstants.START_APPOINTMENT:
+            return <StartAppointment />;
         default:
             return "";
     }

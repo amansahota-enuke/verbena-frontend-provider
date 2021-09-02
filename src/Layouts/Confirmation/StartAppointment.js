@@ -13,7 +13,7 @@ function StartAppointment() {
 
     const joinRoom = () => {
         dispatch(ConfirmationActions.closeConfirmation());
-        history.push(`/home/appointment/video/${selectedAppointment.id}`);
+        history.push(`/home/appointments/video/${selectedAppointment.id}`);
     };
 
     const closeModal = () => {

@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useCallback, useEffect, useState } from "react";
 import * as Yup from "yup";
 import { useDispatch, useSelector } from "react-redux";
 import PhoneInput from "react-phone-number-input";
@@ -71,92 +71,6 @@ const Profile = () => {
     const user = useSelector(selector.user);
     const userStatus = useSelector(selector.userStatus);
 
-    const setFormValues = (object) => {
-        for (const key in object) {
-            if (["provider_type", "provider_speciality"].includes(key)) {
-                console.log("provider type and speciality");
-                setValue(key, Number(user[key]));
-            }
-
-            if (
-                [
-                    "first_name",
-                    "last_name",
-                    "email",
-                    "mobile_number",
-                    "hospital_affiliations",
-                    "board_certifications",
-                    "consultation_fee",
-                ].includes(key)
-            ) {
-                console.log("other keys");
-
-                setValue(key, user[key]);
-            }
-
-            if (["awards_publications", "languages_spoken"].includes(key)) {
-                console.log("awards and languages");
-
-                setValue(key, JSON.parse(user[key]));
-            }
-
-            if (key === "address") {
-                for (const addressKey in object.address) {
-                    if (
-                        [
-                            "address_line1",
-                            "address_line2",
-                            "city",
-                            "state",
-                            "zipcode",
-                        ].includes(addressKey)
-                    ) {
-                        console.log("address");
-
-                        setValue(addressKey, object.address[addressKey]);
-                    }
-                }
-            }
-            console.log("key", key, object[key]);
-        }
-    };
-
-    const fetchTypesAndSpeciality = async () => {
-        try {
-            const responseType = await CommonService.getTypes();
-            setTypes(responseType.data.data);
-
-            const responseSpeciality = await CommonService.getSpeciality();
-            setSpeciality(responseSpeciality.data.data);
-
-            setLoader(false);
-        } catch (error) {
-            toast.error(error);
-            setLoader(false);
-        }
-    };
-
-    useEffect(() => {
-        dispatch(UserActions.getProfile());
-        fetchTypesAndSpeciality();
-    }, []);
-
-    useEffect(() => {
-        if (user.profile_logo) {
-            setProfileLogoUrl(
-                process.env.REACT_APP_API_SERVER_URL + user.profile_logo
-            );
-        }
-        if (user.practice_logo) {
-            setPracticeLogoUrl(
-                process.env.REACT_APP_API_SERVER_URL + user.practice_logo
-            );
-        }
-        if (Object.keys(user).length > 0) {
-            setFormValues(user);
-        }
-    }, [user]);
-
     const {
         register,
         handleSubmit,
@@ -185,6 +99,84 @@ const Profile = () => {
         resolver: yupResolver(validationSchema),
     });
 
+    const setFormValues = useCallback(() => {
+        for (const key in user) {
+            if (["provider_type", "provider_speciality"].includes(key)) {
+                setValue(key, Number(user[key]));
+            }
+
+            if (
+                [
+                    "first_name",
+                    "last_name",
+                    "email",
+                    "mobile_number",
+                    "hospital_affiliations",
+                    "board_certifications",
+                    "consultation_fee",
+                ].includes(key)
+            ) {
+                setValue(key, user[key]);
+            }
+
+            if (["awards_publications", "languages_spoken"].includes(key)) {
+                setValue(key, JSON.parse(user[key]));
+            }
+
+            if (key === "address") {
+                for (const addressKey in user.address) {
+                    if (
+                        [
+                            "address_line1",
+                            "address_line2",
+                            "city",
+                            "state",
+                            "zipcode",
+                        ].includes(addressKey)
+                    ) {
+                        setValue(addressKey, user.address[addressKey]);
+                    }
+                }
+            }
+        }
+    }, [setValue, user]);
+
+    const fetchTypesAndSpeciality = async () => {
+        try {
+            const responseType = await CommonService.getTypes();
+            setTypes(responseType.data.data);
+
+            const responseSpeciality = await CommonService.getSpeciality();
+            setSpeciality(responseSpeciality.data.data);
+
+            setLoader(false);
+        } catch (error) {
+            toast.error(error);
+            setLoader(false);
+        }
+    };
+
+    useEffect(() => {
+        dispatch(UserActions.getProfile());
+        fetchTypesAndSpeciality();
+    }, [dispatch]);
+
+    useEffect(() => {
+        if (user.profile_logo) {
+            setProfileLogoUrl(
+                process.env.REACT_APP_API_SERVER_URL + user.profile_logo
+            );
+        }
+        if (user.practice_logo) {
+            setPracticeLogoUrl(
+                process.env.REACT_APP_API_SERVER_URL + user.practice_logo
+            );
+        }
+        if (Object.keys(user).length > 0) {
+            setFormValues();
+        }
+    }, [user, setFormValues]);
+
     const languagesSpoken = useFieldArray({
         control, // control props comes from useForm (optional: if you are using FormContext)
         name: "languages_spoken", // unique name for your Field Array
@@ -198,6 +190,7 @@ const Profile = () => {
     });
 
     const update = async (payload) => {
+        setProcessing(true);
         const formData = new FormData();
 
         for (const key in payload) {
@@ -216,6 +209,7 @@ const Profile = () => {
         const actionResult = await dispatch(
             UserActions.updateProfile(formData)
         );
+        setProcessing(false);
         if (!actionResult.hasOwnProperty("error")) {
             dispatch(UserActions.getProfile());
         }
@@ -344,6 +338,7 @@ const Profile = () => {
                                                         ? profileLogoUrl
                                                         : "images/profile-dummy.png"
                                                 }
+                                                alt=""
                                             />
                                         </div>
                                         <div>
@@ -386,6 +381,7 @@ const Profile = () => {
                                                         ? practiceLogoUrl
                                                         : "images/card-dummy.png"
                                                 }
+                                                alt=""
                                             />
                                         </div>
                                         <div>

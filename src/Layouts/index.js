@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
-import CommonPage from "../Pages/common";
 import { Header, LeftMenu, Error } from "../Components";
 import selector from "../redux/selector";
 import { UserActions } from "../redux/slice/user.slice";
@@ -21,7 +20,7 @@ const Layout = ({ match }) => {
         if (Object.keys(user).length === 0) {
             dispatch(UserActions.getProfile());
         }
-    }, []);
+    }, [dispatch, user]);
 
     return (
         <>
@@ -33,12 +32,8 @@ const Layout = ({ match }) => {
                         exact
                         path={`${match.path}`}
                         render={() => (
-                            <Redirect to={`${match.path}/common`} />
+                            <Redirect to={`${match.path}/appointments`} />
                         )}
-                    />
-                    <Route
-                        path={`${match.path}/common`}
-                        component={CommonPage}
                     />
                     <Route
                         path={`${match.path}/appointments`}

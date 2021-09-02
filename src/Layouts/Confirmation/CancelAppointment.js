@@ -19,7 +19,7 @@ function RescheduleAppointment() {
 
     useEffect(() => {
         dispatch(AppointmentActions.fetchAppointmentCancelReasons());
-    }, []);
+    }, [dispatch]);
 
     const closeModal = () => {
         dispatch(ConfirmationActions.closeConfirmation());

@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import { Switch } from "@headlessui/react";
+import React, { useCallback, useEffect, useState } from "react";
 import { FullWidthContainer } from "../..";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useRouteMatch } from "react-router-dom";
@@ -18,7 +17,6 @@ function PatientList() {
     const patientCount = useSelector(selector.patientCount);
     const patientList = useSelector(selector.patientList);
 
-    const [enabled, setEnabled] = useState(false);
     const [pageCount, setPageCount] = useState(1);
     const [patientId, setPatientId] = useState("");
     const [patientName, setPatientName] = useState("");
@@ -27,23 +25,35 @@ function PatientList() {
     const [startDate, setStartDate] = useState("");
     const [endDate, setEndDate] = useState("");
 
-    const getPatientList = async (page = null) => {
-        const actionResult = await dispatch(
-            PatientActions.fetchPatientList({
-                ...(page && { page }),
-                ...(patientId && { patient_id: patientId }),
-                ...(patientName && { patient_name: patientName }),
-                ...(patientNumber && { patient_number: patientNumber }),
-                ...(patientEmail && { patient_email: patientEmail }),
-                ...(startDate && { start_date: startDate }),
-                ...(endDate && { end_date: endDate }),
-            })
-        );
+    const getPatientList = useCallback(
+        async (page = null) => {
+            const actionResult = await dispatch(
+                PatientActions.fetchPatientList({
+                    ...(page && { page }),
+                    ...(patientId && { patient_id: patientId }),
+                    ...(patientName && { patient_name: patientName }),
+                    ...(patientNumber && { patient_number: patientNumber }),
+                    ...(patientEmail && { patient_email: patientEmail }),
+                    ...(startDate && { start_date: startDate }),
+                    ...(endDate && { end_date: endDate }),
+                })
+            );
 
-        if (!actionResult.hasOwnProperty("error")) {
-            setPageCount(Math.ceil(Number(patientCount) / 10));
-        }
-    };
+            if (!actionResult.hasOwnProperty("error")) {
+                setPageCount(Math.ceil(Number(patientCount) / 10));
+            }
+        },
+        [
+            dispatch,
+            endDate,
+            patientCount,
+            patientEmail,
+            patientId,
+            patientName,
+            patientNumber,
+            startDate,
+        ]
+    );
 
     const handlePageChange = ({ selected }) => {
         getPatientList(selected);
@@ -51,7 +61,7 @@ function PatientList() {
 
     useEffect(() => {
         getPatientList();
-    }, []);
+    }, [getPatientList]);
 
     const parseName = (name) => {
         return name.charAt(0).toUpperCase() + name.substring(1).toLowerCase();
@@ -77,11 +87,6 @@ function PatientList() {
                 </div>
                 <div className="p-4 wrapper-content">
                     <div className="grid grid-cols-4 gap-4">
-                        <div className="relative">
-                            <select className="custom-select input-border-color border">
-                                <option>Status</option>
-                            </select>
-                        </div>
                         <div className="relative">
                             <input
                                 type="text"
@@ -205,12 +210,6 @@ function PatientList() {
                                     scope="col"
                                     className="dark-gray-color px-6 py-3 text-center font-18 uppercase tracking-wider"
                                 >
-                                    Status
-                                </th>
-                                <th
-                                    scope="col"
-                                    className="dark-gray-color px-6 py-3 text-center font-18 uppercase tracking-wider"
-                                >
                                     Action
                                 </th>
                             </tr>
@@ -247,33 +246,6 @@ function PatientList() {
                                                 "MM-DD-YYYY"
                                             )}
                                         </td>
-                                        <td className="px-6 dark-gray-color py-4 whitespace-nowrap text-center font-18">
-                                            <Switch
-                                                checked={enabled}
-                                                onChange={setEnabled}
-                                                className={`${
-                                                    enabled
-                                                        ? "primary-bg-color"
-                                                        : "primary-dim-bg-color"
-                                                } relative inline-flex items-center h-6 rounded-full w-11`}
-                                            >
-                                                <span className="sr-only">
-                                                    Enable notifications
-                                                </span>
-                                                <span
-                                                    className={`${
-                                                        enabled
-                                                            ? "translate-x-6"
-                                                            : "translate-x-1"
-                                                    } inline-block w-4 h-4 transform bg-white rounded-full`}
-
-                                                    // className={`transform transition ease-in-out duration-200
-                                                    // ${enabled ? "translate-x-6" : "translate-x-1"}
-                                                    // `}
-                                                />
-                                            </Switch>
-                                        </td>
-
                                         <td className="px-6 dark-gray-color py-4 whitespace-nowrap text-center font-18">
                                             <Link
                                                 to={`${path}/${patient.id}`}

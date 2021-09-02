@@ -1,7 +1,6 @@
 import { Dialog } from "@headlessui/react";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
 import DatePicker from "react-datepicker";
 
 import selector from "../../redux/selector";
@@ -13,7 +12,6 @@ import { AcuityService } from "../../services";
 import { AppointmentActions } from "../../redux/slice/appointment.slice";
 
 function RescheduleAppointment() {
-    const history = useHistory();
     const dispatch = useDispatch();
     const selectedAppointment = useSelector(selector.selectedAppointment);
 

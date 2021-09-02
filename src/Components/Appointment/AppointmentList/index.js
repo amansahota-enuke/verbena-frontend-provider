@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import ReactDatePicker from "react-datepicker";
 import ReactPaginate from "react-paginate";
 import { useDispatch, useSelector } from "react-redux";
@@ -26,23 +26,35 @@ function AppointmentList() {
     const [startDate, setStartDate] = useState("");
     const [endDate, setEndDate] = useState("");
 
-    const getAppointment = async (page = null) => {
-        const actionResult = await dispatch(
-            AppointmentActions.fetchAppointmentList({
-                ...(page && { page }),
-                ...(appointmentId && { appointment_id: appointmentId }),
-                ...(patientName && { patient_name: patientName }),
-                ...(patientNumber && { patient_number: patientNumber }),
-                ...(patientEmail && { patient_email: patientEmail }),
-                ...(startDate && { start_date: startDate }),
-                ...(endDate && { end_date: endDate }),
-            })
-        );
+    const getAppointment = useCallback(
+        async (page = null) => {
+            const actionResult = await dispatch(
+                AppointmentActions.fetchAppointmentList({
+                    ...(page && { page }),
+                    ...(appointmentId && { appointment_id: appointmentId }),
+                    ...(patientName && { patient_name: patientName }),
+                    ...(patientNumber && { patient_number: patientNumber }),
+                    ...(patientEmail && { patient_email: patientEmail }),
+                    ...(startDate && { start_date: startDate }),
+                    ...(endDate && { end_date: endDate }),
+                })
+            );
 
-        if (!actionResult.hasOwnProperty("error")) {
-            setPageCount(Math.ceil(Number(appointmentCount) / 10));
-        }
-    };
+            if (!actionResult.hasOwnProperty("error")) {
+                setPageCount(Math.ceil(Number(appointmentCount) / 10));
+            }
+        },
+        [
+            appointmentCount,
+            appointmentId,
+            dispatch,
+            endDate,
+            patientEmail,
+            patientName,
+            patientNumber,
+            startDate,
+        ]
+    );
 
     const handlePageChange = ({ selected }) => {
         getAppointment(selected);
@@ -50,7 +62,7 @@ function AppointmentList() {
 
     useEffect(() => {
         getAppointment();
-    }, []);
+    }, [getAppointment]);
 
     const parseName = (name) => {
         return name.charAt(0).toUpperCase() + name.substring(1).toLowerCase();

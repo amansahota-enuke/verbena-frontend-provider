@@ -3,10 +3,8 @@ import { Fragment, useEffect, useState } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import { TokenService } from "../../services";
 import { Link, useHistory } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import selector from "../../redux/selector";
-import { ConfirmationActions } from "../../redux/slice/confirmation.slice";
-import confirmationConstants from "../../constants/confirmation.constants";
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(" ");
@@ -14,7 +12,6 @@ function classNames(...classes) {
 
 export default function Example() {
     const history = useHistory();
-    const dispatch = useDispatch();
     const handleSubmit = (e) => {
         e.preventDefault();
         TokenService.deleteToken();
@@ -35,11 +32,6 @@ export default function Example() {
     const parseName = (name) => {
         return name.charAt(0).toUpperCase() + name.substring(1).toLowerCase();
     };
-
-    // const openConfirmation = () => {
-    //     dispatch(ConfirmationActions.setConfirmationType(confirmationConstants.START_APPOINTMENT));
-    //     dispatch(ConfirmationActions.openConfirmation());
-    // };
 
     return (
         <Menu as="div" className="relative">
@@ -92,21 +84,6 @@ export default function Example() {
                                         </Link>
                                     )}
                                 </Menu.Item>
-                                {/* <Menu.Item>
-                                    {({ active }) => (
-                                        <button
-                                            onClick={openConfirmation}
-                                            className={classNames(
-                                                active
-                                                    ? "bg-gray-100 text-gray-900"
-                                                    : "text-gray-700",
-                                                "block px-4 py-2 text-sm"
-                                            )}
-                                        >
-                                            Open Modal
-                                        </button>
-                                    )}
-                                </Menu.Item> */}
                                 <form onSubmit={(e) => handleSubmit(e)}>
                                     <Menu.Item>
                                         {({ active }) => (

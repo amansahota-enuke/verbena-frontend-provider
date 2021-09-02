@@ -18,6 +18,7 @@ import ResetPassword from "./ResetPassword";
 import Profile from "./Profile";
 import AppointmentList from "./Appointment/AppointmentList";
 import AppointmentDetail from "./Appointment/AppointmentDetail";
+import AppointmentVideo from "./Appointment/AppointmentVideo";
 import PatientList from "./Patient/PatientList";
 import PatientDetail from "./Patient/PatientDetail";
 
@@ -43,6 +44,7 @@ export {
     Profile,
     AppointmentList,
     AppointmentDetail,
+    AppointmentVideo,
     PatientList,
     PatientDetail,
 };

@@ -1,4 +1,4 @@
-export default {
+const selector = {
     //User Reducer
     userStatus: (state) => state.user.status,
     user: (state) => state.user.data,
@@ -16,4 +16,10 @@ export default {
     patientList: (state) => state.patient.patientList,
     patientCount: (state) => state.patient.count,
     selectedPatient: (state) => state.patient.selectedPatient,
+    //Questionnaire Reducer
+    questionnaireStatus: (state) => state.questionnaire.status,
+    basicQuestionnaire: (state) => state.questionnaire.basicQuestionnaire,
+    questionnaireAnswers: (state) => state.questionnaire.answers,
 };
+
+export default selector;

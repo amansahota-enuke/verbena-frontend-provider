@@ -26,7 +26,7 @@ const LeftMenu = ({ show }) => {
                     <a
                         className="block border-b-1 p-2 calibre-regular"
                         title="Verbena Home"
-                        onClick={(e) => e.preventDefault()}
+                        href={process.env.REACT_APP_VERBENA_HOME}
                     >
                         <span className="icon sprite-menu home"></span>
                         <span className="title uppercase">Verbena Home</span>
