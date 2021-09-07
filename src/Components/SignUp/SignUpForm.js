@@ -358,6 +358,7 @@ const SignUpForm = (props) => {
                                                 <PhoneInput
                                                     disabled={processing}
                                                     className="disabled:opacity-50 custom-input ca-width input-border-color border"
+                                                    placeholder="Enter Phone"
                                                     {...field}
                                                 />
                                             )}

@@ -289,7 +289,7 @@ function AppointmentDetail() {
                                     <div className="relative">
                                         <button
                                             type="button"
-                                            class="btn-reschedule px-3 py-2 rounded-full uppercase text-white primary-dim-bg-color mr-3"
+                                            className="btn-reschedule px-3 py-2 rounded-full uppercase text-white primary-dim-bg-color mr-3"
                                         >
                                             Download Report
                                         </button>

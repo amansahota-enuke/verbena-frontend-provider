@@ -6,6 +6,7 @@ import LeftMenu from "./Common/LeftMenu";
 import Error from "./Common/Error";
 import PrivateRoute from "./Common/PrivateRoute";
 import Dropdown from "./Common/Dropdown";
+import ScrollToTop from "./Common/ScrollToTop";
 
 import BoxedWidthContainer from "./Container/BoxedWidthContainer";
 import FullWidthContainer from "./Container/FullWidthContainer";
@@ -32,6 +33,7 @@ export {
     Error,
     PrivateRoute,
     Dropdown,
+    ScrollToTop,
     //Container
     BoxedWidthContainer,
     FullWidthContainer,

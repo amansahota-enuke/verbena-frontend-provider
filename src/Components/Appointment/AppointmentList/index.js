@@ -25,6 +25,7 @@ function AppointmentList() {
     const [patientEmail, setPatientEmail] = useState("");
     const [startDate, setStartDate] = useState("");
     const [endDate, setEndDate] = useState("");
+    const [status, setStatus] = useState("");
 
     const getAppointment = useCallback(
         async (page = null) => {
@@ -37,6 +38,7 @@ function AppointmentList() {
                     ...(patientEmail && { patient_email: patientEmail }),
                     ...(startDate && { start_date: startDate }),
                     ...(endDate && { end_date: endDate }),
+                    ...(status && { status }),
                 })
             );
 
@@ -53,6 +55,7 @@ function AppointmentList() {
             patientName,
             patientNumber,
             startDate,
+            status,
         ]
     );
 
@@ -75,6 +78,7 @@ function AppointmentList() {
         setPatientEmail("");
         setStartDate("");
         setEndDate("");
+        setStatus("");
         getAppointment();
     };
 
@@ -83,7 +87,7 @@ function AppointmentList() {
             <div className="bg-white rounded-md mb-6">
                 <div className="border-b-1 p-4 wrapper-title">
                     <h3 className="mb-0 hepta-slab text-lg leading-none">
-                        Upcoming Appointments
+                        Appointments
                     </h3>
                 </div>
                 <div className="p-4 wrapper-content">
@@ -145,6 +149,27 @@ function AppointmentList() {
                                 onChange={(date) => setEndDate(date)}
                                 placeholderText="End Date"
                             />
+                        </div>
+                        <div className="relative">
+                            <select
+                                className="custom-input input-border-color border text-justify"
+                                value={status}
+                                onChange={(e) => setStatus(e.target.value)}
+                            >
+                                <option value="">
+                                    Select Appointment Status
+                                </option>
+                                <option
+                                    value={JSON.stringify([
+                                        "paid",
+                                        "rescheduled",
+                                    ])}
+                                >
+                                    Upcoming
+                                </option>
+                                <option value="pending">Pending</option>
+                                <option value="completed">Completed</option>
+                            </select>
                         </div>
                         <div className="relative">
                             <div className="flex">
@@ -221,7 +246,7 @@ function AppointmentList() {
                             {appointmentStatus === statusConstants.PENDING ? (
                                 <ButtonLoader color="#000" />
                             ) : appointmentList.length === 0 ? (
-                                <p>No Upcoming Appointments</p>
+                                <p>No Appointments</p>
                             ) : (
                                 appointmentList.map((appointment) => (
                                     <tr key={appointment.id}>

@@ -1,6 +1,6 @@
-import { Disclosure } from "@headlessui/react";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Disclosure } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/solid";
 
 import statusConstants from "../../../constants/status.constants";
