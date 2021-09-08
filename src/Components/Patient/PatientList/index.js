@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FullWidthContainer } from "../..";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useRouteMatch } from "react-router-dom";
@@ -25,35 +25,23 @@ function PatientList() {
     const [startDate, setStartDate] = useState("");
     const [endDate, setEndDate] = useState("");
 
-    const getPatientList = useCallback(
-        async (page = null) => {
-            const actionResult = await dispatch(
-                PatientActions.fetchPatientList({
-                    ...(page && { page }),
-                    ...(patientId && { patient_id: patientId }),
-                    ...(patientName && { patient_name: patientName }),
-                    ...(patientNumber && { patient_number: patientNumber }),
-                    ...(patientEmail && { patient_email: patientEmail }),
-                    ...(startDate && { start_date: startDate }),
-                    ...(endDate && { end_date: endDate }),
-                })
-            );
+    const getPatientList = async (page = null) => {
+        const actionResult = await dispatch(
+            PatientActions.fetchPatientList({
+                ...(page && { page }),
+                ...(patientId && { patient_id: patientId }),
+                ...(patientName && { patient_name: patientName }),
+                ...(patientNumber && { patient_number: patientNumber }),
+                ...(patientEmail && { patient_email: patientEmail }),
+                ...(startDate && { start_date: startDate }),
+                ...(endDate && { end_date: endDate }),
+            })
+        );
 
-            if (!actionResult.hasOwnProperty("error")) {
-                setPageCount(Math.ceil(Number(patientCount) / 10));
-            }
-        },
-        [
-            dispatch,
-            endDate,
-            patientCount,
-            patientEmail,
-            patientId,
-            patientName,
-            patientNumber,
-            startDate,
-        ]
-    );
+        if (!actionResult.hasOwnProperty("error")) {
+            setPageCount(Math.ceil(Number(patientCount) / 10));
+        }
+    };
 
     const handlePageChange = ({ selected }) => {
         getPatientList(selected);
@@ -61,7 +49,8 @@ function PatientList() {
 
     useEffect(() => {
         getPatientList();
-    }, [getPatientList]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     const parseName = (name) => {
         return name.charAt(0).toUpperCase() + name.substring(1).toLowerCase();
