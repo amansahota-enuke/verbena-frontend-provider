@@ -31,7 +31,18 @@ function StartAppointment() {
             <div className="bg-white mb-10">
                 <div className="p-10 px-5 py-5 flex xl:flex-nowrap lg:flex-nowrap md:flex-wrap sm:flex-wrap flex-wrap border-b">
                     <div>
-                        <div className="doctor-image primary-bg-color rounded-full mr-5 xl:mb-0 lg:mb-0 md:mb-0 sm:mb-3 mb-3"></div>
+                        <div
+                            className="doctor-image primary-bg-color rounded-full mr-5 xl:mb-0 lg:mb-0 md:mb-0 sm:mb-3 mb-3"
+                            style={{
+                                backgroundImage:
+                                    selectedAppointment.provider &&
+                                    `url("${
+                                        process.env.REACT_APP_API_SERVER_URL +
+                                        selectedAppointment.provider
+                                            .profile_logo
+                                    }")`,
+                            }}
+                        ></div>
                     </div>
                     <div>
                         <h3 className="hepta-slab mb-1 text-xl">
