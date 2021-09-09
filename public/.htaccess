@@ -1,0 +1,9 @@
+#DirectoryIndex disabled
+RewriteEngine On
+
+RewriteRule ^api/(.*)$ http://127.0.0.1:4042/api/$1 [P,L]
+RewriteRule ^uploads/(.*)$ http://127.0.0.1:4042/uploads/$1 [P,L]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . index.html
