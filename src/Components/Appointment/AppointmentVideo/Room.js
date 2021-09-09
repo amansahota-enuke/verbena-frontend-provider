@@ -39,7 +39,7 @@ const Room = ({ roomName, room, handleLogout }) => {
                     className="btn-login calibre-bold font-18 uppercase primary-bg-color text-white"
                     onClick={handleLogout}
                 >
-                    Log out
+                    Go to Appointment
                 </button>
             </div>
             <div className="flex justify-between">

@@ -1,50 +1,65 @@
 import React, { useState, useCallback, useEffect } from "react";
 import { useHistory, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 import Video from "twilio-video";
+
 import { VideoService } from "../../../services";
-import Lobby from "./Lobby";
 import Room from "./Room";
+import { Loader } from "../../";
+import { useDispatch, useSelector } from "react-redux";
+import selector from "../../../redux/selector";
+import { AppointmentActions } from "../../../redux/slice/appointment.slice";
 
 const VideoChat = () => {
     const history = useHistory();
-    const { id } = useParams();
-    const [username, setUsername] = useState("");
-    const [roomName, setRoomName] = useState("");
+    const dispatch = useDispatch();
+    const { appointmentId } = useParams();
     const [room, setRoom] = useState(null);
-    const [connecting, setConnecting] = useState(false);
+    const selectedAppointment = useSelector(selector.selectedAppointment);
+    const user = useSelector(selector.user);
 
-    const handleUsernameChange = useCallback((event) => {
-        setUsername(event.target.value);
-    }, []);
-
-    const handleRoomNameChange = useCallback((event) => {
-        setRoomName(event.target.value);
-    }, []);
-
-    const handleSubmit = useCallback(
-        async (event) => {
-            event.preventDefault();
-            setConnecting(true);
-            const response = await VideoService.createToken({
-                identity: username,
-                room: roomName,
-            });
-            Video.connect(response.data.data, {
-                name: roomName,
+    const connectRoom = async (token) => {
+        Video.connect(token, {
+            name: `room-appointment-${appointmentId}`,
+        })
+            .then((room) => {
+                setRoom(room);
             })
-                .then((room) => {
-                    setConnecting(false);
-                    setRoom(room);
-                })
-                .catch((err) => {
-                    console.error(err);
-                    setConnecting(false);
-                });
-        },
-        [roomName, username]
-    );
+            .catch((err) => {
+                toast.error(err);
+            });
+    };
 
-    const handleLogout = useCallback(() => {
+    const checkToken = () => {
+        const tokenArr = selectedAppointment.appointment_videos;
+        return tokenArr.find(
+            (item) => Number(item.provider_id) === Number(user.id)
+        );
+    };
+
+    const joinRoom = async () => {
+        const tokenObj = await checkToken();
+        if (tokenObj) {
+            console.log("yes");
+            connectRoom(tokenObj.token);
+        } else {
+            console.log("no");
+            const response = await VideoService.getToken(appointmentId);
+            connectRoom(response.data.data);
+        }
+    };
+
+    useEffect(() => {
+        dispatch(AppointmentActions.fetchAppointmentDetail(appointmentId));
+    }, []);
+
+    useEffect(() => {
+        if (user.id && selectedAppointment.appointment_videos) {
+            joinRoom();
+        }
+    }, [selectedAppointment, user]);
+
+    const handleLogout = useCallback((type) => {
         setRoom((prevRoom) => {
             if (prevRoom) {
                 prevRoom.localParticipant.tracks.forEach((trackPub) => {
@@ -54,8 +69,12 @@ const VideoChat = () => {
             }
             return null;
         });
-        history.push(`/home/appointments/${id}`);
-    }, [history, id]);
+        if (type === "end") {
+            history.push(`/home/appointment/feedback/${appointmentId}`);
+        } else {
+            history.push(`/home/appointment/${appointmentId}`);
+        }
+    }, []);
 
     useEffect(() => {
         if (room) {
@@ -79,19 +98,14 @@ const VideoChat = () => {
     let render;
     if (room) {
         render = (
-            <Room roomName={roomName} room={room} handleLogout={handleLogout} />
-        );
-    } else {
-        render = (
-            <Lobby
-                username={username}
-                roomName={roomName}
-                handleUsernameChange={handleUsernameChange}
-                handleRoomNameChange={handleRoomNameChange}
-                handleSubmit={handleSubmit}
-                connecting={connecting}
+            <Room
+                roomName={`room-appointment-${appointmentId}`}
+                room={room}
+                handleLogout={handleLogout}
             />
         );
+    } else {
+        render = <Loader />;
     }
     return render;
 };

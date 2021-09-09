@@ -1,12 +1,15 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 
 import confirmationConstants from "../../../constants/confirmation.constants";
 import selector from "../../../redux/selector";
 import { ConfirmationActions } from "../../../redux/slice/confirmation.slice";
+import { AppointmentActions } from "../../../redux/slice/appointment.slice";
 
 function DoctorDetail({ selectedAppointment }) {
     const dispatch = useDispatch();
+    const history = useHistory();
     const user = useSelector(selector.user);
 
     const parseName = (name) => {
@@ -39,6 +42,21 @@ function DoctorDetail({ selectedAppointment }) {
         );
         dispatch(ConfirmationActions.openConfirmation());
     };
+
+    const updateAppointmentStatus = async (status) => {
+        const actionResult = await dispatch(
+            AppointmentActions.updateAppointmentStatus({
+                id: appointmentId,
+                body: {
+                    status,
+                },
+            })
+        );
+        if (!actionResult.hasOwnProperty("error")) {
+            history.push("/home/dashboard");
+        }
+    };
+
     return (
         <>
             <h4 className="hepta-slab mb-4">Doctor Details</h4>
@@ -101,37 +119,71 @@ function DoctorDetail({ selectedAppointment }) {
                             </div>
                         </div>
                     </div>
-                    {["paid", "rescheduled"].includes(
-                        selectedAppointment.status
-                    ) && (
-                        <div>
-                            <div className="quick-btn">
-                                <div className="flex">
+                    <div>
+                        <div className="quick-btn">
+                            <div className="flex">
+                                {selectedAppointment.status === "ongoing" && (
                                     <button
-                                        type="button"
+                                        onClick={() =>
+                                            history.push(
+                                                `/home/appointment/video/${selectedAppointment.id}`
+                                            )
+                                        }
                                         className="modal-open btn-ready-visit px-3 py-2 rounded-full uppercase text-white primary-bg-color mr-3"
-                                        onClick={startAppointment}
                                     >
-                                        Ready For Visit
+                                        Rejoin
                                     </button>
-                                    <button
-                                        type="button"
-                                        className="btn-reschedule px-3 py-2 rounded-full uppercase text-white primary-dim-bg-color mr-3"
-                                        onClick={rescheduleAppointment}
-                                    >
-                                        Reschedule
-                                    </button>
-                                    <button
-                                        type="button"
-                                        className="btn-cancel-meet px-3 py-2 rounded-full uppercase primary-text-color primary-light-bg-color"
-                                        onClick={cancelAppointment}
-                                    >
-                                        Cancel
-                                    </button>
-                                </div>
+                                )}
+                                {["ongoing", "patientDone"].includes(
+                                    selectedAppointment.status
+                                ) && (
+                                    <>
+                                        <button
+                                            type="button"
+                                            className="btn-reschedule px-3 py-2 rounded-full uppercase text-white primary-dim-bg-color mr-3"
+                                            onClick={()=>updateAppointmentStatus("completed")}
+                                        >
+                                            Complete Appointment
+                                        </button>
+                                        <button
+                                            type="button"
+                                            className="btn-cancel-meet px-3 py-2 rounded-full uppercase primary-text-color primary-light-bg-color"
+                                            onClick={()=>updateAppointmentStatus("noshow")}
+                                        >
+                                            No Show
+                                        </button>
+                                    </>
+                                )}
+                                {["paid", "rescheduled"].includes(
+                                    selectedAppointment.status
+                                ) && (
+                                    <>
+                                        <button
+                                            type="button"
+                                            className="modal-open btn-ready-visit px-3 py-2 rounded-full uppercase text-white primary-bg-color mr-3"
+                                            onClick={startAppointment}
+                                        >
+                                            Ready For Visit
+                                        </button>
+                                        <button
+                                            type="button"
+                                            className="btn-reschedule px-3 py-2 rounded-full uppercase text-white primary-dim-bg-color mr-3"
+                                            onClick={rescheduleAppointment}
+                                        >
+                                            Reschedule
+                                        </button>
+                                        <button
+                                            type="button"
+                                            className="btn-cancel-meet px-3 py-2 rounded-full uppercase primary-text-color primary-light-bg-color"
+                                            onClick={cancelAppointment}
+                                        >
+                                            Cancel
+                                        </button>
+                                    </>
+                                )}
                             </div>
                         </div>
-                    )}
+                    </div>
                 </div>
             </div>
         </>

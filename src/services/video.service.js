@@ -1,7 +1,7 @@
 import { ApiService } from "./index";
 
 const VideoService = {
-    createToken: (payload) => ApiService.post("/video/token", payload),
+    getToken: (payload) => ApiService.get(`/video/token/${payload}`),
 };
 
 export default VideoService;
