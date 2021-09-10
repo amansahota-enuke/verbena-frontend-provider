@@ -63,6 +63,19 @@ function Report({ appointmentId, oldReports, setOldReports }) {
         }
     };
 
+    async function downloadFile(fileSrc, fileName) {
+        const file = await fetch(fileSrc);
+        const fileBlog = await file.blob();
+        const fileURL = URL.createObjectURL(fileBlog);
+
+        const link = document.createElement("a");
+        link.href = fileURL;
+        link.download = fileName;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
+
     return (
         <>
             <h4 className="hepta-slab mb-4">Lab Test</h4>
@@ -86,17 +99,19 @@ function Report({ appointmentId, oldReports, setOldReports }) {
                                     )}
                                 </div>
                                 <div className="relative">
-                                    <a
+                                    <button
                                         className="btn-reschedule px-3 py-2 rounded-full uppercase text-white primary-dim-bg-color mr-3"
-                                        href={
-                                            process.env
-                                                .REACT_APP_API_SERVER_URL +
-                                            report.name
+                                        onClick={() =>
+                                            downloadFile(
+                                                process.env
+                                                    .REACT_APP_API_SERVER_URL +
+                                                    report.name,
+                                                report.name
+                                            )
                                         }
-                                        download={report.name}
                                     >
                                         Download Report
-                                    </a>
+                                    </button>
                                 </div>
                                 <div className="relative">
                                     <button
