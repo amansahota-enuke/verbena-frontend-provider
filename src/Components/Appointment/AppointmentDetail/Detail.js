@@ -72,15 +72,6 @@ function Detail({ selectedAppointment }) {
             <h4 className="hepta-slab mb-4">Diagnosis</h4>
             <div className="bg-white rounded-md mb p-6 mb-6">
                 <textarea
-                    disabled
-                    className="disabled:opacity-50 w-full p-4 border rounded-md"
-                    placeholder="Patient's complaint"
-                    value={
-                        selectedAppointment.appointment_detail &&
-                        selectedAppointment.appointment_detail.patient_diagnosis
-                    }
-                ></textarea>
-                <textarea
                     className="w-full p-4 border rounded-md"
                     placeholder="Type Here"
                     value={diagnosis}
@@ -89,16 +80,6 @@ function Detail({ selectedAppointment }) {
             </div>
             <h4 className="hepta-slab mb-4">Assessment and Plan</h4>
             <div className="bg-white rounded-md mb p-6 mb-6">
-                <textarea
-                    disabled
-                    className="disabled:opacity-50 w-full p-4 border rounded-md"
-                    placeholder="Patient's Assessment"
-                    value={
-                        selectedAppointment.appointment_detail &&
-                        selectedAppointment.appointment_detail
-                            .patient_assesment_plans
-                    }
-                ></textarea>
                 <textarea
                     className="w-full p-4 border rounded-md"
                     placeholder="Type Here"

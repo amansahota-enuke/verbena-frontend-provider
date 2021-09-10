@@ -12,7 +12,7 @@ function AppointmentPage(props) {
         <>
             <Switch>
                 <Route
-                    path={`${props.match.path}/video/:id`}
+                    path={`${props.match.path}/video/:appointmentId`}
                     component={AppointmentVideo}
                 />
                 <Route

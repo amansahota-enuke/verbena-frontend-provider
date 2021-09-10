@@ -46,14 +46,18 @@ function DoctorDetail({ selectedAppointment }) {
     const updateAppointmentStatus = async (status) => {
         const actionResult = await dispatch(
             AppointmentActions.updateAppointmentStatus({
-                id: appointmentId,
+                id: selectedAppointment.id,
                 body: {
                     status,
                 },
             })
         );
         if (!actionResult.hasOwnProperty("error")) {
-            history.push("/home/dashboard");
+            dispatch(
+                AppointmentActions.fetchAppointmentDetail(
+                    selectedAppointment.id
+                )
+            );
         }
     };
 
@@ -126,7 +130,7 @@ function DoctorDetail({ selectedAppointment }) {
                                     <button
                                         onClick={() =>
                                             history.push(
-                                                `/home/appointment/video/${selectedAppointment.id}`
+                                                `/home/appointments/video/${selectedAppointment.id}`
                                             )
                                         }
                                         className="modal-open btn-ready-visit px-3 py-2 rounded-full uppercase text-white primary-bg-color mr-3"
@@ -141,22 +145,32 @@ function DoctorDetail({ selectedAppointment }) {
                                         <button
                                             type="button"
                                             className="btn-reschedule px-3 py-2 rounded-full uppercase text-white primary-dim-bg-color mr-3"
-                                            onClick={()=>updateAppointmentStatus("completed")}
+                                            onClick={() =>
+                                                updateAppointmentStatus(
+                                                    "pending"
+                                                )
+                                            }
                                         >
                                             Complete Appointment
                                         </button>
                                         <button
                                             type="button"
                                             className="btn-cancel-meet px-3 py-2 rounded-full uppercase primary-text-color primary-light-bg-color"
-                                            onClick={()=>updateAppointmentStatus("noshow")}
+                                            onClick={() =>
+                                                updateAppointmentStatus(
+                                                    "noshow"
+                                                )
+                                            }
                                         >
                                             No Show
                                         </button>
                                     </>
                                 )}
-                                {["paid", "rescheduled"].includes(
-                                    selectedAppointment.status
-                                ) && (
+                                {[
+                                    "paid",
+                                    "rescheduled",
+                                    "patientStart",
+                                ].includes(selectedAppointment.status) && (
                                     <>
                                         <button
                                             type="button"

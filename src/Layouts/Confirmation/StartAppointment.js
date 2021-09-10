@@ -5,15 +5,24 @@ import { useHistory } from "react-router-dom";
 import moment from "moment";
 import selector from "../../redux/selector";
 import { ConfirmationActions } from "../../redux/slice/confirmation.slice";
+import { AppointmentActions } from "../../redux/slice/appointment.slice";
 
 function StartAppointment() {
     const history = useHistory();
     const dispatch = useDispatch();
     const selectedAppointment = useSelector(selector.selectedAppointment);
 
-    const joinRoom = () => {
-        dispatch(ConfirmationActions.closeConfirmation());
-        history.push(`/home/appointments/video/${selectedAppointment.id}`);
+    const joinRoom = async () => {
+        const actionResult = await dispatch(
+            AppointmentActions.updateAppointmentStatus({
+                id: selectedAppointment.id,
+                body: { status: "ongoing" },
+            })
+        );
+        if (!actionResult.hasOwnProperty("error")) {
+            dispatch(ConfirmationActions.closeConfirmation());
+            history.push(`/home/appointments/video/${selectedAppointment.id}`);
+        }
     };
 
     const closeModal = () => {

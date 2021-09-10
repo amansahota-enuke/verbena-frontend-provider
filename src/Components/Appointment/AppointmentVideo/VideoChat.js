@@ -69,11 +69,7 @@ const VideoChat = () => {
             }
             return null;
         });
-        if (type === "end") {
-            history.push(`/home/appointment/feedback/${appointmentId}`);
-        } else {
-            history.push(`/home/appointment/${appointmentId}`);
-        }
+        history.push(`/home/appointments/${appointmentId}`);
     }, []);
 
     useEffect(() => {
