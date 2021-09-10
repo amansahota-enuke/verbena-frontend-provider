@@ -45,7 +45,7 @@ export default function Example() {
                                         ? profileImage
                                         : "/images/user.png"
                                 }
-                                className="mr-2 w-10"
+                                className="mr-2 w-10 rounded-full"
                                 alt=""
                                 title=""
                             />
