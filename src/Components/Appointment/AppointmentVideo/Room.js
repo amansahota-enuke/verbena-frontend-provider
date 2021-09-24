@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Participant from "./Participant";
 
-const Room = ({ roomName, room, handleLogout }) => {
+const Room = ({ roomName, room, handleLogout, openAppointmentWindow }) => {
     const [participants, setParticipants] = useState([]);
 
     useEffect(() => {
@@ -36,10 +36,16 @@ const Room = ({ roomName, room, handleLogout }) => {
             <h2>Room: {roomName}</h2>
             <div className="flex justify-end">
                 <button
-                    className="btn-login calibre-bold font-18 uppercase primary-bg-color text-white"
-                    onClick={handleLogout}
+                    className="btn-reschedule px-3 py-2 rounded-full uppercase text-white primary-dim-bg-color mr-3"
+                    onClick={() => openAppointmentWindow()}
                 >
-                    Go to Appointment
+                    Open Appointment Detail
+                </button>
+                <button
+                    className="btn-login calibre-bold font-18 uppercase primary-bg-color text-white"
+                    onClick={() => handleLogout()}
+                >
+                    End Call
                 </button>
             </div>
             <div className="flex justify-between">

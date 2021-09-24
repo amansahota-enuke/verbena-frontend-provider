@@ -91,6 +91,15 @@ const VideoChat = () => {
         }
     }, [room, handleLogout]);
 
+    const openAppointmentWindow = () => {
+        let popUpObj = window.open(
+            `${window.location.origin}/appointment/${appointmentId}`,
+            "_blank",
+            "toolbar=0,location=0,menubar=0,width=400,height=300"
+        );
+        popUpObj.focus();
+    };
+
     let render;
     if (room) {
         render = (
@@ -98,6 +107,7 @@ const VideoChat = () => {
                 roomName={`room-appointment-${appointmentId}`}
                 room={room}
                 handleLogout={handleLogout}
+                openAppointmentWindow={openAppointmentWindow}
             />
         );
     } else {

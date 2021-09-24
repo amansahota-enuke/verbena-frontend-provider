@@ -7,7 +7,7 @@ import {
     ForgotPasswordPage,
     UpdatePasswordPage,
 } from "./Pages";
-import { ScrollToTop, Footer } from "./Components";
+import { ScrollToTop, Footer, AppointmentPopup } from "./Components";
 import { PrivateRoute } from "./Components";
 import { TokenService } from "./services";
 import Confirmation from "./Layouts/Confirmation";
@@ -39,6 +39,10 @@ function App() {
                         <Route
                             path="/update-password"
                             component={UpdatePasswordPage}
+                        />
+                        <Route
+                            path="/appointment/:id"
+                            component={AppointmentPopup}
                         />
                         <Route component={Error} />
                     </Switch>

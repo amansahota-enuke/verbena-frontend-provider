@@ -20,6 +20,7 @@ import Profile from "./Profile";
 import AppointmentList from "./Appointment/AppointmentList";
 import AppointmentDetail from "./Appointment/AppointmentDetail";
 import AppointmentVideo from "./Appointment/AppointmentVideo";
+import AppointmentPopup from "./Appointment/AppointmentPopup";
 import PatientList from "./Patient/PatientList";
 import PatientDetail from "./Patient/PatientDetail";
 
@@ -47,6 +48,7 @@ export {
     AppointmentList,
     AppointmentDetail,
     AppointmentVideo,
+    AppointmentPopup,
     PatientList,
     PatientDetail,
 };
