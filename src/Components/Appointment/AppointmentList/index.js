@@ -27,8 +27,8 @@ function AppointmentList() {
     const [endDate, setEndDate] = useState("");
     const [status, setStatus] = useState("");
 
-    const getAppointment = async (page = null) => {
-        const actionResult = await dispatch(
+    const getAppointment = (page = null) => {
+        dispatch(
             AppointmentActions.fetchAppointmentList({
                 ...(page && { page }),
                 ...(appointmentId && { appointment_id: appointmentId }),
@@ -40,11 +40,11 @@ function AppointmentList() {
                 ...(status && { status }),
             })
         );
-
-        if (!actionResult.hasOwnProperty("error")) {
-            setPageCount(Math.ceil(Number(appointmentCount) / 10));
-        }
     };
+
+    useEffect(() => {
+        setPageCount(Math.ceil(Number(appointmentCount) / 10));
+    }, [appointmentCount]);
 
     const handlePageChange = ({ selected }) => {
         getAppointment(selected);
@@ -257,7 +257,8 @@ function AppointmentList() {
                                         <td className="px-6 dark-gray-color py-4 whitespace-nowrap text-center font-18">
                                             {appointment.appointment_reason_text
                                                 ? appointment.appointment_reason_text
-                                                : appointment.appointment_reason
+                                                : appointment.appointment_reason &&
+                                                  appointment.appointment_reason
                                                       .name}
                                         </td>
                                         <td className="px-6 dark-gray-color py-4 whitespace-nowrap text-center font-18">
