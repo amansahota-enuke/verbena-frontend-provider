@@ -152,12 +152,12 @@ function Medication({ appointmentId, oldMedication, setOldMedication }) {
                                     </td>
                                     <td>
                                         <button
-                                            className="btn-create-account calibre-bold font-18 uppercase primary-text-color mr-3"
+                                            
                                             onClick={() =>
                                                 removeMedication(index, "old")
                                             }
                                         >
-                                            -
+                                            Remove
                                         </button>
                                     </td>
                                 </tr>
@@ -206,12 +206,12 @@ function Medication({ appointmentId, oldMedication, setOldMedication }) {
                                     </td>
                                     <td>
                                         <button
-                                            className="btn-create-account calibre-bold font-18 uppercase primary-text-color mr-3"
+                                            
                                             onClick={() =>
                                                 removeMedication(index)
                                             }
                                         >
-                                            -
+                                            Remove
                                         </button>
                                     </td>
                                 </tr>
