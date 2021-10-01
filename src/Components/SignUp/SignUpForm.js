@@ -4,7 +4,8 @@ import { useDispatch } from "react-redux";
 import * as Yup from "yup";
 import { Controller, useFieldArray, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import PhoneInput from "react-phone-number-input";
+import PhoneInput from "react-phone-number-input/input";
+import { isPossiblePhoneNumber } from "react-phone-number-input";
 
 import { UserActions } from "../../redux/slice/user.slice";
 import { toast } from "react-toastify";
@@ -58,11 +59,46 @@ const SignUpForm = (props) => {
         email: Yup.string()
             .required("Email is a required field")
             .email("Invalid email"),
-        mobile_number: Yup.string().required(
-            "Mobile number is a required field"
+        mobile_number: Yup.string().test(
+            "check-number",
+            "Number is not valid",
+            function (value) {
+                const { path, createError } = this;
+                if (!value) {
+                    return createError({
+                        path,
+                        message: "Mobile number is a required field",
+                    });
+                }
+                const checkNumber = isPossiblePhoneNumber(value);
+                if (checkNumber) {
+                    return true;
+                } else {
+                    return createError({
+                        path,
+                        message: "Mobile Number is not valid",
+                    });
+                }
+            }
         ),
-        hospital_affiliations: Yup.string().required(),
-        board_certifications: Yup.string().required(),
+        hospital_affiliations: Yup.array()
+            .of(
+                Yup.object()
+                    .shape({
+                        value: Yup.string().required(),
+                    })
+                    .required()
+            )
+            .min(1),
+        board_certifications: Yup.array()
+            .of(
+                Yup.object()
+                    .shape({
+                        value: Yup.string().required(),
+                    })
+                    .required()
+            )
+            .min(1),
         awards_publications: Yup.array()
             .of(
                 Yup.object()
@@ -106,8 +142,8 @@ const SignUpForm = (props) => {
             provider_speciality: 0,
             email: "",
             mobile_number: "",
-            hospital_affiliations: "",
-            board_certifications: "",
+            hospital_affiliations: [{}],
+            board_certifications: [{}],
             awards_publications: [{}],
             languages_spoken: [{ value: "English" }],
             consultation_fee: "",
@@ -132,6 +168,16 @@ const SignUpForm = (props) => {
         control, // control props comes from useForm (optional: if you are using FormContext)
         name: "awards_publications", // unique name for your Field Array
         // keyName: "id", default to "id", you can change the key name
+    });
+
+    const hospitalAffiliations = useFieldArray({
+        control,
+        name: "hospital_affiliations",
+    });
+
+    const boardCertifications = useFieldArray({
+        control,
+        name: "board_certifications",
     });
 
     const signUp = async (payload) => {
@@ -356,6 +402,7 @@ const SignUpForm = (props) => {
                                             control={control}
                                             render={({ field }) => (
                                                 <PhoneInput
+                                                    country="US"
                                                     disabled={processing}
                                                     className="disabled:opacity-50 custom-input ca-width input-border-color border"
                                                     placeholder="Enter Phone"
@@ -417,15 +464,51 @@ const SignUpForm = (props) => {
                                         <div className="input-label calibre-regular mb-4">
                                             Hospital Affiliations
                                         </div>
-                                        <input
+                                        {hospitalAffiliations.fields.map(
+                                            (field, index) => (
+                                                <Fragment key={field.id}>
+                                                    <input
+                                                        disabled={processing}
+                                                        type="text"
+                                                        className="disabled:opacity-50 custom-input ca-width input-border-color border"
+                                                        placeholder="Enter Awards Publications"
+                                                        {...register(
+                                                            `hospital_affiliations.${index}.value`
+                                                        )}
+                                                    />
+                                                    <button
+                                                        disabled={processing}
+                                                        className="disabled:opacity-50 btn-create-account calibre-bold font-18 uppercase primary-text-color mr-3"
+                                                        onClick={(e) => {
+                                                            e.preventDefault();
+                                                            hospitalAffiliations.remove(
+                                                                index
+                                                            );
+                                                        }}
+                                                    >
+                                                        -
+                                                    </button>
+                                                    <span className="text-red-500 block mt-2">
+                                                        {errors.hospital_affiliations &&
+                                                            errors
+                                                                .hospital_affiliations[
+                                                                index
+                                                            ]?.value?.message}
+                                                    </span>
+                                                </Fragment>
+                                            )
+                                        )}
+
+                                        <button
                                             disabled={processing}
-                                            type="text"
-                                            className="disabled:opacity-50 custom-input ca-width input-border-color border"
-                                            placeholder="Enter Hospital Affiliations"
-                                            {...register(
-                                                "hospital_affiliations"
-                                            )}
-                                        />
+                                            className="disabled:opacity-50 btn-login calibre-bold font-18 uppercase primary-bg-color text-white"
+                                            onClick={(e) => {
+                                                e.preventDefault();
+                                                hospitalAffiliations.append({});
+                                            }}
+                                        >
+                                            +
+                                        </button>
                                         <span className="text-red-500 block mt-2">
                                             {
                                                 errors.hospital_affiliations
@@ -438,15 +521,51 @@ const SignUpForm = (props) => {
                                         <div className="input-label calibre-regular mb-4">
                                             Board Certifications
                                         </div>
-                                        <input
+                                        {boardCertifications.fields.map(
+                                            (field, index) => (
+                                                <Fragment key={field.id}>
+                                                    <input
+                                                        disabled={processing}
+                                                        type="text"
+                                                        className="disabled:opacity-50 custom-input ca-width input-border-color border"
+                                                        placeholder="Enter Awards Publications"
+                                                        {...register(
+                                                            `board_certifications.${index}.value`
+                                                        )}
+                                                    />
+                                                    <button
+                                                        disabled={processing}
+                                                        className="disabled:opacity-50 btn-create-account calibre-bold font-18 uppercase primary-text-color mr-3"
+                                                        onClick={(e) => {
+                                                            e.preventDefault();
+                                                            boardCertifications.remove(
+                                                                index
+                                                            );
+                                                        }}
+                                                    >
+                                                        -
+                                                    </button>
+                                                    <span className="text-red-500 block mt-2">
+                                                        {errors.board_certifications &&
+                                                            errors
+                                                                .board_certifications[
+                                                                index
+                                                            ]?.value?.message}
+                                                    </span>
+                                                </Fragment>
+                                            )
+                                        )}
+
+                                        <button
                                             disabled={processing}
-                                            type="text"
-                                            className="disabled:opacity-50 custom-input ca-width input-border-color border"
-                                            placeholder="Enter Board Certifications"
-                                            {...register(
-                                                "board_certifications"
-                                            )}
-                                        />
+                                            className="disabled:opacity-50 btn-login calibre-bold font-18 uppercase primary-bg-color text-white"
+                                            onClick={(e) => {
+                                                e.preventDefault();
+                                                boardCertifications.append({});
+                                            }}
+                                        >
+                                            +
+                                        </button>
                                         <span className="text-red-500 block mt-2">
                                             {
                                                 errors.board_certifications
