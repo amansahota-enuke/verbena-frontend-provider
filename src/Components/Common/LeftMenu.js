@@ -50,14 +50,14 @@ const LeftMenu = ({ show }) => {
                         <span className="title uppercase">Patients</span>
                     </Link>
 
-                    <Link
+                    {/* <Link
                         className="block border-b-1 p-2 caliber-regular"
                         to="/home/calendar"
                         title="Manage Calendar"
                     >
                         <span className="icon sprite-menu bh"></span>
                         <span className="title uppercase">Manage Calendar</span>
-                    </Link>
+                    </Link> */}
                     <Link
                         className="block border-b-1 p-2 caliber-regular"
                         to="/home/profile"

@@ -115,12 +115,12 @@ function Report({ appointmentId, oldReports, setOldReports }) {
                                 </div>
                                 <div className="relative">
                                     <button
-                                        className="btn-create-account calibre-bold font-18 uppercase primary-text-color mr-3"
+                                        
                                         onClick={() =>
                                             removeReport(index, "old")
                                         }
                                     >
-                                        -
+                                        Remove
                                     </button>
                                 </div>
                             </div>
@@ -154,10 +154,10 @@ function Report({ appointmentId, oldReports, setOldReports }) {
                                     </div>
                                 </div>
                                 <button
-                                    className="btn-create-account calibre-bold font-18 uppercase primary-text-color mr-3"
+                                    
                                     onClick={() => removeReport(index)}
                                 >
-                                    -
+                                    Remove
                                 </button>
                             </div>
                         </div>

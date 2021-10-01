@@ -45,7 +45,7 @@ const LoginForm = (props) => {
                 <div className="flex xl:flex-nowrap lg:flex-nowrap md:flex-wrap justify-between mb-10 items-end">
                     <div>
                         <h1 className="hepta-bold primary-text-color">
-                            Log In
+                            Provider Log In
                         </h1>
                     </div>
                     <div>

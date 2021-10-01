@@ -666,7 +666,7 @@ const Profile = () => {
                                             />
                                             <button
                                                 disabled={processing}
-                                                className="disabled:opacity-50 btn-create-account calibre-bold font-18 uppercase primary-text-color mr-3"
+                                                
                                                 onClick={(e) => {
                                                     e.preventDefault();
                                                     awardsPublications.remove(
@@ -674,7 +674,7 @@ const Profile = () => {
                                                     );
                                                 }}
                                             >
-                                                -
+                                            &ensp;    Remove
                                             </button>
                                             <span className="text-red-500 block mt-2">
                                                 {errors.awards_publications &&
@@ -718,13 +718,13 @@ const Profile = () => {
                                         />
                                         <button
                                             disabled={processing}
-                                            className="disabled:opacity-50 btn-create-account calibre-bold font-18 uppercase primary-text-color mr-3"
+                                            
                                             onClick={(e) => {
                                                 e.preventDefault();
                                                 languagesSpoken.remove(index);
                                             }}
                                         >
-                                            -
+                                        &ensp;    Remove
                                         </button>
                                         <span className="text-red-500 block mt-2">
                                             {errors.languages_spoken &&
