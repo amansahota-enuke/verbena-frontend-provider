@@ -65,11 +65,11 @@ function ForgotPassForm() {
                     </div>
 
                     <form onSubmit={handleSubmit(submit)}>
-                        <div className="flex items-center mb-5">
+                        <div className="flex xl:flex-nowrap lg:flex-nowrap md:flex-nowrap sm:flex-wrap flex-wrap items-center mb-5">
                             <div className="input-label calibre-regular">
                                 Email
                             </div>
-                            <div className="flex-1">
+                            <div className="w-full">
                                 <input
                                     type="text"
                                     className="custom-input input-border-color border"
