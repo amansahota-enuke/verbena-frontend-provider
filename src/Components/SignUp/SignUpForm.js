@@ -478,7 +478,7 @@ const SignUpForm = (props) => {
                                                     />
                                                     <button
                                                         disabled={processing}
-                                                        className="disabled:opacity-50 btn-create-account calibre-bold font-18 uppercase primary-text-color mr-3"
+                                                        className="disabled:opacity-50 w-6 h-6 text-center leading-none calibre-bold p-1 rounded-full text-white primary-bg-color font-18 ml-3"
                                                         onClick={(e) => {
                                                             e.preventDefault();
                                                             hospitalAffiliations.remove(
@@ -501,7 +501,7 @@ const SignUpForm = (props) => {
 
                                         <button
                                             disabled={processing}
-                                            className="disabled:opacity-50 btn-login calibre-bold font-18 uppercase primary-bg-color text-white"
+                                            className="disabled:opacity-50 w-6 h-6 text-white primary-bg-color rounded-full calibre-bold font-18"
                                             onClick={(e) => {
                                                 e.preventDefault();
                                                 hospitalAffiliations.append({});
@@ -535,7 +535,7 @@ const SignUpForm = (props) => {
                                                     />
                                                     <button
                                                         disabled={processing}
-                                                        className="disabled:opacity-50 btn-create-account calibre-bold font-18 uppercase primary-text-color mr-3"
+                                                        className="disabled:opacity-50 w-6 h-6 text-center leading-none calibre-bold p-1 rounded-full text-white primary-bg-color font-18 ml-3"
                                                         onClick={(e) => {
                                                             e.preventDefault();
                                                             boardCertifications.remove(
@@ -558,7 +558,7 @@ const SignUpForm = (props) => {
 
                                         <button
                                             disabled={processing}
-                                            className="disabled:opacity-50 btn-login calibre-bold font-18 uppercase primary-bg-color text-white"
+                                            className="disabled:opacity-50 w-6 h-6 text-center leading-none calibre-bold p-1 rounded-full text-white primary-bg-color font-18"
                                             onClick={(e) => {
                                                 e.preventDefault();
                                                 boardCertifications.append({});
@@ -592,7 +592,7 @@ const SignUpForm = (props) => {
                                                     />
                                                     <button
                                                         disabled={processing}
-                                                        className="disabled:opacity-50 btn-create-account calibre-bold font-18 uppercase primary-text-color mr-3"
+                                                        className="disabled:opacity-50 w-6 h-6 text-center leading-none calibre-bold p-1 rounded-full text-white primary-bg-color font-18 ml-3"
                                                         onClick={(e) => {
                                                             e.preventDefault();
                                                             awardsPublications.remove(
@@ -615,7 +615,7 @@ const SignUpForm = (props) => {
 
                                         <button
                                             disabled={processing}
-                                            className="disabled:opacity-50 btn-login calibre-bold font-18 uppercase primary-bg-color text-white"
+                                            className="disabled:opacity-50 w-6 h-6 text-center leading-none calibre-bold p-1 rounded-full text-white primary-bg-color font-18"
                                             onClick={(e) => {
                                                 e.preventDefault();
                                                 awardsPublications.append({});
@@ -649,7 +649,7 @@ const SignUpForm = (props) => {
                                                     />
                                                     <button
                                                         disabled={processing}
-                                                        className="disabled:opacity-50 btn-create-account calibre-bold font-18 uppercase primary-text-color mr-3"
+                                                        className="disabled:opacity-50 w-6 h-6 text-center leading-none calibre-bold p-1 rounded-full text-white primary-bg-color font-18 ml-3"
                                                         onClick={(e) => {
                                                             e.preventDefault();
                                                             languagesSpoken.remove(
@@ -672,7 +672,7 @@ const SignUpForm = (props) => {
 
                                         <button
                                             disabled={processing}
-                                            className="disabled:opacity-50 btn-login calibre-bold font-18 uppercase primary-bg-color text-white"
+                                            className="disabled:opacity-50 w-6 h-6 text-center leading-none calibre-bold p-1 rounded-full text-white primary-bg-color font-18"
                                             onClick={(e) => {
                                                 e.preventDefault();
                                                 languagesSpoken.append({});
@@ -831,7 +831,7 @@ const SignUpForm = (props) => {
                                     type="submit"
                                     className="disabled:opacity-50 btn-login calibre-bold font-18 uppercase primary-bg-color text-white"
                                 >
-                                    <span>
+                                    <span className="calibre-bold">
                                         {processing ? (
                                             <ButtonLoader />
                                         ) : (
