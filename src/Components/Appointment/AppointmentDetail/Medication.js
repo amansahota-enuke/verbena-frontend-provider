@@ -207,14 +207,14 @@ function Medication({ appointmentId, oldMedication, setOldMedication }) {
                                                 }
                                             />
                                         </td>
-                                        <td>
+                                        <td className="text-center">
                                             <button
-                                                
+                                                className="calibre-bold font-14"
                                                 onClick={() =>
                                                     removeMedication(index)
                                                 }
                                             >
-                                                Remove
+                                                REMOVE
                                             </button>
                                         </td>
                                     </tr>

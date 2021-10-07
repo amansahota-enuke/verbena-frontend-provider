@@ -63,7 +63,7 @@ function DoctorDetail({ selectedAppointment }) {
 
     return (
         <>
-            <h4 className="hepta-slab mb-4">Doctor Details</h4>
+            <h4 className="hepta-slab mb-2 leading-none">Doctor Details</h4>
 
             <div className="bg-white rounded-md mb-10 px-4 py-4">
                 <div className="flex flex-wrap items-center justify-between">

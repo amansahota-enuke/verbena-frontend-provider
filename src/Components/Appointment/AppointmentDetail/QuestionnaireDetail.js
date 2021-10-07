@@ -47,7 +47,7 @@ const QuestionnaireDetail = () => {
             <Disclosure>
                 {({ open }) => (
                     <>
-                        <Disclosure.Button className="flex justify-between w-full py-4 text-sm font-medium text-left rounded-lg bg-white px-2 mb-3">
+                        <Disclosure.Button className="flex justify-between w-full py-4 text-sm font-medium text-left rounded-lg bg-white px-2 mb-2">
                             <h4 className="hepta-slab mb-0">
                                 Questionnaire Details
                             </h4>

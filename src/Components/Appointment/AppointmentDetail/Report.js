@@ -86,7 +86,7 @@ function Report({ appointmentId, oldReports, setOldReports }) {
             <PlusIcon />
             </button></h4>
             
-            <div className="mb-6">
+            <div className="">
                 <div className="content bg-white rounded-md ">
                     {oldReports.map((report, index) => (
                         <div key={index} className="p-3 border-b-1 mb-3">
@@ -166,7 +166,7 @@ function Report({ appointmentId, oldReports, setOldReports }) {
                     
                 </div>
                 {reports.length + oldReports.length > 0 && (
-                        <div className="justify-center">
+                        <div className="justify-center mb-5">
                             <button
                                 className="btn-login calibre-bold font-16 uppercase primary-bg-color text-white"
                                 onClick={() => saveReport()}
