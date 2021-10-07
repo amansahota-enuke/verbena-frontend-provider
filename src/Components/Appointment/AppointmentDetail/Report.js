@@ -168,7 +168,7 @@ function Report({ appointmentId, oldReports, setOldReports }) {
                 {reports.length + oldReports.length > 0 && (
                         <div className="justify-center mb-5">
                             <button
-                                className="btn-login calibre-bold font-16 uppercase primary-bg-color text-white"
+                                className="btn-login calibre-regular font-16 uppercase primary-bg-color text-white"
                                 onClick={() => saveReport()}
                             >
                                 save
