@@ -85,14 +85,14 @@ function ForgotPassForm() {
                         <div className="d-flex items-center mb-5">
                             <button
                                 type="button"
-                                className="btn-create-account calibre-bold font-18 uppercase primary-text-color mr-3"
+                                className="btn-create-account calibre-regular font-16 uppercase primary-text-color mr-3"
                                 onClick={() => history.goBack()}
                             >
                                 Cancel
                             </button>
                             <button
                                 type="submit"
-                                className="btn-login calibre-bold font-18 uppercase primary-bg-color text-white mr-3"
+                                className="btn-login calibre-regular font-16 uppercase primary-bg-color text-white mr-3"
                             >
                                 Continue
                             </button>

@@ -1,3 +1,4 @@
+import { PlusIcon } from "@heroicons/react/solid";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
@@ -78,15 +79,15 @@ function Report({ appointmentId, oldReports, setOldReports }) {
 
     return (
         <>
-            <h4 className="hepta-slab mb-4">Lab Test</h4>
-            <button
-                className="btn-login calibre-bold font-18 uppercase primary-bg-color text-white"
+            <h4 className="hepta-slab px-4 py-3 rounded-md mb-2 bg-white">Lab Test <button
+                className="rounded-full p-2 w-8 h-8 calibre-bold font-18 uppercase primary-bg-color text-white"
                 onClick={() => addReport()}
             >
-                +
-            </button>
-            <div className="bg-white rounded-md mb-6">
-                <div className="content">
+            <PlusIcon />
+            </button></h4>
+            
+            <div className="mb-6">
+                <div className="content bg-white rounded-md ">
                     {oldReports.map((report, index) => (
                         <div key={index} className="p-3 border-b-1 mb-3">
                             <div className="flex justify-between items-center">
@@ -115,12 +116,12 @@ function Report({ appointmentId, oldReports, setOldReports }) {
                                 </div>
                                 <div className="relative">
                                     <button
-                                        
+                                        className="font-14 calibre-bold"
                                         onClick={() =>
                                             removeReport(index, "old")
                                         }
                                     >
-                                        Remove
+                                        REMOVE
                                     </button>
                                 </div>
                             </div>
@@ -154,26 +155,29 @@ function Report({ appointmentId, oldReports, setOldReports }) {
                                     </div>
                                 </div>
                                 <button
-                                    
+                                    className="font-14 calibre-bold"
                                     onClick={() => removeReport(index)}
                                 >
-                                    Remove
+                                    REMOVE
                                 </button>
                             </div>
                         </div>
                     ))}
-                    {reports.length + oldReports.length > 0 && (
+                    
+                </div>
+                {reports.length + oldReports.length > 0 && (
                         <div className="justify-center">
                             <button
-                                className="btn-login calibre-bold font-18 uppercase primary-bg-color text-white"
+                                className="btn-login calibre-bold font-16 uppercase primary-bg-color text-white"
                                 onClick={() => saveReport()}
                             >
                                 save
                             </button>
                         </div>
                     )}
-                </div>
+                
             </div>
+            
         </>
     );
 }

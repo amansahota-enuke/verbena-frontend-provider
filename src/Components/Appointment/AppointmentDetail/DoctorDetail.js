@@ -65,7 +65,7 @@ function DoctorDetail({ selectedAppointment }) {
         <>
             <h4 className="hepta-slab mb-4">Doctor Details</h4>
 
-            <div className="bg-white rounded-md mb-3 px-4 py-4">
+            <div className="bg-white rounded-md mb-10 px-4 py-4">
                 <div className="flex flex-wrap items-center justify-between">
                     <div>
                         <div className="flex xl:flex-nowrap lg:flex-nowrap md:flex-wrap sm:flex-nowrap">
@@ -95,7 +95,7 @@ function DoctorDetail({ selectedAppointment }) {
                                     {user.provider_speciality_master &&
                                         user.provider_speciality_master.name}
                                 </h6>
-                                <div className="provider-education calibre-regular flex items-center xl:flex-nowrap md:flex-wrap mb-3 whitespace-nowrap">
+                                <div className="provider-education calibre-regular flex items-center xl:flex-nowrap md:flex-wrap mb-0 whitespace-nowrap">
                                     <div className="edu-icon mr-3">
                                         <i className="fas fa-graduation-cap"></i>
                                     </div>
@@ -133,7 +133,7 @@ function DoctorDetail({ selectedAppointment }) {
                                                 `/home/appointments/video/${selectedAppointment.id}`
                                             )
                                         }
-                                        className="modal-open btn-ready-visit px-3 py-2 rounded-full uppercase text-white primary-bg-color mr-3"
+                                        className="modal-open calibre-regular font-16 btn-ready-visit px-3 py-2 rounded-full uppercase text-white primary-bg-color mr-3"
                                     >
                                         Rejoin
                                     </button>
@@ -144,7 +144,7 @@ function DoctorDetail({ selectedAppointment }) {
                                     <>
                                         <button
                                             type="button"
-                                            className="btn-reschedule px-3 py-2 rounded-full uppercase text-white primary-dim-bg-color mr-3"
+                                            className="btn-reschedule calibre-regular font-16 px-3 py-2 rounded-full uppercase text-white primary-dim-bg-color mr-3"
                                             onClick={() =>
                                                 updateAppointmentStatus(
                                                     "pending"
@@ -155,7 +155,7 @@ function DoctorDetail({ selectedAppointment }) {
                                         </button>
                                         <button
                                             type="button"
-                                            className="btn-cancel-meet px-3 py-2 rounded-full uppercase primary-text-color primary-light-bg-color"
+                                            className="btn-cancel-meet calibre-regular font-16 px-3 py-2 rounded-full uppercase primary-text-color primary-light-bg-color"
                                             onClick={() =>
                                                 updateAppointmentStatus(
                                                     "noshow"
@@ -174,21 +174,21 @@ function DoctorDetail({ selectedAppointment }) {
                                     <>
                                         <button
                                             type="button"
-                                            className="modal-open btn-ready-visit px-3 py-2 rounded-full uppercase text-white primary-bg-color mr-3"
+                                            className="modal-open calibre-regular font-16 leading-none btn-ready-visit px-3 py-2 rounded-full uppercase text-white primary-bg-color mr-3"
                                             onClick={startAppointment}
                                         >
                                             Ready For Visit
                                         </button>
                                         <button
                                             type="button"
-                                            className="btn-reschedule px-3 py-2 rounded-full uppercase text-white primary-dim-bg-color mr-3"
+                                            className="btn-reschedule px-3 py-2 calibre-regular font-16 rounded-full uppercase text-white primary-dim-bg-color mr-3"
                                             onClick={rescheduleAppointment}
                                         >
                                             Reschedule
                                         </button>
                                         <button
                                             type="button"
-                                            className="btn-cancel-meet px-3 py-2 rounded-full uppercase primary-text-color primary-light-bg-color"
+                                            className="btn-cancel-meet px-3 py-2 calibre-regular font-16 rounded-full uppercase primary-text-color primary-light-bg-color"
                                             onClick={cancelAppointment}
                                         >
                                             Cancel
