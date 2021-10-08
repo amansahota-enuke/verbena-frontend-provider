@@ -45,10 +45,10 @@ function InsuranceInformation({ insuranceDetail = null }) {
                                 />
                             </div>
                             <div className="border-b-2 border-r-2 p-4">
-                                <h4 className="text-base dark-color mb-2 opacity-50">
+                                <h4 className="text-base dark-color mb-2">
                                     Insurance Plan Name
                                 </h4>
-                                <h6 className="text-black font-bold">
+                                <h6 className="text-black opacity-50 font-bold">
                                     {insuranceDetail &&
                                         insuranceDetail.insurance_plan_name}
                                 </h6>
@@ -57,7 +57,7 @@ function InsuranceInformation({ insuranceDetail = null }) {
                                 <h4 className="text-base dark-color mb-2">
                                     ID Number
                                 </h4>
-                                <h6 className="text-black">
+                                <h6 className="text-black font-bold opacity-50">
                                     {insuranceDetail &&
                                         insuranceDetail.id_number}
                                 </h6>
@@ -66,7 +66,7 @@ function InsuranceInformation({ insuranceDetail = null }) {
                                 <h4 className="text-base dark-color mb-2">
                                     Policy Number
                                 </h4>
-                                <h6 className="text-black">
+                                <h6 className="text-black opacity-50 font-bold">
                                     {insuranceDetail &&
                                         insuranceDetail.policy_number}
                                 </h6>
@@ -75,7 +75,7 @@ function InsuranceInformation({ insuranceDetail = null }) {
                                 <h4 className="text-base dark-color mb-2">
                                     Type of Insurance Coverage
                                 </h4>
-                                <h6 className="text-black">
+                                <h6 className="text-black opacity-50 font-bold">
                                     {insuranceDetail &&
                                         insuranceDetail.insurance_coverage_type}
                                 </h6>
@@ -84,7 +84,7 @@ function InsuranceInformation({ insuranceDetail = null }) {
                                 <h4 className="text-base dark-color mb-2">
                                     Relationship to Insured
                                 </h4>
-                                <h6 className="text-black">
+                                <h6 className="text-black opacity-50 font-bold">
                                     {insuranceDetail &&
                                         insuranceDetail.relationship}
                                 </h6>
@@ -93,7 +93,7 @@ function InsuranceInformation({ insuranceDetail = null }) {
                                 <h4 className="text-base dark-color mb-2">
                                     Copayment
                                 </h4>
-                                <h6 className="text-black">
+                                <h6 className="text-black opacity-50 font-bold">
                                     $
                                     {insuranceDetail &&
                                         insuranceDetail.copayment}

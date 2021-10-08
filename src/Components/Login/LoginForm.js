@@ -89,21 +89,21 @@ const LoginForm = (props) => {
                     <div className="d-flex items-center mb-5">
                         <button
                             type="submit"
-                            className="btn-login calibre-bold font-18 uppercase primary-bg-color text-white mr-3"
+                            className="btn-login calibre-regular font-16 tracking-wider uppercase primary-bg-color text-white mr-3"
                         >
                             Login
                         </button>
 
                         <button
                             type="button"
-                            className="btn-create-account calibre-bold font-18 uppercase primary-text-color"
+                            className="btn-create-account calibre-regular tracking-wider font-16 uppercase primary-text-color"
                             onClick={() => history.push("/signup")}
                         >
                             Create Account
                         </button>
                     </div>
 
-                    <div className="d-flex items-center mb-20">
+                    <div className="d-flex items-center mb-20 font-16 calibre-regular">
                         <Link
                             to="/forgot-password"
                             className="light-gray-color"

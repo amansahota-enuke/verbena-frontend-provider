@@ -52,7 +52,7 @@ const BasicHealthInformation = () => {
                                 } w-5 h-5 text-black`}
                             />
                         </Disclosure.Button>
-                        <Disclosure.Panel className="px-4 pt-4 pb-2 text-sm">
+                        <Disclosure.Panel className="pt-4 pb-2 text-sm">
                             <div className="bg-white rounded-md mb-3">
                                 {basicQuestionnaire.map((question) => {
                                     const showQuestion =
@@ -60,14 +60,14 @@ const BasicHealthInformation = () => {
                                     if (showQuestion) {
                                         return (
                                             <div className="health-info border-b-1">
-                                                <h3 className="text-xl dark-color px-4 py-2 calibre-regular">
+                                                <h3 className="text-xl dark-color px-4 py-2 calibre-bold">
                                                     {question.text}
                                                 </h3>
                                                 {question.basic_health_responses
                                                     .length > 0 ? (
                                                     question.basic_health_responses.map(
                                                         (response) => (
-                                                            <p className="text-xl px-4 py-2 calibre-bold text-2x">
+                                                            <p className="text-xl px-4 py-2 calibre-regular font-16 leading-none">
                                                                 {response.answer_text
                                                                     ? response.answer_text
                                                                     : response
@@ -77,7 +77,7 @@ const BasicHealthInformation = () => {
                                                         )
                                                     )
                                                 ) : (
-                                                    <p className="text-xl px-4 py-2 calibre-bold text-2x">
+                                                    <p className="text-xl px-4 py-2 calibre-regular font-16">
                                                         No Response
                                                     </p>
                                                 )}

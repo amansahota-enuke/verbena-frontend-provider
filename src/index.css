@@ -152,9 +152,11 @@ h1.login-heading
 .btn-login,
 .btn-create-account
 {
-  padding: 12px 35px;
+  padding: 0 20px;
   border-radius: 30px;
   font-weight: 700;
+  line-height: 40px;
+  min-height: 42px;
 }
 
 .btn-search,

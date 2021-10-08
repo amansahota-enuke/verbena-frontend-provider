@@ -131,17 +131,17 @@ function StartAppointment() {
                     <div className="flex justify-end">
                         <button
                             type="button"
-                            className="btn-create-account calibre-bold font-18 uppercase primary-text-color mr-3"
+                            className="btn-create-account calibre-regular font-16 uppercase primary-text-color mr-3"
                             onClick={closeModal}
                         >
                             Cancel
                         </button>
                         <button
                             type="button"
-                            className="btn-login calibre-bold font-18 uppercase primary-bg-color text-white"
+                            className="btn-login calibre-regular font-16 uppercase primary-bg-color text-white"
                             onClick={joinRoom}
                         >
-                            <span>Start video visit</span>
+                            <span className="calibre-regular">Start video visit</span>
                         </button>
                     </div>
                 </div>

@@ -47,7 +47,7 @@ const QuestionnaireDetail = () => {
             <Disclosure>
                 {({ open }) => (
                     <>
-                        <Disclosure.Button className="flex justify-between w-full py-4 text-sm font-medium text-left rounded-lg bg-white px-2 mb-3">
+                        <Disclosure.Button className="flex justify-between w-full py-4 text-sm font-medium text-left rounded-lg bg-white px-2 mb-2">
                             <h4 className="hepta-slab mb-0">
                                 Questionnaire Details
                             </h4>
@@ -57,7 +57,7 @@ const QuestionnaireDetail = () => {
                                 } w-5 h-5 text-black`}
                             />
                         </Disclosure.Button>
-                        <Disclosure.Panel className="px-4 pt-4 pb-2 text-sm">
+                        <Disclosure.Panel className="pt-0 pb-2 text-sm">
                             <div className="bg-white rounded-md mb-3">
                                 {questionnaireAnswers.map((question) => {
                                     const showQuestion =
@@ -65,14 +65,14 @@ const QuestionnaireDetail = () => {
                                     if (showQuestion) {
                                         return (
                                             <div className="health-info border-b-1">
-                                                <h3 className="text-xl dark-color px-4 py-2 calibre-regular">
+                                                <h3 className="text-xl dark-color px-4 pt-2 pb-0 calibre-bold">
                                                     {question.text}
                                                 </h3>
                                                 {question.patient_questionnaires
                                                     .length > 0 ? (
                                                     question.patient_questionnaires.map(
                                                         (response) => (
-                                                            <p className="text-xl px-4 py-2 calibre-bold text-2x">
+                                                            <p className="text-xl px-4 py-0 mb-3 calibre-regular font-16">
                                                                 {response.answer_text
                                                                     ? response.answer_text
                                                                     : response
@@ -82,7 +82,7 @@ const QuestionnaireDetail = () => {
                                                         )
                                                     )
                                                 ) : (
-                                                    <p className="text-xl px-4 py-2 calibre-bold text-2x">
+                                                    <p className="text-xl px-4 py-2 calibre-regular text-2x">
                                                         No Response
                                                     </p>
                                                 )}
