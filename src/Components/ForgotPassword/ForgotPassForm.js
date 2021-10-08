@@ -65,11 +65,11 @@ function ForgotPassForm() {
                     </div>
 
                     <form onSubmit={handleSubmit(submit)}>
-                        <div className="flex items-center mb-5">
+                        <div className="flex xl:flex-nowrap lg:flex-nowrap md:flex-nowrap sm:flex-wrap flex-wrap items-center mb-5">
                             <div className="input-label calibre-regular">
                                 Email
                             </div>
-                            <div className="flex-1">
+                            <div className="w-full">
                                 <input
                                     type="text"
                                     className="custom-input input-border-color border"
@@ -85,14 +85,14 @@ function ForgotPassForm() {
                         <div className="d-flex items-center mb-5">
                             <button
                                 type="button"
-                                className="btn-create-account calibre-bold font-18 uppercase primary-text-color mr-3"
+                                className="btn-create-account calibre-regular font-16 uppercase primary-text-color mr-3"
                                 onClick={() => history.goBack()}
                             >
                                 Cancel
                             </button>
                             <button
                                 type="submit"
-                                className="btn-login calibre-bold font-18 uppercase primary-bg-color text-white mr-3"
+                                className="btn-login calibre-regular font-16 uppercase primary-bg-color text-white mr-3"
                             >
                                 Continue
                             </button>

@@ -88,7 +88,7 @@ function Detail({ selectedAppointment }) {
                 ></textarea>
             </div>
             <button
-                className="btn-login calibre-bold font-18 uppercase primary-bg-color text-white"
+                className="btn-login calibre-regular font-16 uppercase primary-bg-color text-white"
                 onClick={() => saveDetail()}
             >
                 save

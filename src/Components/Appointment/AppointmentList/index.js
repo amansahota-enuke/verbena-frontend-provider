@@ -79,7 +79,7 @@ function AppointmentList() {
                     </h3>
                 </div>
                 <div className="p-4 wrapper-content">
-                    <div className="grid grid-cols-4 gap-4">
+                    <div className="grid xl:grid-cols-4 lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-2 grid-cols-1 gap-4">
                         <div className="relative">
                             <input
                                 type="text"
@@ -163,14 +163,14 @@ function AppointmentList() {
                             <div className="flex">
                                 <button
                                     type="button"
-                                    className="btn-search calibre-bold font-18 uppercase primary-bg-color text-white mr-3"
+                                    className="btn-search calibre-regular font-16 uppercase primary-bg-color text-white mr-3"
                                     onClick={() => getAppointment()}
                                 >
                                     Search
                                 </button>
                                 <button
                                     type="button"
-                                    className="btn-reset calibre-bold font-18 uppercase primary-light-bg-color primary-text-color mr-3"
+                                    className="btn-reset calibre-regular font-16 uppercase primary-light-bg-color primary-text-color mr-3"
                                     onClick={resetSearch}
                                 >
                                     Reset
@@ -183,102 +183,104 @@ function AppointmentList() {
 
             <div className="mb-8">
                 <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-                    <table className="min-w-full divide-y divide-gray-200">
-                        <thead className="bg-gray-50 calibre-regular thead-bg">
-                            <tr>
-                                <th
-                                    scope="col"
-                                    className="dark-gray-color px-6 py-3 text-center font-18 uppercase tracking-wider"
-                                >
-                                    Patient Name
-                                </th>
-                                <th
-                                    scope="col"
-                                    className="dark-gray-color px-6 py-3 text-center font-18 uppercase tracking-wider"
-                                >
-                                    Mobile Number
-                                </th>
-                                <th
-                                    scope="col"
-                                    className="dark-gray-color px-6 py-3 text-center font-18 uppercase tracking-wider"
-                                >
-                                    Appointment ID
-                                </th>
-                                <th
-                                    scope="col"
-                                    className="dark-gray-color px-6 py-3 text-center font-18 uppercase tracking-wider"
-                                >
-                                    Email
-                                </th>
-                                <th
-                                    scope="col"
-                                    className="dark-gray-color px-6 py-3 text-center font-18 uppercase tracking-wider"
-                                >
-                                    Reason For Visit
-                                </th>
-                                <th
-                                    scope="col"
-                                    className="dark-gray-color px-6 py-3 text-center font-18 uppercase tracking-wider"
-                                >
-                                    Appointment Time
-                                </th>
-                                <th
-                                    scope="col"
-                                    className="dark-gray-color px-6 py-3 text-center font-18 uppercase tracking-wider"
-                                >
-                                    Action
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody className="bg-white divide-y divide-gray-200">
-                            {appointmentStatus === statusConstants.PENDING ? (
-                                <ButtonLoader color="#000" />
-                            ) : appointmentList.length === 0 ? (
-                                <p>No Appointments</p>
-                            ) : (
-                                appointmentList.map((appointment) => (
-                                    <tr key={appointment.id}>
-                                        <td className="px-6 dark-gray-color py-4 whitespace-nowrap text-center font-18">
-                                            {`${parseName(
-                                                appointment.patient.first_name
-                                            )} ${parseName(
-                                                appointment.patient.last_name
-                                            )}`}
-                                        </td>
-                                        <td className="px-6 dark-gray-color py-4 whitespace-nowrap text-center font-18">
-                                            {appointment.patient.mobile_number}
-                                        </td>
-                                        <td className="px-6 dark-gray-color py-4 whitespace-nowrap text-center font-18">
-                                            {appointment.id}
-                                        </td>
-                                        <td className="px-6 dark-gray-color py-4 whitespace-nowrap text-center font-18">
-                                            {appointment.patient.email}
-                                        </td>
-                                        <td className="px-6 dark-gray-color py-4 whitespace-nowrap text-center font-18">
-                                            {appointment.appointment_reason_text
-                                                ? appointment.appointment_reason_text
-                                                : appointment.appointment_reason &&
-                                                  appointment.appointment_reason
-                                                      .name}
-                                        </td>
-                                        <td className="px-6 dark-gray-color py-4 whitespace-nowrap text-center font-18">
-                                            {moment(
-                                                appointment.appointment_datetime
-                                            ).format("MM-DD-YYYY | hh:mm A")}
-                                        </td>
-                                        <td className="px-6 dark-gray-color py-4 whitespace-nowrap text-center font-18">
-                                            <Link
-                                                to={`${path}/${appointment.id}`}
-                                                className="text-indigo-600 hover:text-indigo-900"
-                                            >
-                                                <i className="fas fa-eye"></i>
-                                            </Link>
-                                        </td>
-                                    </tr>
-                                ))
-                            )}
-                        </tbody>
-                    </table>
+                    <div className="overflow-x-auto">
+                        <table className="min-w-full divide-y divide-gray-200">
+                            <thead className="bg-gray-50 calibre-regular thead-bg">
+                                <tr>
+                                    <th
+                                        scope="col"
+                                        className="dark-gray-color px-6 py-3 text-center font-18 uppercase tracking-wider"
+                                    >
+                                        Patient Name
+                                    </th>
+                                    <th
+                                        scope="col"
+                                        className="dark-gray-color px-6 py-3 text-center font-18 uppercase tracking-wider"
+                                    >
+                                        Mobile Number
+                                    </th>
+                                    <th
+                                        scope="col"
+                                        className="dark-gray-color px-6 py-3 text-center font-18 uppercase tracking-wider"
+                                    >
+                                        Appointment ID
+                                    </th>
+                                    <th
+                                        scope="col"
+                                        className="dark-gray-color px-6 py-3 text-center font-18 uppercase tracking-wider"
+                                    >
+                                        Email
+                                    </th>
+                                    <th
+                                        scope="col"
+                                        className="dark-gray-color px-6 py-3 text-center font-18 uppercase tracking-wider"
+                                    >
+                                        Reason For Visit
+                                    </th>
+                                    <th
+                                        scope="col"
+                                        className="dark-gray-color px-6 py-3 text-center font-18 uppercase tracking-wider"
+                                    >
+                                        Appointment Time
+                                    </th>
+                                    <th
+                                        scope="col"
+                                        className="dark-gray-color px-6 py-3 text-center font-18 uppercase tracking-wider"
+                                    >
+                                        Action
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody className="bg-white divide-y divide-gray-200">
+                                {appointmentStatus === statusConstants.PENDING ? (
+                                    <ButtonLoader color="#000" />
+                                ) : appointmentList.length === 0 ? (
+                                    <p>No Appointments</p>
+                                ) : (
+                                    appointmentList.map((appointment) => (
+                                        <tr key={appointment.id}>
+                                            <td className="px-6 dark-gray-color py-4 whitespace-nowrap text-center font-18">
+                                                {`${parseName(
+                                                    appointment.patient.first_name
+                                                )} ${parseName(
+                                                    appointment.patient.last_name
+                                                )}`}
+                                            </td>
+                                            <td className="px-6 dark-gray-color py-4 whitespace-nowrap text-center font-18">
+                                                {appointment.patient.mobile_number}
+                                            </td>
+                                            <td className="px-6 dark-gray-color py-4 whitespace-nowrap text-center font-18">
+                                                {appointment.id}
+                                            </td>
+                                            <td className="px-6 dark-gray-color py-4 whitespace-nowrap text-center font-18">
+                                                {appointment.patient.email}
+                                            </td>
+                                            <td className="px-6 dark-gray-color py-4 whitespace-nowrap text-center font-18">
+                                                {appointment.appointment_reason_text
+                                                    ? appointment.appointment_reason_text
+                                                    : appointment.appointment_reason &&
+                                                    appointment.appointment_reason
+                                                        .name}
+                                            </td>
+                                            <td className="px-6 dark-gray-color py-4 whitespace-nowrap text-center font-18">
+                                                {moment(
+                                                    appointment.appointment_datetime
+                                                ).format("MM-DD-YYYY | hh:mm A")}
+                                            </td>
+                                            <td className="px-6 dark-gray-color py-4 whitespace-nowrap text-center font-18">
+                                                <Link
+                                                    to={`${path}/${appointment.id}`}
+                                                    className="text-indigo-600 hover:text-indigo-900"
+                                                >
+                                                    <i className="fas fa-eye"></i>
+                                                </Link>
+                                            </td>
+                                        </tr>
+                                    ))
+                                )}
+                            </tbody>
+                        </table>
+                    </div>
                     <ReactPaginate
                         previousLabel={"previous"}
                         nextLabel={"next"}

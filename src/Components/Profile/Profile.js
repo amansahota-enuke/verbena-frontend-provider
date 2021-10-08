@@ -1,7 +1,7 @@
 import React, { Fragment, useCallback, useEffect, useState } from "react";
 import * as Yup from "yup";
 import { useDispatch, useSelector } from "react-redux";
-import PhoneInput from "react-phone-number-input";
+import PhoneInput, { isPossiblePhoneNumber } from "react-phone-number-input";
 import { Controller, useFieldArray, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Link } from "react-router-dom";
@@ -25,9 +25,44 @@ const validationSchema = Yup.object({
     email: Yup.string()
         .required("Email is a required field")
         .email("Invalid email"),
-    mobile_number: Yup.string().required("Mobile number is a required field"),
-    hospital_affiliations: Yup.string().required(),
-    board_certifications: Yup.string().required(),
+    mobile_number: Yup.string()
+        .required("Mobile number is a required field")
+        .test("check-number", "Mobile number is not valid", function (value) {
+            const { createError, path } = this;
+            if (!value) {
+                return createError({
+                    path,
+                    message: "Mobile number is a required field",
+                });
+            }
+            const checkNumber = isPossiblePhoneNumber(value);
+            if (checkNumber) {
+                return true;
+            } else {
+                return createError({
+                    path,
+                    message: "Mobile number is not valid",
+                });
+            }
+        }),
+    hospital_affiliations: Yup.array()
+        .of(
+            Yup.object()
+                .shape({
+                    value: Yup.string().required(),
+                })
+                .required()
+        )
+        .min(1),
+    board_certifications: Yup.array()
+        .of(
+            Yup.object()
+                .shape({
+                    value: Yup.string().required(),
+                })
+                .required()
+        )
+        .min(1),
     awards_publications: Yup.array()
         .of(
             Yup.object()
@@ -52,6 +87,16 @@ const validationSchema = Yup.object({
     city: Yup.string().required("City is a required field"),
     state: Yup.string().required("State is a required field"),
     zipcode: Yup.string().required("Zipcode is a required field"),
+    bio: Yup.string().required("Bio is a required field"),
+    patient_testimonial: Yup.array()
+        .of(
+            Yup.object()
+                .shape({
+                    value: Yup.string().required(),
+                })
+                .required()
+        )
+        .min(1),
 });
 
 const Profile = () => {
@@ -85,8 +130,8 @@ const Profile = () => {
             provider_speciality: 0,
             email: "",
             mobile_number: "",
-            hospital_affiliations: "",
-            board_certifications: "",
+            hospital_affiliations: [{}],
+            board_certifications: [{}],
             awards_publications: [{}],
             languages_spoken: [{ value: "English" }],
             consultation_fee: "",
@@ -95,6 +140,8 @@ const Profile = () => {
             city: "",
             state: "",
             zipcode: "",
+            bio: "",
+            patient_testimonial: [{}],
         },
         resolver: yupResolver(validationSchema),
     });
@@ -111,15 +158,21 @@ const Profile = () => {
                     "last_name",
                     "email",
                     "mobile_number",
-                    "hospital_affiliations",
-                    "board_certifications",
                     "consultation_fee",
                 ].includes(key)
             ) {
                 setValue(key, user[key]);
             }
 
-            if (["awards_publications", "languages_spoken"].includes(key)) {
+            if (
+                [
+                    "board_certifications",
+                    "awards_publications",
+                    "languages_spoken",
+                    "hospital_affiliations",
+                    "patient_testimonial",
+                ].includes(key)
+            ) {
                 setValue(key, JSON.parse(user[key]));
             }
 
@@ -187,6 +240,21 @@ const Profile = () => {
         control, // control props comes from useForm (optional: if you are using FormContext)
         name: "awards_publications", // unique name for your Field Array
         // keyName: "id", default to "id", you can change the key name
+    });
+
+    const patientTestimonial = useFieldArray({
+        control,
+        name: "patient_testimonial",
+    });
+
+    const hospitalAffiliations = useFieldArray({
+        control,
+        name: "hospital_affiliations",
+    });
+
+    const boardCertifications = useFieldArray({
+        control,
+        name: "board_certifications",
     });
 
     const update = async (payload) => {
@@ -415,6 +483,7 @@ const Profile = () => {
                                     control={control}
                                     render={({ field }) => (
                                         <PhoneInput
+                                            country="US"
                                             disabled={processing}
                                             className="disabled:opacity-50 custom-input ca-width input-border-color border"
                                             {...field}
@@ -476,13 +545,51 @@ const Profile = () => {
                                 <div className="input-label calibre-regular mb-4">
                                     Hospital Affiliations
                                 </div>
-                                <input
+                                {hospitalAffiliations.fields.map(
+                                    (field, index) => (
+                                        <Fragment key={field.id}>
+                                            <input
+                                                disabled={processing}
+                                                type="text"
+                                                className="disabled:opacity-50 custom-input ca-width input-border-color border"
+                                                placeholder="Enter Awards Publications"
+                                                {...register(
+                                                    `hospital_affiliations.${index}.value`
+                                                )}
+                                            />
+                                            <button
+                                                disabled={processing}
+                                                className="disabled:opacity-50 btn-create-account calibre-bold font-18 uppercase primary-text-color mr-3"
+                                                onClick={(e) => {
+                                                    e.preventDefault();
+                                                    hospitalAffiliations.remove(
+                                                        index
+                                                    );
+                                                }}
+                                            >
+                                                -
+                                            </button>
+                                            <span className="text-red-500 block mt-2">
+                                                {errors.hospital_affiliations &&
+                                                    errors
+                                                        .hospital_affiliations[
+                                                        index
+                                                    ]?.value?.message}
+                                            </span>
+                                        </Fragment>
+                                    )
+                                )}
+
+                                <button
                                     disabled={processing}
-                                    type="text"
-                                    className="disabled:opacity-50 custom-input ca-width input-border-color border"
-                                    placeholder="Enter Hospital Affiliations"
-                                    {...register("hospital_affiliations")}
-                                />
+                                    className="disabled:opacity-50 btn-login calibre-bold font-18 uppercase primary-bg-color text-white"
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        hospitalAffiliations.append({});
+                                    }}
+                                >
+                                    +
+                                </button>
                                 <span className="text-red-500 block mt-2">
                                     {errors.hospital_affiliations?.message}
                                 </span>
@@ -492,13 +599,50 @@ const Profile = () => {
                                 <div className="input-label calibre-regular mb-4">
                                     Board Certifications
                                 </div>
-                                <input
+                                {boardCertifications.fields.map(
+                                    (field, index) => (
+                                        <Fragment key={field.id}>
+                                            <input
+                                                disabled={processing}
+                                                type="text"
+                                                className="disabled:opacity-50 custom-input ca-width input-border-color border"
+                                                placeholder="Enter Awards Publications"
+                                                {...register(
+                                                    `board_certifications.${index}.value`
+                                                )}
+                                            />
+                                            <button
+                                                disabled={processing}
+                                                className="disabled:opacity-50 btn-create-account calibre-bold font-18 uppercase primary-text-color mr-3"
+                                                onClick={(e) => {
+                                                    e.preventDefault();
+                                                    boardCertifications.remove(
+                                                        index
+                                                    );
+                                                }}
+                                            >
+                                                -
+                                            </button>
+                                            <span className="text-red-500 block mt-2">
+                                                {errors.board_certifications &&
+                                                    errors.board_certifications[
+                                                        index
+                                                    ]?.value?.message}
+                                            </span>
+                                        </Fragment>
+                                    )
+                                )}
+
+                                <button
                                     disabled={processing}
-                                    type="text"
-                                    className="disabled:opacity-50 custom-input ca-width input-border-color border"
-                                    placeholder="Enter Board Certifications"
-                                    {...register("board_certifications")}
-                                />
+                                    className="disabled:opacity-50 btn-login calibre-bold font-18 uppercase primary-bg-color text-white"
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        boardCertifications.append({});
+                                    }}
+                                >
+                                    +
+                                </button>
                                 <span className="text-red-500 block mt-2">
                                     {errors.board_certifications?.message}
                                 </span>
@@ -700,6 +844,70 @@ const Profile = () => {
                                     {errors.zipcode?.message}
                                 </span>
                             </div>
+                            <div className="col-span-6">
+                                <div className="input-label calibre-regular mb-4">
+                                    Bio
+                                </div>
+                                <textarea
+                                    {...register("bio")}
+                                    disabled={processing}
+                                    className="disabled:opacity-50 custom-input ca-width input-border-color border"
+                                ></textarea>
+                                <span className="text-red-500 block mt-2">
+                                    {errors.bio?.message}
+                                </span>
+                            </div>
+                            <div className="col-span-6">
+                                <div className="input-label calibre-regular mb-4">
+                                    Patient Testimonial
+                                </div>
+                                {patientTestimonial.fields.map(
+                                    (field, index) => (
+                                        <Fragment key={index}>
+                                            <input
+                                                disabled={processing}
+                                                type="text"
+                                                className="disabled:opacity-50 custom-input ca-width input-border-color border"
+                                                placeholder="Enter "
+                                                {...register(
+                                                    `patient_testimonial.${index}.value`
+                                                )}
+                                            />
+                                            <button
+                                                disabled={processing}
+                                                className="disabled:opacity-50 btn-create-account calibre-bold font-18 uppercase primary-text-color mr-3"
+                                                onClick={(e) => {
+                                                    e.preventDefault();
+                                                    patientTestimonial.remove(
+                                                        index
+                                                    );
+                                                }}
+                                            >
+                                                -
+                                            </button>
+                                            <span className="text-red-500 block mt-2">
+                                                {errors.patient_testimonial &&
+                                                    errors.patient_testimonial[
+                                                        index
+                                                    ]?.value?.message}
+                                            </span>
+                                        </Fragment>
+                                    )
+                                )}
+                                <button
+                                    disabled={processing}
+                                    className="disabled:opacity-50 btn-login calibre-bold font-18 uppercase primary-bg-color text-white"
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        patientTestimonial.append({});
+                                    }}
+                                >
+                                    +
+                                </button>
+                                <span className="text-red-500 block mt-2">
+                                    {errors.patient_testimonial?.message}
+                                </span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -709,7 +917,7 @@ const Profile = () => {
                         <Link
                             disabled={processing}
                             type="button"
-                            className="btn-create-account calibre-bold font-18 uppercase primary-text-color mr-3"
+                            className="btn-create-account calibre-regular font-16 uppercase primary-text-color mr-3"
                             to="/home/dashboard"
                         >
                             Cancel
@@ -717,9 +925,9 @@ const Profile = () => {
                         <button
                             disabled={processing}
                             type="submit"
-                            className="disabled:opacity-50 btn-login calibre-bold font-18 uppercase primary-bg-color text-white"
+                            className="disabled:opacity-50 btn-login calibre-regular font-16 uppercase primary-bg-color text-white"
                         >
-                            <span>
+                            <span className="calibre-regular">
                                 {processing ? <ButtonLoader /> : "Update"}
                             </span>
                         </button>
