@@ -19,8 +19,8 @@ function PatientDetail({ selectedAppointment }) {
 
     return (
         <>
-            <h4 className="hepta-slab mb-4">Patient Details</h4>
-            <div className="bg-white rounded-md mb-3 px-4 py-4">
+            <h4 className="hepta-slab mb-2 leading-none">Patient Details</h4>
+            <div className="bg-white rounded-md mb-10 px-4 py-4">
                 <div className="flex flex-wrap justify-between">
                     <div>
                         <div className="flex xl:flex-nowrap lg:flex-nowrap md:flex-wrap sm:flex-nowrap">
@@ -50,35 +50,35 @@ function PatientDetail({ selectedAppointment }) {
                                                 .last_name
                                         )}`}
                                 </h3>
-                                <div className="flex flex-nowrap mb-1">
-                                    <div className="font-18 light-dark-gray-color mr-3 pr-3 leading-tight border-r-2">
+                                <div className="flex flex-nowrap mb-2">
+                                    <div className="calibre-regular font-16 light-dark-gray-color mr-3 pr-3 leading-none border-r-2">
                                         {selectedAppointment.patient &&
                                         selectedAppointment.patient.gender ===
                                             "M"
                                             ? "Male"
                                             : "Female"}
                                     </div>
-                                    <div className="font-18 light-dark-gray-color leading-tight">
+                                    <div className="calibre-regular font-16 light-dark-gray-color leading-none">
                                         {selectedAppointment.patient &&
                                             getAge(
                                                 selectedAppointment.patient.dob
                                             )}
                                     </div>
                                 </div>
-                                <div className="flex flex-nowrap mb-1">
-                                    <div className="font-18 light-dark-gray-color mr-3 pr-3 leading-tight border-r-2">
+                                <div className="flex flex-nowrap items-center mb-0">
+                                    <div className="calibre-regular font-16 light-dark-gray-color mr-3 pr-3 leading-none border-r-2">
                                         {moment(
                                             selectedAppointment.appointment_datetime
                                         ).format("D MMMM YYYY")}
                                     </div>
-                                    <div className="font-18 light-dark-gray-color leading-tight">
+                                    <div className="calibre-regular font-16 light-dark-gray-color leading-none">
                                         {moment(
                                             selectedAppointment.appointment_datetime
                                         ).format("HH:mm A")}
                                     </div>
                                 </div>
                                 <div className="flex flex-nowrap">
-                                    <div className="font-18 light-dark-gray-color">
+                                    <div className="calibre-regular font-16 light-dark-gray-color">
                                         Reason for your visit{" "}
                                         <span className="text-black calibre-bold">
                                             {selectedAppointment.appointment_reason_text

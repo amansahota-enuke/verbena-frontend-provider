@@ -44,7 +44,7 @@ const LoginForm = (props) => {
             <div className="bg-white p-10 login-box px-5 xl:px-8 lg:px-8 md:px-3 sm:px-3 py-10 mb-10">
                 <div className="flex xl:flex-nowrap lg:flex-nowrap md:flex-wrap justify-between mb-10 items-end">
                     <div>
-                        <h1 className="hepta-bold primary-text-color">
+                        <h1 className="hepta-bold primary-text-color login-heading">
                             Provider Log In
                         </h1>
                     </div>
@@ -54,9 +54,9 @@ const LoginForm = (props) => {
                 </div>
 
                 <form onSubmit={handleSubmit(login)}>
-                    <div className="flex flex-wrap items-center mb-5">
+                    <div className="flex xl:flex-nowrap lg:flex-nowrap md:flex-nowrap sm:flex-wrap flex-wrap items-center mb-5">
                         <div className="input-label calibre-regular">Email</div>
-                        <div className="flex-1">
+                        <div className="w-full">
                             <input
                                 type="text"
                                 className="custom-input input-border-color border"
@@ -69,11 +69,11 @@ const LoginForm = (props) => {
                         </div>
                     </div>
 
-                    <div className="flex items-center mb-10">
+                    <div className="flex xl:flex-nowrap lg:flex-nowrap md:flex-nowrap sm:flex-wrap flex-wrap items-center mb-10">
                         <div className="input-label calibre-regular">
                             Password
                         </div>
-                        <div className="flex-1">
+                        <div className="w-full">
                             <input
                                 type="password"
                                 className="custom-input input-border-color border"
@@ -89,21 +89,21 @@ const LoginForm = (props) => {
                     <div className="d-flex items-center mb-5">
                         <button
                             type="submit"
-                            className="btn-login calibre-bold font-18 uppercase primary-bg-color text-white mr-3"
+                            className="btn-login calibre-regular font-16 tracking-wider uppercase primary-bg-color text-white mr-3"
                         >
                             Login
                         </button>
 
                         <button
                             type="button"
-                            className="btn-create-account calibre-bold font-18 uppercase primary-text-color"
+                            className="btn-create-account calibre-regular tracking-wider font-16 uppercase primary-text-color"
                             onClick={() => history.push("/signup")}
                         >
                             Create Account
                         </button>
                     </div>
 
-                    <div className="d-flex items-center mb-20">
+                    <div className="d-flex items-center mb-20 font-16 calibre-regular">
                         <Link
                             to="/forgot-password"
                             className="light-gray-color"
