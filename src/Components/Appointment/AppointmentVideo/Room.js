@@ -59,7 +59,19 @@ const Room = ({ roomName, room, handleLogout, openAppointmentWindow }) => {
                         ""
                     )}
                 </div>
+                <div>
                 <div className="remote-participants">{remoteParticipants}</div>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <h1> Waiting for the Patient </h1>
+                </div>
             </div>
         </div>
     );
