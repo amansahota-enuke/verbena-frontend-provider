@@ -38,7 +38,7 @@ function RescheduleAppointment() {
     const getDate = async () => {
         try {
             setDateLoader(true);
-            const response = await AcuityService.getDates();
+            const response = await AcuityService.getDates(selectedAppointment.provider_id);
             if (response.data.data.length !== 0) {
                 const dates = response.data.data.map((date) => new Date(date));
                 setAvailableDates(dates);
@@ -57,7 +57,7 @@ function RescheduleAppointment() {
             }
             setTimeLoader(true);
             const payload = { date: moment(date).format("YYYY-MM-DD") };
-            const times = await AcuityService.getTimes(payload);
+            const times = await AcuityService.getTimes(selectedAppointment.provider_id, payload);
             setAvailableTimes(times.data.data);
             setTimeLoader(false);
         } catch (error) {

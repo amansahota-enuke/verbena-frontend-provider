@@ -5,7 +5,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { Header, LeftMenu, Error } from "../Components";
 import selector from "../redux/selector";
 import { UserActions } from "../redux/slice/user.slice";
-import { AppointmentPage, ProfilePage, PatientPage } from "../Pages";
+import {
+    AppointmentPage,
+    ProfilePage,
+    PatientPage,
+    DashboardPage,
+} from "../Pages";
 
 const Layout = ({ match }) => {
     const dispatch = useDispatch();
@@ -32,8 +37,12 @@ const Layout = ({ match }) => {
                         exact
                         path={`${match.path}`}
                         render={() => (
-                            <Redirect to={`${match.path}/appointments`} />
+                            <Redirect to={`${match.path}/dashboard`} />
                         )}
+                    />
+                    <Route
+                        path={`${match.path}/dashboard`}
+                        component={DashboardPage}
                     />
                     <Route
                         path={`${match.path}/appointments`}

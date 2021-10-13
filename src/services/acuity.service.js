@@ -1,8 +1,8 @@
 import { ApiService } from ".";
 
 const AcuityService = {
-    getDates: () => ApiService.get("/calendar/dates"),
-    getTimes: (payload)=> ApiService.get("/calendar/times",payload)
+    getDates: (id) => ApiService.get(`/calendar/dates/${id}`),
+    getTimes: (id, payload)=> ApiService.get(`/calendar/times/${id}`,payload)
 };
 
 export default AcuityService;

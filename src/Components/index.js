@@ -16,6 +16,7 @@ import SignUp from "./SignUp";
 import ForgotPassword from "./ForgotPassword";
 import ResetPassword from "./ResetPassword";
 
+import Dashboard from "./Dashboard";
 import Profile from "./Profile";
 import AppointmentList from "./Appointment/AppointmentList";
 import AppointmentDetail from "./Appointment/AppointmentDetail";
@@ -44,6 +45,7 @@ export {
     ForgotPassword,
     ResetPassword,
     //Home
+    Dashboard,
     Profile,
     AppointmentList,
     AppointmentDetail,

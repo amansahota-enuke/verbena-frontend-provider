@@ -21,6 +21,7 @@ const SignUpForm = (props) => {
     const [processing, setProcessing] = useState(false);
     const [types, setTypes] = useState([]);
     const [speciality, setSpeciality] = useState([]);
+    const [states, setStates] = useState([]);
 
     const [profileLogo, setProfileLogo] = useState("");
     const [profileLogoUrl, setProfileLogoUrl] = useState("");
@@ -28,13 +29,16 @@ const SignUpForm = (props) => {
     const [practiceLogo, setPracticeLogo] = useState("");
     const [practiceLogoUrl, setPracticeLogoUrl] = useState("");
 
-    const fetchTypesAndSpeciality = async () => {
+    const fetchReferenceData = async () => {
         try {
             const responseType = await CommonService.getTypes();
             setTypes(responseType.data.data);
 
             const responseSpeciality = await CommonService.getSpeciality();
             setSpeciality(responseSpeciality.data.data);
+
+            const responseStates = await CommonService.getStates();
+            setStates(responseStates.data.data);
 
             setLoader(false);
         } catch (error) {
@@ -44,7 +48,7 @@ const SignUpForm = (props) => {
     };
 
     useEffect(() => {
-        fetchTypesAndSpeciality();
+        fetchReferenceData();
     }, []);
 
     const validationSchema = Yup.object({
@@ -117,11 +121,15 @@ const SignUpForm = (props) => {
                     .required()
             )
             .min(1),
-        consultation_fee: Yup.number().required(),
+        consultation_fee: Yup.number()
+            .required("Consultation fee is a required field")
+            .min(1, "Consultation fee is a required field"),
         address_line1: Yup.string().required("Address is a required field"),
         address_line2: Yup.string(),
         city: Yup.string().required("City is a required field"),
-        state: Yup.string().required("State is a required field"),
+        state_id: Yup.number()
+            .required("State is a required field")
+            .min(1, "State is a required field"),
         zipcode: Yup.string().required("Zipcode is a required field"),
         password: Yup.string().required("Password is a required field"),
         confirmPassword: Yup.string()
@@ -146,11 +154,11 @@ const SignUpForm = (props) => {
             board_certifications: [{}],
             awards_publications: [{}],
             languages_spoken: [{ value: "English" }],
-            consultation_fee: "",
+            consultation_fee: 0,
             address_line1: "",
             address_line2: "",
             city: "",
-            state: "",
+            state_id: 0,
             zipcode: "",
             password: "",
             confirmPassword: "",
@@ -185,7 +193,14 @@ const SignUpForm = (props) => {
         const formData = new FormData(); // Currently empty
 
         for (const key in payload) {
-            if (["awards_publications", "languages_spoken"].includes(key)) {
+            if (
+                [
+                    "awards_publications",
+                    "languages_spoken",
+                    "hospital_affiliations",
+                    "board_certifications",
+                ].includes(key)
+            ) {
                 formData.append(key, JSON.stringify(payload[key]));
             } else {
                 formData.append(key, payload[key]);
@@ -433,7 +448,7 @@ const SignUpForm = (props) => {
 
                                     <div className="col-span-6">
                                         <div className="input-label calibre-regular mb-4">
-                                            Provider Speaciality
+                                            Provider Speciality
                                         </div>
                                         <select
                                             disabled={processing}
@@ -464,6 +479,16 @@ const SignUpForm = (props) => {
                                         <div className="input-label calibre-regular mb-4">
                                             Hospital Affiliations
                                         </div>
+                                        <button
+                                            disabled={processing}
+                                            className="disabled:opacity-50 w-6 h-6 text-white primary-bg-color rounded-full calibre-bold font-18"
+                                            onClick={(e) => {
+                                                e.preventDefault();
+                                                hospitalAffiliations.append({});
+                                            }}
+                                        >
+                                            +
+                                        </button>
                                         {hospitalAffiliations.fields.map(
                                             (field, index) => (
                                                 <Fragment key={field.id}>
@@ -471,7 +496,7 @@ const SignUpForm = (props) => {
                                                         disabled={processing}
                                                         type="text"
                                                         className="disabled:opacity-50 custom-input ca-width input-border-color border"
-                                                        placeholder="Enter Awards Publications"
+                                                        placeholder="Enter Hospital Affiliations"
                                                         {...register(
                                                             `hospital_affiliations.${index}.value`
                                                         )}
@@ -486,7 +511,7 @@ const SignUpForm = (props) => {
                                                             );
                                                         }}
                                                     >
-                                                        -
+                                                        Remove
                                                     </button>
                                                     <span className="text-red-500 block mt-2">
                                                         {errors.hospital_affiliations &&
@@ -498,17 +523,6 @@ const SignUpForm = (props) => {
                                                 </Fragment>
                                             )
                                         )}
-
-                                        <button
-                                            disabled={processing}
-                                            className="disabled:opacity-50 w-6 h-6 text-white primary-bg-color rounded-full calibre-bold font-18"
-                                            onClick={(e) => {
-                                                e.preventDefault();
-                                                hospitalAffiliations.append({});
-                                            }}
-                                        >
-                                            +
-                                        </button>
                                         <span className="text-red-500 block mt-2">
                                             {
                                                 errors.hospital_affiliations
@@ -521,6 +535,16 @@ const SignUpForm = (props) => {
                                         <div className="input-label calibre-regular mb-4">
                                             Board Certifications
                                         </div>
+                                        <button
+                                            disabled={processing}
+                                            className="disabled:opacity-50 w-6 h-6 text-center leading-none calibre-bold p-1 rounded-full text-white primary-bg-color font-18"
+                                            onClick={(e) => {
+                                                e.preventDefault();
+                                                boardCertifications.append({});
+                                            }}
+                                        >
+                                            +
+                                        </button>
                                         {boardCertifications.fields.map(
                                             (field, index) => (
                                                 <Fragment key={field.id}>
@@ -528,7 +552,7 @@ const SignUpForm = (props) => {
                                                         disabled={processing}
                                                         type="text"
                                                         className="disabled:opacity-50 custom-input ca-width input-border-color border"
-                                                        placeholder="Enter Awards Publications"
+                                                        placeholder="Enter Board Certifications"
                                                         {...register(
                                                             `board_certifications.${index}.value`
                                                         )}
@@ -543,7 +567,7 @@ const SignUpForm = (props) => {
                                                             );
                                                         }}
                                                     >
-                                                        -
+                                                        Remove
                                                     </button>
                                                     <span className="text-red-500 block mt-2">
                                                         {errors.board_certifications &&
@@ -555,17 +579,6 @@ const SignUpForm = (props) => {
                                                 </Fragment>
                                             )
                                         )}
-
-                                        <button
-                                            disabled={processing}
-                                            className="disabled:opacity-50 w-6 h-6 text-center leading-none calibre-bold p-1 rounded-full text-white primary-bg-color font-18"
-                                            onClick={(e) => {
-                                                e.preventDefault();
-                                                boardCertifications.append({});
-                                            }}
-                                        >
-                                            +
-                                        </button>
                                         <span className="text-red-500 block mt-2">
                                             {
                                                 errors.board_certifications
@@ -578,6 +591,16 @@ const SignUpForm = (props) => {
                                         <div className="input-label calibre-regular mb-4">
                                             Awards Publications
                                         </div>
+                                        <button
+                                            disabled={processing}
+                                            className="disabled:opacity-50 w-6 h-6 text-center leading-none calibre-bold p-1 rounded-full text-white primary-bg-color font-18"
+                                            onClick={(e) => {
+                                                e.preventDefault();
+                                                awardsPublications.append({});
+                                            }}
+                                        >
+                                            +
+                                        </button>
                                         {awardsPublications.fields.map(
                                             (field, index) => (
                                                 <Fragment key={field.id}>
@@ -600,7 +623,7 @@ const SignUpForm = (props) => {
                                                             );
                                                         }}
                                                     >
-                                                        -
+                                                        Remove
                                                     </button>
                                                     <span className="text-red-500 block mt-2">
                                                         {errors.awards_publications &&
@@ -612,17 +635,6 @@ const SignUpForm = (props) => {
                                                 </Fragment>
                                             )
                                         )}
-
-                                        <button
-                                            disabled={processing}
-                                            className="disabled:opacity-50 w-6 h-6 text-center leading-none calibre-bold p-1 rounded-full text-white primary-bg-color font-18"
-                                            onClick={(e) => {
-                                                e.preventDefault();
-                                                awardsPublications.append({});
-                                            }}
-                                        >
-                                            +
-                                        </button>
                                         <span className="text-red-500 block mt-2">
                                             {
                                                 errors.awards_publications
@@ -635,6 +647,16 @@ const SignUpForm = (props) => {
                                         <div className="input-label calibre-regular mb-4">
                                             Languages spoken
                                         </div>
+                                        <button
+                                            disabled={processing}
+                                            className="disabled:opacity-50 w-6 h-6 text-center leading-none calibre-bold p-1 rounded-full text-white primary-bg-color font-18"
+                                            onClick={(e) => {
+                                                e.preventDefault();
+                                                languagesSpoken.append({});
+                                            }}
+                                        >
+                                            +
+                                        </button>
                                         {languagesSpoken.fields.map(
                                             (field, index) => (
                                                 <Fragment key={field.id}>
@@ -657,7 +679,7 @@ const SignUpForm = (props) => {
                                                             );
                                                         }}
                                                     >
-                                                        -
+                                                        Remove
                                                     </button>
                                                     <span className="text-red-500 block mt-2">
                                                         {errors.languages_spoken &&
@@ -669,17 +691,6 @@ const SignUpForm = (props) => {
                                                 </Fragment>
                                             )
                                         )}
-
-                                        <button
-                                            disabled={processing}
-                                            className="disabled:opacity-50 w-6 h-6 text-center leading-none calibre-bold p-1 rounded-full text-white primary-bg-color font-18"
-                                            onClick={(e) => {
-                                                e.preventDefault();
-                                                languagesSpoken.append({});
-                                            }}
-                                        >
-                                            +
-                                        </button>
                                         <span className="text-red-500 block mt-2">
                                             {errors.languages_spoken?.message}
                                         </span>
@@ -753,15 +764,25 @@ const SignUpForm = (props) => {
                                         <div className="input-label calibre-regular mb-4">
                                             State
                                         </div>
-                                        <input
+                                        <select
                                             disabled={processing}
-                                            type="text"
-                                            className="disabled:opacity-50 custom-input ca-width input-border-color border"
-                                            placeholder="Enter State"
-                                            {...register("state")}
-                                        />
+                                            className="disabled:opacity-50 input-border-color ca-width border custom-select"
+                                            {...register("state_id")}
+                                        >
+                                            <option value={0}>
+                                                Select State
+                                            </option>
+                                            {states.map((state) => (
+                                                <option
+                                                    key={state.id}
+                                                    value={state.id}
+                                                >
+                                                    {state.state_name}
+                                                </option>
+                                            ))}
+                                        </select>
                                         <span className="text-red-500 block mt-2">
-                                            {errors.state?.message}
+                                            {errors.state_id?.message}
                                         </span>
                                     </div>
 

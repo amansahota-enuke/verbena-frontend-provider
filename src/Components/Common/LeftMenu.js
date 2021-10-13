@@ -1,8 +1,12 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import $ from "jquery";
+import { useSelector } from "react-redux";
+import selector from "../../redux/selector";
 
 const LeftMenu = ({ show }) => {
+    const user = useSelector(selector.user);
+
     useEffect(() => {
         $("a.multi-level").on("click", function (e) {
             $(".multi-level-menu").toggleClass("show");
@@ -14,6 +18,15 @@ const LeftMenu = ({ show }) => {
             e.stopPropagation();
         });
     }, []);
+
+    const openAcuityWindow = () => {
+        const popupObj = window.open(
+            "https://secure.acuityscheduling.com/login.php",
+            "_blank",
+            "toolbar=0,location=0,menubar=0,width=400,height=300"
+        );
+        popupObj.focus();
+    };
 
     return (
         <>
@@ -34,6 +47,15 @@ const LeftMenu = ({ show }) => {
 
                     <Link
                         className="block border-b-1 p-2 caliber-regular"
+                        to="/home/dashboard"
+                        title="Patient Dashboard"
+                    >
+                        <span className="icon sprite-menu dashboard"></span>
+                        <span className="title uppercase">Dashboard</span>
+                    </Link>
+
+                    <Link
+                        className="block border-b-1 p-2 caliber-regular"
                         to="/home/appointments"
                         title="Appointments"
                     >
@@ -50,14 +72,16 @@ const LeftMenu = ({ show }) => {
                         <span className="title uppercase">Patients</span>
                     </Link>
 
-                    {/* <Link
-                        className="block border-b-1 p-2 caliber-regular"
-                        to="/home/calendar"
+                    <button
+                        className="disabled:opacity-50 block border-b-1 p-2 caliber-regular cursor-pointer"
                         title="Manage Calendar"
+                        disabled={Number(user.status) === 0 ? true : false}
+                        onClick={() => openAcuityWindow()}
                     >
                         <span className="icon sprite-menu bh"></span>
                         <span className="title uppercase">Manage Calendar</span>
-                    </Link> */}
+                    </button>
+
                     <Link
                         className="block border-b-1 p-2 caliber-regular"
                         to="/home/profile"
