@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { FullWidthContainer } from "../..";
+import { FullWidthContainer, Pagination } from "../..";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useRouteMatch } from "react-router-dom";
 import selector from "../../../redux/selector";
@@ -25,8 +25,8 @@ function PatientList() {
     const [startDate, setStartDate] = useState("");
     const [endDate, setEndDate] = useState("");
 
-    const getPatientList = async (page = null) => {
-        const actionResult = await dispatch(
+    const getPatientList = (page = null) => {
+        dispatch(
             PatientActions.fetchPatientList({
                 ...(page && { page }),
                 ...(patientId && { patient_id: patientId }),
@@ -37,11 +37,11 @@ function PatientList() {
                 ...(endDate && { end_date: endDate }),
             })
         );
-
-        if (!actionResult.hasOwnProperty("error")) {
-            setPageCount(Math.ceil(Number(patientCount) / 10));
-        }
     };
+
+    useEffect(() => {
+        setPageCount(Math.ceil(Number(patientCount) / 10));
+    }, [patientCount]);
 
     const handlePageChange = ({ selected }) => {
         getPatientList(selected);
@@ -218,7 +218,9 @@ function PatientList() {
                                             <td className="px-6 dark-gray-color py-4 whitespace-nowrap text-center font-18">
                                                 {`${parseName(
                                                     patient.first_name
-                                                )} ${parseName(patient.last_name)}`}
+                                                )} ${parseName(
+                                                    patient.last_name
+                                                )}`}
                                             </td>
                                             <td className="px-6 dark-gray-color py-4 whitespace-nowrap text-center font-18">
                                                 {patient.gender === "M"
@@ -250,20 +252,14 @@ function PatientList() {
                             </tbody>
                         </table>
                     </div>
-                    <ReactPaginate
-                        previousLabel={"previous"}
-                        nextLabel={"next"}
-                        breakLabel={"..."}
-                        breakClassName={"break-me"}
-                        pageCount={pageCount}
-                        marginPagesDisplayed={2}
-                        pageRangeDisplayed={5}
-                        onPageChange={handlePageChange}
-                        containerClassName={"pagination"}
-                        activeClassName={"active"}
-                    />
                 </div>
             </div>
+            {patientCount > 0 && (
+                <Pagination
+                    pageCount={pageCount}
+                    onPageChange={handlePageChange}
+                />
+            )}
         </FullWidthContainer>
     );
 }

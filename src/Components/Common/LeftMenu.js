@@ -73,12 +73,12 @@ const LeftMenu = ({ show }) => {
                     </Link>
 
                     <button
-                        className="disabled:opacity-50 block border-b-1 p-2 caliber-regular cursor-pointer"
+                        className="block border-b-1 p-2 caliber-regular cursor-pointer w-full"
                         title="Manage Calendar"
                         disabled={Number(user.status) === 0 ? true : false}
                         onClick={() => openAcuityWindow()}
                     >
-                        <span className="icon sprite-menu bh"></span>
+                        <span className="icon sprite-menu mc"></span>
                         <span className="title uppercase">Manage Calendar</span>
                     </button>
 

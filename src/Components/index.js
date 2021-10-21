@@ -7,6 +7,7 @@ import Error from "./Common/Error";
 import PrivateRoute from "./Common/PrivateRoute";
 import Dropdown from "./Common/Dropdown";
 import ScrollToTop from "./Common/ScrollToTop";
+import Pagination from "./Common/Pagination";
 
 import BoxedWidthContainer from "./Container/BoxedWidthContainer";
 import FullWidthContainer from "./Container/FullWidthContainer";
@@ -36,6 +37,7 @@ export {
     PrivateRoute,
     Dropdown,
     ScrollToTop,
+    Pagination,
     //Container
     BoxedWidthContainer,
     FullWidthContainer,

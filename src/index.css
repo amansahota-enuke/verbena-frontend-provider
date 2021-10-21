@@ -606,7 +606,8 @@ input,label,span,p,li,ul
   background-size: 90%;
 }
 
-.left-menu a span
+.left-menu a span,
+.left-menu button span
 {
   vertical-align: middle;
 }
@@ -679,6 +680,16 @@ input,label,span,p,li,ul
 .left-menu a:hover span.sprite-menu.profile
 {
   background-position: 0 -366px;
+}
+
+.mc
+{
+  background-position: 0 -449px;
+}
+
+.left-menu button:hover span.sprite-menu.mc
+{
+  background-position: 0 -479px;
 }
 
 /* ul li css */

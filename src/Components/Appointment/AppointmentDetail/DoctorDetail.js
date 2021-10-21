@@ -100,7 +100,21 @@ function DoctorDetail({ selectedAppointment }) {
                                         <i className="fas fa-graduation-cap"></i>
                                     </div>
                                     <div className="light-gray-color text-base calibre-regular">
-                                        {user.hospital_affiliations}
+                                        {user.hospital_affiliations &&
+                                            JSON.parse(
+                                                user.hospital_affiliations
+                                            ).map((hospital, index) => {
+                                                let test = index + 1;
+                                                if (
+                                                    JSON.parse(
+                                                        user.hospital_affiliations
+                                                    ).length === test
+                                                ) {
+                                                    return hospital.value;
+                                                } else {
+                                                    return `${hospital.value}, `;
+                                                }
+                                            })}
                                     </div>
                                 </div>
                                 <div className="provider-address calibre-regular flex xl:flex-nowrap md:flex-wrap">
@@ -110,13 +124,9 @@ function DoctorDetail({ selectedAppointment }) {
                                     <div className="light-gray-color text-base calibre-regular">
                                         {user.address &&
                                             `${user.address.address_line1}, ${
-                                                user.address.address_line2 &&
-                                                JSON.parse(
-                                                    user.address.address_line2
-                                                ) !== null &&
                                                 user.address.address_line2 + ","
                                             } ${user.address.city}, ${
-                                                user.address.state
+                                                user.address.state.state_name
                                             } ${user.address.zipcode}`}
                                     </div>
                                 </div>
