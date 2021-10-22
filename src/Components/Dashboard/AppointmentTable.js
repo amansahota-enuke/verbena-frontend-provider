@@ -28,19 +28,13 @@ function AppointmentTable() {
                                             scope="col"
                                             className="dark-gray-color px-6 py-3 text-center font-18 uppercase tracking-wider"
                                         >
-                                            Patient's Name
+                                            Patient Name
                                         </th>
                                         <th
                                             scope="col"
                                             className="dark-gray-color px-6 py-3 text-center font-18 uppercase tracking-wider"
                                         >
-                                            Patient's Mobile Number
-                                        </th>
-                                        <th
-                                            scope="col"
-                                            className="dark-gray-color px-6 py-3 text-center font-18 uppercase tracking-wider"
-                                        >
-                                            Patient's Email
+                                            Mobile Number
                                         </th>
                                         <th
                                             scope="col"
@@ -52,25 +46,19 @@ function AppointmentTable() {
                                             scope="col"
                                             className="dark-gray-color px-6 py-3 text-center font-18 uppercase tracking-wider"
                                         >
-                                            Appointment Date
+                                            Email
                                         </th>
                                         <th
                                             scope="col"
                                             className="dark-gray-color px-6 py-3 text-center font-18 uppercase tracking-wider"
                                         >
-                                            Provider's Name
+                                            Reason For Visit
                                         </th>
                                         <th
                                             scope="col"
                                             className="dark-gray-color px-6 py-3 text-center font-18 uppercase tracking-wider"
                                         >
-                                            Provider's Mobile Number
-                                        </th>
-                                        <th
-                                            scope="col"
-                                            className="dark-gray-color px-6 py-3 text-center font-18 uppercase tracking-wider"
-                                        >
-                                            Provider's Email
+                                            Appointment Time
                                         </th>
                                         <th
                                             scope="col"
@@ -105,10 +93,18 @@ function AppointmentTable() {
                                                     }
                                                 </td>
                                                 <td className="px-6 dark-gray-color py-4 whitespace-nowrap text-center font-18">
+                                                    {appointment.id}
+                                                </td>
+                                                <td className="px-6 dark-gray-color py-4 whitespace-nowrap text-center font-18">
                                                     {appointment.patient.email}
                                                 </td>
                                                 <td className="px-6 dark-gray-color py-4 whitespace-nowrap text-center font-18">
-                                                    {appointment.id}
+                                                    {appointment.appointment_reason_text
+                                                        ? appointment.appointment_reason_text
+                                                        : appointment.appointment_reason &&
+                                                          appointment
+                                                              .appointment_reason
+                                                              .name}
                                                 </td>
                                                 <td className="px-6 dark-gray-color py-4 whitespace-nowrap text-center font-18">
                                                     {moment(
@@ -116,24 +112,6 @@ function AppointmentTable() {
                                                     ).format(
                                                         "MM-DD-YYYY | hh:mm A"
                                                     )}
-                                                </td>
-                                                <td className="px-6 dark-gray-color py-4 whitespace-nowrap text-center font-18">
-                                                    {`${parseName(
-                                                        appointment.provider
-                                                            .first_name
-                                                    )} ${parseName(
-                                                        appointment.provider
-                                                            .last_name
-                                                    )}`}
-                                                </td>
-                                                <td className="px-6 dark-gray-color py-4 whitespace-nowrap text-center font-18">
-                                                    {
-                                                        appointment.provider
-                                                            .mobile_number
-                                                    }
-                                                </td>
-                                                <td className="px-6 dark-gray-color py-4 whitespace-nowrap text-center font-18">
-                                                    {appointment.provider.email}
                                                 </td>
                                                 <td className="px-6 dark-gray-color py-4 whitespace-nowrap text-center font-18">
                                                     <Link
