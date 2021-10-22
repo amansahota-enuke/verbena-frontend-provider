@@ -6,7 +6,7 @@ const Timer = () => (
       seconds={0}
       minutes={0}
       hours={0}
-      limit="00:00:10"
+     // limit="00:00:10"
       onChange={({ hours, minutes, seconds }) => {
         // do something
       }}
@@ -15,7 +15,7 @@ const Timer = () => (
         return (
           <div>
             <p>
-              Time Duration: { formatted }
+              Time : { minutes } Min : { seconds } Sec
             </p>
             {/* <p>
               Hours: { hours }
