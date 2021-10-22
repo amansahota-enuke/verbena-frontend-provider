@@ -1,7 +1,9 @@
 import React, { Fragment, useCallback, useEffect, useState } from "react";
 import * as Yup from "yup";
 import { useDispatch, useSelector } from "react-redux";
-import PhoneInput, { isPossiblePhoneNumber } from "react-phone-number-input";
+import PhoneInput, {
+    isPossiblePhoneNumber,
+} from "react-phone-number-input/input";
 import { Controller, useFieldArray, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Link } from "react-router-dom";
@@ -25,10 +27,11 @@ const validationSchema = Yup.object({
     email: Yup.string()
         .required("Email is a required field")
         .email("Invalid email"),
-    mobile_number: Yup.string()
-        .required("Mobile number is a required field")
-        .test("check-number", "Mobile number is not valid", function (value) {
-            const { createError, path } = this;
+    mobile_number: Yup.string().test(
+        "check-number",
+        "Number is not valid",
+        function (value) {
+            const { path, createError } = this;
             if (!value) {
                 return createError({
                     path,
@@ -41,10 +44,11 @@ const validationSchema = Yup.object({
             } else {
                 return createError({
                     path,
-                    message: "Mobile number is not valid",
+                    message: "Mobile Number is not valid",
                 });
             }
-        }),
+        }
+    ),
     hospital_affiliations: Yup.array()
         .of(
             Yup.object()
@@ -81,22 +85,24 @@ const validationSchema = Yup.object({
                 .required()
         )
         .min(1),
-    consultation_fee: Yup.number().required(),
+    consultation_fee: Yup.number()
+        .required("Consultation fee is a required field")
+        .min(1, "Consultation fee is a required field"),
     address_line1: Yup.string().required("Address is a required field"),
     address_line2: Yup.string().nullable(),
     city: Yup.string().required("City is a required field"),
-    state: Yup.string().required("State is a required field"),
+    state_id: Yup.number()
+        .required("State is a required field")
+        .min(1, "State is a required field"),
     zipcode: Yup.string().required("Zipcode is a required field"),
-    bio: Yup.string().required("Bio is a required field"),
-    patient_testimonial: Yup.array()
-        .of(
-            Yup.object()
-                .shape({
-                    value: Yup.string().required(),
-                })
-                .required()
-        )
-        .min(1),
+    bio: Yup.string(),
+    patient_testimonial: Yup.array().of(
+        Yup.object()
+            .shape({
+                value: Yup.string(),
+            })
+            .required()
+    ),
 });
 
 const Profile = () => {
@@ -106,6 +112,7 @@ const Profile = () => {
     const [processing, setProcessing] = useState(false);
     const [types, setTypes] = useState([]);
     const [speciality, setSpeciality] = useState([]);
+    const [states, setStates] = useState([]);
 
     const [profileLogo, setProfileLogo] = useState("");
     const [profileLogoUrl, setProfileLogoUrl] = useState("");
@@ -134,11 +141,11 @@ const Profile = () => {
             board_certifications: [{}],
             awards_publications: [{}],
             languages_spoken: [{ value: "English" }],
-            consultation_fee: "",
+            consultation_fee: 0,
             address_line1: "",
             address_line2: "",
             city: "",
-            state: "",
+            state_id: 0,
             zipcode: "",
             bio: "",
             patient_testimonial: [{}],
@@ -159,6 +166,7 @@ const Profile = () => {
                     "email",
                     "mobile_number",
                     "consultation_fee",
+                    "bio",
                 ].includes(key)
             ) {
                 setValue(key, user[key]);
@@ -183,24 +191,30 @@ const Profile = () => {
                             "address_line1",
                             "address_line2",
                             "city",
-                            "state",
                             "zipcode",
                         ].includes(addressKey)
                     ) {
                         setValue(addressKey, user.address[addressKey]);
+                    }
+
+                    if (addressKey === "state_id") {
+                        setValue(addressKey, Number(user.address[addressKey]));
                     }
                 }
             }
         }
     }, [setValue, user]);
 
-    const fetchTypesAndSpeciality = async () => {
+    const fetchReferenceData = async () => {
         try {
             const responseType = await CommonService.getTypes();
             setTypes(responseType.data.data);
 
             const responseSpeciality = await CommonService.getSpeciality();
             setSpeciality(responseSpeciality.data.data);
+
+            const responseStates = await CommonService.getStates();
+            setStates(responseStates.data.data);
 
             setLoader(false);
         } catch (error) {
@@ -211,7 +225,7 @@ const Profile = () => {
 
     useEffect(() => {
         dispatch(UserActions.getProfile());
-        fetchTypesAndSpeciality();
+        fetchReferenceData();
     }, [dispatch]);
 
     useEffect(() => {
@@ -262,7 +276,15 @@ const Profile = () => {
         const formData = new FormData();
 
         for (const key in payload) {
-            if (["awards_publications", "languages_spoken"].includes(key)) {
+            if (
+                [
+                    "awards_publications",
+                    "languages_spoken",
+                    "patient_testimonial",
+                    "hospital_affiliations",
+                    "board_certifications",
+                ].includes(key)
+            ) {
                 formData.append(key, JSON.stringify(payload[key]));
             } else {
                 formData.append(key, payload[key]);
@@ -486,6 +508,7 @@ const Profile = () => {
                                             country="US"
                                             disabled={processing}
                                             className="disabled:opacity-50 custom-input ca-width input-border-color border"
+                                            placeholder="Enter Phone"
                                             {...field}
                                         />
                                     )}
@@ -544,6 +567,16 @@ const Profile = () => {
                             <div className="col-span-6">
                                 <div className="input-label calibre-regular mb-4">
                                     Hospital Affiliations
+                                    <button
+                                        disabled={processing}
+                                        className="disabled:opacity-50 w-6 h-6 text-white primary-bg-color rounded-full calibre-bold font-18 ml-3"
+                                        onClick={(e) => {
+                                            e.preventDefault();
+                                            hospitalAffiliations.append({});
+                                        }}
+                                    >
+                                        +
+                                    </button>
                                 </div>
                                 {hospitalAffiliations.fields.map(
                                     (field, index) => (
@@ -559,7 +592,7 @@ const Profile = () => {
                                             />
                                             <button
                                                 disabled={processing}
-                                                className="disabled:opacity-50 btn-create-account calibre-bold font-18 uppercase primary-text-color mr-3"
+                                                className="disabled:opacity-50 ml-3"
                                                 onClick={(e) => {
                                                     e.preventDefault();
                                                     hospitalAffiliations.remove(
@@ -567,7 +600,7 @@ const Profile = () => {
                                                     );
                                                 }}
                                             >
-                                                -
+                                                Remove
                                             </button>
                                             <span className="text-red-500 block mt-2">
                                                 {errors.hospital_affiliations &&
@@ -579,17 +612,6 @@ const Profile = () => {
                                         </Fragment>
                                     )
                                 )}
-
-                                <button
-                                    disabled={processing}
-                                    className="disabled:opacity-50 btn-login calibre-bold font-18 uppercase primary-bg-color text-white"
-                                    onClick={(e) => {
-                                        e.preventDefault();
-                                        hospitalAffiliations.append({});
-                                    }}
-                                >
-                                    +
-                                </button>
                                 <span className="text-red-500 block mt-2">
                                     {errors.hospital_affiliations?.message}
                                 </span>
@@ -598,6 +620,16 @@ const Profile = () => {
                             <div className="col-span-6">
                                 <div className="input-label calibre-regular mb-4">
                                     Board Certifications
+                                    <button
+                                        disabled={processing}
+                                        className="disabled:opacity-50 w-6 h-6 text-white primary-bg-color rounded-full calibre-bold font-18 ml-3"
+                                        onClick={(e) => {
+                                            e.preventDefault();
+                                            boardCertifications.append({});
+                                        }}
+                                    >
+                                        +
+                                    </button>
                                 </div>
                                 {boardCertifications.fields.map(
                                     (field, index) => (
@@ -613,7 +645,7 @@ const Profile = () => {
                                             />
                                             <button
                                                 disabled={processing}
-                                                className="disabled:opacity-50 btn-create-account calibre-bold font-18 uppercase primary-text-color mr-3"
+                                                className="disabled:opacity-50 ml-3"
                                                 onClick={(e) => {
                                                     e.preventDefault();
                                                     boardCertifications.remove(
@@ -621,7 +653,7 @@ const Profile = () => {
                                                     );
                                                 }}
                                             >
-                                                -
+                                                Remove
                                             </button>
                                             <span className="text-red-500 block mt-2">
                                                 {errors.board_certifications &&
@@ -632,17 +664,6 @@ const Profile = () => {
                                         </Fragment>
                                     )
                                 )}
-
-                                <button
-                                    disabled={processing}
-                                    className="disabled:opacity-50 btn-login calibre-bold font-18 uppercase primary-bg-color text-white"
-                                    onClick={(e) => {
-                                        e.preventDefault();
-                                        boardCertifications.append({});
-                                    }}
-                                >
-                                    +
-                                </button>
                                 <span className="text-red-500 block mt-2">
                                     {errors.board_certifications?.message}
                                 </span>
@@ -651,6 +672,16 @@ const Profile = () => {
                             <div className="col-span-6">
                                 <div className="input-label calibre-regular mb-4">
                                     Awards Publications
+                                    <button
+                                        disabled={processing}
+                                        className="disabled:opacity-50 w-6 h-6 text-white primary-bg-color rounded-full calibre-bold font-18 ml-3"
+                                        onClick={(e) => {
+                                            e.preventDefault();
+                                            awardsPublications.append({});
+                                        }}
+                                    >
+                                        +
+                                    </button>
                                 </div>
                                 {awardsPublications.fields.map(
                                     (field, index) => (
@@ -666,7 +697,6 @@ const Profile = () => {
                                             />
                                             <button
                                                 disabled={processing}
-                                                
                                                 onClick={(e) => {
                                                     e.preventDefault();
                                                     awardsPublications.remove(
@@ -674,7 +704,7 @@ const Profile = () => {
                                                     );
                                                 }}
                                             >
-                                            &ensp;    Remove
+                                                &ensp; Remove
                                             </button>
                                             <span className="text-red-500 block mt-2">
                                                 {errors.awards_publications &&
@@ -685,17 +715,6 @@ const Profile = () => {
                                         </Fragment>
                                     )
                                 )}
-
-                                <button
-                                    disabled={processing}
-                                    className="disabled:opacity-50 btn-login calibre-bold font-18 uppercase primary-bg-color text-white"
-                                    onClick={(e) => {
-                                        e.preventDefault();
-                                        awardsPublications.append({});
-                                    }}
-                                >
-                                    +
-                                </button>
                                 <span className="text-red-500 block mt-2">
                                     {errors.awards_publications?.message}
                                 </span>
@@ -704,6 +723,16 @@ const Profile = () => {
                             <div className="col-span-6">
                                 <div className="input-label calibre-regular mb-4">
                                     Languages spoken
+                                    <button
+                                        disabled={processing}
+                                        className="disabled:opacity-50 w-6 h-6 text-white primary-bg-color rounded-full calibre-bold font-18 ml-3"
+                                        onClick={(e) => {
+                                            e.preventDefault();
+                                            languagesSpoken.append({});
+                                        }}
+                                    >
+                                        +
+                                    </button>
                                 </div>
                                 {languagesSpoken.fields.map((field, index) => (
                                     <Fragment key={field.id}>
@@ -718,13 +747,12 @@ const Profile = () => {
                                         />
                                         <button
                                             disabled={processing}
-                                            
                                             onClick={(e) => {
                                                 e.preventDefault();
                                                 languagesSpoken.remove(index);
                                             }}
                                         >
-                                        &ensp;    Remove
+                                            &ensp; Remove
                                         </button>
                                         <span className="text-red-500 block mt-2">
                                             {errors.languages_spoken &&
@@ -733,17 +761,6 @@ const Profile = () => {
                                         </span>
                                     </Fragment>
                                 ))}
-
-                                <button
-                                    disabled={processing}
-                                    className="disabled:opacity-50 btn-login calibre-bold font-18 uppercase primary-bg-color text-white"
-                                    onClick={(e) => {
-                                        e.preventDefault();
-                                        languagesSpoken.append({});
-                                    }}
-                                >
-                                    +
-                                </button>
                                 <span className="text-red-500 block mt-2">
                                     {errors.languages_spoken?.message}
                                 </span>
@@ -817,15 +834,31 @@ const Profile = () => {
                                 <div className="input-label calibre-regular mb-4">
                                     State
                                 </div>
-                                <input
-                                    disabled={processing}
-                                    type="text"
-                                    className="disabled:opacity-50 custom-input ca-width input-border-color border"
-                                    placeholder="Enter State"
-                                    {...register("state")}
+                                <Controller
+                                    name="state_id"
+                                    control={control}
+                                    render={({ field }) => (
+                                        <select
+                                            disabled={processing}
+                                            className="disabled:opacity-50 input-border-color ca-width border custom-select"
+                                            {...field}
+                                        >
+                                            <option value={0}>
+                                                Select State
+                                            </option>
+                                            {states.map((state) => (
+                                                <option
+                                                    key={state.id}
+                                                    value={state.id}
+                                                >
+                                                    {state.state_name}
+                                                </option>
+                                            ))}
+                                        </select>
+                                    )}
                                 />
                                 <span className="text-red-500 block mt-2">
-                                    {errors.state?.message}
+                                    {errors.state_id?.message}
                                 </span>
                             </div>
 
@@ -851,7 +884,7 @@ const Profile = () => {
                                 <textarea
                                     {...register("bio")}
                                     disabled={processing}
-                                    className="disabled:opacity-50 custom-input ca-width input-border-color border"
+                                    className="disabled:opacity-50 rounded-md ca-width input-border-color border h-28 p-4 font-18"
                                 ></textarea>
                                 <span className="text-red-500 block mt-2">
                                     {errors.bio?.message}
@@ -860,22 +893,31 @@ const Profile = () => {
                             <div className="col-span-6">
                                 <div className="input-label calibre-regular mb-4">
                                     Patient Testimonial
+                                    <button
+                                        disabled={processing}
+                                        className="disabled:opacity-50 w-6 h-6 text-white primary-bg-color rounded-full calibre-bold font-18 ml-3"
+                                        onClick={(e) => {
+                                            e.preventDefault();
+                                            patientTestimonial.append({});
+                                        }}
+                                    >
+                                        +
+                                    </button>
                                 </div>
                                 {patientTestimonial.fields.map(
                                     (field, index) => (
-                                        <Fragment key={index}>
+                                        <Fragment key={field.id}>
                                             <input
                                                 disabled={processing}
                                                 type="text"
                                                 className="disabled:opacity-50 custom-input ca-width input-border-color border"
-                                                placeholder="Enter "
+                                                placeholder="Enter patient testimonials"
                                                 {...register(
                                                     `patient_testimonial.${index}.value`
                                                 )}
                                             />
                                             <button
                                                 disabled={processing}
-                                                className="disabled:opacity-50 btn-create-account calibre-bold font-18 uppercase primary-text-color mr-3"
                                                 onClick={(e) => {
                                                     e.preventDefault();
                                                     patientTestimonial.remove(
@@ -883,7 +925,7 @@ const Profile = () => {
                                                     );
                                                 }}
                                             >
-                                                -
+                                                &ensp; Remove
                                             </button>
                                             <span className="text-red-500 block mt-2">
                                                 {errors.patient_testimonial &&
@@ -894,16 +936,6 @@ const Profile = () => {
                                         </Fragment>
                                     )
                                 )}
-                                <button
-                                    disabled={processing}
-                                    className="disabled:opacity-50 btn-login calibre-bold font-18 uppercase primary-bg-color text-white"
-                                    onClick={(e) => {
-                                        e.preventDefault();
-                                        patientTestimonial.append({});
-                                    }}
-                                >
-                                    +
-                                </button>
                                 <span className="text-red-500 block mt-2">
                                     {errors.patient_testimonial?.message}
                                 </span>
