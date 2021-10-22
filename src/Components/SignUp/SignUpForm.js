@@ -478,17 +478,19 @@ const SignUpForm = (props) => {
                                     <div className="col-span-6">
                                         <div className="input-label calibre-regular mb-4">
                                             Hospital Affiliations
+                                            <button
+                                                disabled={processing}
+                                                className="disabled:opacity-50 w-6 h-6 text-white primary-bg-color rounded-full calibre-bold font-18 ml-3"
+                                                onClick={(e) => {
+                                                    e.preventDefault();
+                                                    hospitalAffiliations.append(
+                                                        {}
+                                                    );
+                                                }}
+                                            >
+                                                +
+                                            </button>
                                         </div>
-                                        <button
-                                            disabled={processing}
-                                            className="disabled:opacity-50 w-6 h-6 text-white primary-bg-color rounded-full calibre-bold font-18"
-                                            onClick={(e) => {
-                                                e.preventDefault();
-                                                hospitalAffiliations.append({});
-                                            }}
-                                        >
-                                            +
-                                        </button>
                                         {hospitalAffiliations.fields.map(
                                             (field, index) => (
                                                 <Fragment key={field.id}>
@@ -503,7 +505,7 @@ const SignUpForm = (props) => {
                                                     />
                                                     <button
                                                         disabled={processing}
-                                                        className="disabled:opacity-50 w-6 h-6 text-center leading-none calibre-bold p-1 rounded-full text-white primary-bg-color font-18 ml-3"
+                                                        className="disabled:opacity-50 ml-3"
                                                         onClick={(e) => {
                                                             e.preventDefault();
                                                             hospitalAffiliations.remove(
@@ -534,17 +536,19 @@ const SignUpForm = (props) => {
                                     <div className="col-span-6">
                                         <div className="input-label calibre-regular mb-4">
                                             Board Certifications
+                                            <button
+                                                disabled={processing}
+                                                className="disabled:opacity-50 ml-3"
+                                                onClick={(e) => {
+                                                    e.preventDefault();
+                                                    boardCertifications.append(
+                                                        {}
+                                                    );
+                                                }}
+                                            >
+                                                +
+                                            </button>
                                         </div>
-                                        <button
-                                            disabled={processing}
-                                            className="disabled:opacity-50 w-6 h-6 text-center leading-none calibre-bold p-1 rounded-full text-white primary-bg-color font-18"
-                                            onClick={(e) => {
-                                                e.preventDefault();
-                                                boardCertifications.append({});
-                                            }}
-                                        >
-                                            +
-                                        </button>
                                         {boardCertifications.fields.map(
                                             (field, index) => (
                                                 <Fragment key={field.id}>
@@ -559,7 +563,7 @@ const SignUpForm = (props) => {
                                                     />
                                                     <button
                                                         disabled={processing}
-                                                        className="disabled:opacity-50 w-6 h-6 text-center leading-none calibre-bold p-1 rounded-full text-white primary-bg-color font-18 ml-3"
+                                                        className="disabled:opacity-50 ml-3"
                                                         onClick={(e) => {
                                                             e.preventDefault();
                                                             boardCertifications.remove(
@@ -590,17 +594,19 @@ const SignUpForm = (props) => {
                                     <div className="col-span-6">
                                         <div className="input-label calibre-regular mb-4">
                                             Awards Publications
+                                            <button
+                                                disabled={processing}
+                                                className="disabled:opacity-50 w-6 h-6 text-center leading-none calibre-bold p-1 rounded-full text-white primary-bg-color font-18 ml-3"
+                                                onClick={(e) => {
+                                                    e.preventDefault();
+                                                    awardsPublications.append(
+                                                        {}
+                                                    );
+                                                }}
+                                            >
+                                                +
+                                            </button>
                                         </div>
-                                        <button
-                                            disabled={processing}
-                                            className="disabled:opacity-50 w-6 h-6 text-center leading-none calibre-bold p-1 rounded-full text-white primary-bg-color font-18"
-                                            onClick={(e) => {
-                                                e.preventDefault();
-                                                awardsPublications.append({});
-                                            }}
-                                        >
-                                            +
-                                        </button>
                                         {awardsPublications.fields.map(
                                             (field, index) => (
                                                 <Fragment key={field.id}>
@@ -615,7 +621,7 @@ const SignUpForm = (props) => {
                                                     />
                                                     <button
                                                         disabled={processing}
-                                                        className="disabled:opacity-50 w-6 h-6 text-center leading-none calibre-bold p-1 rounded-full text-white primary-bg-color font-18 ml-3"
+                                                        className="disabled:opacity-50 ml-3"
                                                         onClick={(e) => {
                                                             e.preventDefault();
                                                             awardsPublications.remove(
@@ -646,17 +652,17 @@ const SignUpForm = (props) => {
                                     <div className="col-span-6">
                                         <div className="input-label calibre-regular mb-4">
                                             Languages spoken
+                                            <button
+                                                disabled={processing}
+                                                className="disabled:opacity-50 w-6 h-6 text-center leading-none calibre-bold p-1 rounded-full text-white primary-bg-color font-18 ml-3"
+                                                onClick={(e) => {
+                                                    e.preventDefault();
+                                                    languagesSpoken.append({});
+                                                }}
+                                            >
+                                                +
+                                            </button>
                                         </div>
-                                        <button
-                                            disabled={processing}
-                                            className="disabled:opacity-50 w-6 h-6 text-center leading-none calibre-bold p-1 rounded-full text-white primary-bg-color font-18"
-                                            onClick={(e) => {
-                                                e.preventDefault();
-                                                languagesSpoken.append({});
-                                            }}
-                                        >
-                                            +
-                                        </button>
                                         {languagesSpoken.fields.map(
                                             (field, index) => (
                                                 <Fragment key={field.id}>
@@ -671,7 +677,7 @@ const SignUpForm = (props) => {
                                                     />
                                                     <button
                                                         disabled={processing}
-                                                        className="disabled:opacity-50 w-6 h-6 text-center leading-none calibre-bold p-1 rounded-full text-white primary-bg-color font-18 ml-3"
+                                                        className="disabled:opacity-50 ml-3"
                                                         onClick={(e) => {
                                                             e.preventDefault();
                                                             languagesSpoken.remove(

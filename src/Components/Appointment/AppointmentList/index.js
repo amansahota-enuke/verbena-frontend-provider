@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
 import ReactDatePicker from "react-datepicker";
-import ReactPaginate from "react-paginate";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useRouteMatch } from "react-router-dom";
 import moment from "moment";
 
-import { FullWidthContainer } from "../..";
+import { FullWidthContainer, Pagination } from "../..";
 import statusConstants from "../../../constants/status.constants";
 import selector from "../../../redux/selector";
 import { AppointmentActions } from "../../../redux/slice/appointment.slice";
@@ -232,7 +231,8 @@ function AppointmentList() {
                                 </tr>
                             </thead>
                             <tbody className="bg-white divide-y divide-gray-200">
-                                {appointmentStatus === statusConstants.PENDING ? (
+                                {appointmentStatus ===
+                                statusConstants.PENDING ? (
                                     <ButtonLoader color="#000" />
                                 ) : appointmentList.length === 0 ? (
                                     <p>No Appointments</p>
@@ -241,13 +241,18 @@ function AppointmentList() {
                                         <tr key={appointment.id}>
                                             <td className="px-6 dark-gray-color py-4 whitespace-nowrap text-center font-18">
                                                 {`${parseName(
-                                                    appointment.patient.first_name
+                                                    appointment.patient
+                                                        .first_name
                                                 )} ${parseName(
-                                                    appointment.patient.last_name
+                                                    appointment.patient
+                                                        .last_name
                                                 )}`}
                                             </td>
                                             <td className="px-6 dark-gray-color py-4 whitespace-nowrap text-center font-18">
-                                                {appointment.patient.mobile_number}
+                                                {
+                                                    appointment.patient
+                                                        .mobile_number
+                                                }
                                             </td>
                                             <td className="px-6 dark-gray-color py-4 whitespace-nowrap text-center font-18">
                                                 {appointment.id}
@@ -259,13 +264,16 @@ function AppointmentList() {
                                                 {appointment.appointment_reason_text
                                                     ? appointment.appointment_reason_text
                                                     : appointment.appointment_reason &&
-                                                    appointment.appointment_reason
-                                                        .name}
+                                                      appointment
+                                                          .appointment_reason
+                                                          .name}
                                             </td>
                                             <td className="px-6 dark-gray-color py-4 whitespace-nowrap text-center font-18">
                                                 {moment(
                                                     appointment.appointment_datetime
-                                                ).format("MM-DD-YYYY | hh:mm A")}
+                                                ).format(
+                                                    "MM-DD-YYYY | hh:mm A"
+                                                )}
                                             </td>
                                             <td className="px-6 dark-gray-color py-4 whitespace-nowrap text-center font-18">
                                                 <Link
@@ -281,20 +289,14 @@ function AppointmentList() {
                             </tbody>
                         </table>
                     </div>
-                    <ReactPaginate
-                        previousLabel={"previous"}
-                        nextLabel={"next"}
-                        breakLabel={"..."}
-                        breakClassName={"break-me"}
-                        pageCount={pageCount}
-                        marginPagesDisplayed={2}
-                        pageRangeDisplayed={5}
-                        onPageChange={handlePageChange}
-                        containerClassName={"pagination"}
-                        activeClassName={"active"}
-                    />
                 </div>
             </div>
+            {appointmentCount > 0 && (
+                <Pagination
+                    pageCount={pageCount}
+                    handlePageChange={handlePageChange}
+                />
+            )}
         </FullWidthContainer>
     );
 }
