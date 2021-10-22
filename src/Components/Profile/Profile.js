@@ -181,7 +181,9 @@ const Profile = () => {
                     "patient_testimonial",
                 ].includes(key)
             ) {
-                setValue(key, JSON.parse(user[key]));
+                if (JSON.parse(user[key])) {
+                    setValue(key, JSON.parse(user[key]));
+                }
             }
 
             if (key === "address") {
