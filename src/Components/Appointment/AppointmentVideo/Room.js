@@ -65,7 +65,7 @@ const Room = ({ roomName, room, handleLogout, openAppointmentWindow }) => {
           <h2> Waiting for the Aman Sahota </h2>
         </div>
       </div>
-      <div class="text-center mt-10 border-t pt-5">
+      {/* <div class="text-center mt-10 border-t pt-5">
         <img
           src="/images/the-waiting-roomss.png"
           className="ff m-auto w-3/5"
@@ -75,9 +75,9 @@ const Room = ({ roomName, room, handleLogout, openAppointmentWindow }) => {
           className="btn-reschedule px-3 py-2 mt-5 calibre-regular font-16 rounded-full uppercase text-white primary-dim-bg-color mr-3"
           onClick={() => openRoomWindow()}
         >
-          Read
+          READ MORE
         </button>
-      </div>
+      </div> */}
       <div class="px-4 py-6 rounded-lg border bg-white mt-10 border-t">
         <div class="flex justify-between items-center">
           <div className="flex justify-end">
