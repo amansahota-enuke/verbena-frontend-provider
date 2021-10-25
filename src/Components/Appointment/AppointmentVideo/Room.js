@@ -39,8 +39,7 @@ const Room = ({ roomName, room, handleLogout, openAppointmentWindow }) => {
 
   return (
     <div className="room">
-      <h2>Room: {roomName}</h2>
-      <div className="flex justify-between">
+      <div className="flex justify-between items-center">
         <div className="local-participant">
           {room ? (
             <Participant
@@ -53,15 +52,6 @@ const Room = ({ roomName, room, handleLogout, openAppointmentWindow }) => {
         </div>
         <div>
           <div className="remote-participants">{remoteParticipants}</div>
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
           <h2> Waiting for the Aman Sahota </h2>
         </div>
       </div>
