@@ -39,8 +39,7 @@ const Room = ({ roomName, room, handleLogout, openAppointmentWindow }) => {
 
   return (
     <div className="room">
-      <h2>Room: {roomName}</h2>
-      <div className="flex justify-between">
+      <div className="flex justify-between items-center">
         <div className="local-participant">
           {room ? (
             <Participant
@@ -53,19 +52,10 @@ const Room = ({ roomName, room, handleLogout, openAppointmentWindow }) => {
         </div>
         <div>
           <div className="remote-participants">{remoteParticipants}</div>
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
           <h2> Waiting for the Aman Sahota </h2>
         </div>
       </div>
-      <div class="text-center mt-10 border-t pt-5">
+      {/* <div class="text-center mt-10 border-t pt-5">
         <img
           src="/images/the-waiting-roomss.png"
           className="ff m-auto w-3/5"
@@ -77,7 +67,7 @@ const Room = ({ roomName, room, handleLogout, openAppointmentWindow }) => {
         >
           Read
         </button>
-      </div>
+      </div> */}
       <div class="px-4 py-6 rounded-lg border bg-white mt-10 border-t">
         <div class="flex justify-between items-center">
           <div className="flex justify-end">
