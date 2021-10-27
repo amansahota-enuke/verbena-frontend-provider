@@ -34,11 +34,11 @@ export default function Example() {
     };
 
     return (
-        <Menu as="div" className="relative">
+        <Menu as="div" className="relative inline-block">
             {({ open }) => (
                 <>
                     <div>
-                        <Menu.Button className="inline-flex justify-center items-center">
+                        <Menu.Button className="">
                             <img
                                 src={
                                     profileImage

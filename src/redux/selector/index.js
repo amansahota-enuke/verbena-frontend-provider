@@ -11,6 +11,8 @@ const selector = {
     appointmentCount: (state) => state.appointment.count,
     selectedAppointment: (state) => state.appointment.selectedAppointment,
     appointmentCancelReasons: (state) => state.appointment.cancelReasons,
+    chatMessages:(state)=>state.appointment.messages,
+    chatNotifications:(state)=>state.appointment.notifications,
     //Patient Reducer
     patientStatus: (state) => state.patient.status,
     patientList: (state) => state.patient.patientList,

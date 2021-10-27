@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
-
+import { useParams } from "react-router-dom";
 import { AppointmentActions } from "../../../redux/slice/appointment.slice";
 import { AppointmentService } from "../../../services";
-
+import ChatBox from "./ChatBox";
+import $ from 'jquery';
 function Detail({ selectedAppointment }) {
+    const { appointmentId } = useParams();
     const dispatch = useDispatch();
     const [complaint, setComplaint] = useState("");
     const [diagnosis, setDiagnosis] = useState("");
@@ -23,6 +25,10 @@ function Detail({ selectedAppointment }) {
                 selectedAppointment.appointment_detail.provider_assesment_plans
             );
         }
+        $('.sc-closed-icon').on('click', function(e) {
+            $('.chat-container').toggleClass("closed");
+            e.preventDefault();
+          });
     }, [selectedAppointment]);
 
     const saveDetail = async () => {
@@ -87,6 +93,8 @@ function Detail({ selectedAppointment }) {
                     onChange={(e) => setAssesmentPlans(e.target.value)}
                 ></textarea>
             </div>
+            <ChatBox selectedAppointment={selectedAppointment.id}   />
+            <a href="#" className="sc-closed-icon"><i class="fas fa-comment"></i></a>
             <button
                 className="btn-login calibre-regular font-16 uppercase primary-bg-color text-white"
                 onClick={() => saveDetail()}

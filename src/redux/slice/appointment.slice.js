@@ -113,6 +113,52 @@ const cancelAppointment = createAsyncThunk(
     }
 );
 
+const sendMessage = createAsyncThunk(
+    "user/message",
+    async (payload, thunkApi) => {
+        try {
+            const response = await AppointmentService.sendMessage(payload);
+            toast.success(response.data.message);
+            return response.data.data;
+        } catch (error) {
+            toast.error(error.response.data.message);
+            return thunkApi.rejectWithValue(error);
+        }
+    }
+);
+
+const getMessages = createAsyncThunk(
+    "user/messages",
+    async (payload, thunkApi) => {
+        try {
+            const response = await AppointmentService.getMessages(
+                payload
+            );
+            toast.success(response.data.message);
+            return response.data.data;
+        } catch (error) {
+            toast.error(error.response.data.message);
+            return thunkApi.rejectWithValue(error);
+        }
+    }
+);
+
+const getNotifications = createAsyncThunk(
+    "user/notifications",
+    async (payload, thunkApi) => {
+        try {
+            const response = await AppointmentService.getNotifications(
+                payload
+            );
+            toast.success(response.data.message);
+            return response.data.data;
+        } catch (error) {
+            toast.error(error.response.data.message);
+            return thunkApi.rejectWithValue(error);
+        }
+    }
+);
+
 export const AppointmentActions = {
     fetchAppointmentCancelReasons,
     fetchAppointmentList,
@@ -121,6 +167,9 @@ export const AppointmentActions = {
     updateAppointmentStatus,
     rescheduleAppointment,
     cancelAppointment,
+    getMessages,
+    sendMessage,
+    getNotifications
 };
 
 const AppointmentSlice = createSlice({
@@ -131,6 +180,8 @@ const AppointmentSlice = createSlice({
         count: 0,
         list: [],
         selectedAppointment: {},
+        messages:[],
+        notifications:[]
     },
     extraReducers: {
         [fetchAppointmentCancelReasons.pending]: (state) => {
@@ -199,6 +250,35 @@ const AppointmentSlice = createSlice({
             state.status = statusConstants.FULFILLED;
         },
         [cancelAppointment.rejected]: (state) => {
+            state.status = statusConstants.REJECTED;
+        },
+        [getMessages.pending]: (state) => {
+            state.status = statusConstants.PENDING;
+        },
+        [getMessages.fulfilled]: (state, action) => {
+            state.status = statusConstants.FULFILLED;
+            state.messages = action.payload.rows;
+        },
+        [getMessages.rejected]: (state) => {
+            state.status = statusConstants.REJECTED;
+        },
+        [sendMessage.pending]: (state) => {
+            state.status = statusConstants.PENDING;
+        },
+        [sendMessage.fulfilled]: (state, action) => {
+            state.status = statusConstants.FULFILLED;
+        },
+        [sendMessage.rejected]: (state) => {
+            state.status = statusConstants.REJECTED;
+        },
+        [getNotifications.pending]: (state) => {
+            state.status = statusConstants.PENDING;
+        },
+        [getNotifications.fulfilled]: (state, action) => {
+            state.status = statusConstants.FULFILLED;
+            state.notifications = action.payload.rows;
+        },
+        [getNotifications.rejected]: (state) => {
             state.status = statusConstants.REJECTED;
         },
     },
