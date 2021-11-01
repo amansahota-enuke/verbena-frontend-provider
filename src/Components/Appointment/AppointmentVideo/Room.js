@@ -1,9 +1,15 @@
 import React, { useEffect, useState } from "react";
 import Participant from "./Participant";
 import Timer from "./Timer";
-
-const Room = ({ roomName, room, handleLogout, openAppointmentWindow }) => {
+import ChatBox from "../AppointmentDetail/ChatBox";
+import $ from 'jquery';
+import selector from "../../../redux/selector";
+import { AppointmentActions } from "../../../redux/slice/appointment.slice";
+import { useDispatch, useSelector } from "react-redux";
+const Room = ({ roomName, room, handleLogout, openAppointmentWindow, appointmentId }) => {
   const [participants, setParticipants] = useState([]);
+  const appointmentDetails = useSelector(selector.selectedAppointment);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const participantConnected = (participant) => {
@@ -37,6 +43,14 @@ const Room = ({ roomName, room, handleLogout, openAppointmentWindow }) => {
     popupObj.focus();
   };
 
+  useEffect(()=>{
+    $('.sc-closed-icon').on('click', function(e) {
+      $('.chat-container').toggleClass("closed");
+      e.preventDefault();
+    });
+    dispatch(AppointmentActions.fetchAppointmentDetail(appointmentId));
+  },[])
+
   return (
     <div className="room">
       <div className="flex justify-between items-center">
@@ -55,6 +69,8 @@ const Room = ({ roomName, room, handleLogout, openAppointmentWindow }) => {
           <h2> Waiting for the Aman Sahota </h2>
         </div>
       </div>
+      <ChatBox appointmentId = {appointmentId} />
+        <a href="#" className="sc-closed-icon"><i class="fas fa-comment"></i></a>
       {/* <div class="text-center mt-10 border-t pt-5">
         <img
           src="/images/the-waiting-roomss.png"

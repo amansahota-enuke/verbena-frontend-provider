@@ -38,19 +38,19 @@ export default function Example() {
             {({ open }) => (
                 <>
                     <div>
-                        <Menu.Button className="">
+                    <Menu.Button className="calibre-regular">
                             <img
                                 src={
                                     profileImage
                                         ? profileImage
                                         : "/images/user.png"
                                 }
-                                className="mr-2 w-10 rounded-full"
+                                className="mr-2 w-10 h-10 rounded-full inline-block border rounded-full"
                                 alt=""
                                 title=""
                             />
-                            {!!user.first_name && parseName(user.first_name)}{" "}
-                            {!!user.last_name && parseName(user.last_name)}
+                            <span>{!!user.first_name && parseName(user.first_name)}{" "}
+                            {!!user.last_name && parseName(user.last_name)}</span>
                         </Menu.Button>
                     </div>
 

@@ -21,17 +21,17 @@ const ChatBox = ({selectedAppointment}) => {
     showMessages(messagesList)
   }, [messagesList])
 
-  const sendData = () => {
+  const sendData = async () => {
     if (message !== '') {
       const requestBody = {
         id: selectedAppointment,
         body: {
           text: message,
-          created_by: 'provider',
-          receiver_user_id: appointmentDetails.patient_id
+          created_by: 'provider'
         }
       }
-      dispatch(AppointmentActions.sendMessage(requestBody))
+      await AppointmentService.sendMessage(requestBody)
+
       showMessages(prevArray => [...prevArray, requestBody.body])
       console.log(selectedAppointment)
       setMessage('')
@@ -53,7 +53,7 @@ const ChatBox = ({selectedAppointment}) => {
               if (i.created_by === 'provider') {
                 return (
                   <div class="msg-container to-msg-container">
-                    <img src="https://res.cloudinary.com/dx94hnzfl/image/upload/v1612593409/Ellipse_1_2_uziel2.png" class="from-msg-profile-pic" />
+                    <img src="https://res.cloudinary.com/dx94hnzfl/image/upload/v1612594885/Avatar_jarzmi.png" class="from-msg-profile-pic" />
                     <div class="msg-text-container from-msg-text-container">
                       <p class='msg-text from-msg-text'>{i.text}</p>
                     </div>
@@ -62,7 +62,7 @@ const ChatBox = ({selectedAppointment}) => {
               } else {
                 return (
                   <div class="msg-container">
-                    <img src="https://res.cloudinary.com/dx94hnzfl/image/upload/v1612594885/Avatar_jarzmi.png" class="to-msg-profile-pic" />
+                    <img src="https://res.cloudinary.com/dx94hnzfl/image/upload/v1612593409/Ellipse_1_2_uziel2.png" class="to-msg-profile-pic" />
                     <div class="msg-text-container to-msg-text-container">
                       <p class='msg-text to-msg-text'>{i.text}</p>
                     </div>
@@ -74,7 +74,7 @@ const ChatBox = ({selectedAppointment}) => {
           </div>
         
         <div className="sc-user-input">
-          <input
+          {/* <input
           className="border"
             placeholder="Enter your message"
             value={message}
@@ -84,7 +84,18 @@ const ChatBox = ({selectedAppointment}) => {
                 sendData();
               }
             }}
-          ></input>
+          ></input> */}
+          <textarea className="border"
+            placeholder="Enter your message"
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+            onKeyPress={(e) => {
+              if (e.key === "Enter") {
+                sendData();
+              }
+            }}>
+
+          </textarea>
           <button className="px-6 calibre-regular primary-bg-color text-white font-16" onClick={sendData}><i class="fas fa-paper-plane"></i></button>
         </div>
       </div>

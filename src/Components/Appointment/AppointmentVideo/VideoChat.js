@@ -108,6 +108,7 @@ const VideoChat = () => {
                 room={room}
                 handleLogout={handleLogout}
                 openAppointmentWindow={openAppointmentWindow}
+                appointmentId = {appointmentId}
             />
         );
     } else {

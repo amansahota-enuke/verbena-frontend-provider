@@ -22,7 +22,8 @@ const AppointmentService = {
     getMessages:(id)=>ApiService.get(`/chat/get-messages/${id}`),
     sendMessage: ({id,body}) =>
         ApiService.post(`/chat/add-message/${id}`, body),
-    getNotifications:(id)=>ApiService.get(`/chat/getNotifications`),
+    getNotifications:(id)=>ApiService.get(`/chat/notfication`),
+    removeNotifications:({id,body})=>ApiService.put(`/chat/notification-status/${id}`, body),
 };
 
 export default AppointmentService;

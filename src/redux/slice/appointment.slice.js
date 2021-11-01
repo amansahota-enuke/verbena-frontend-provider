@@ -257,7 +257,7 @@ const AppointmentSlice = createSlice({
         },
         [getMessages.fulfilled]: (state, action) => {
             state.status = statusConstants.FULFILLED;
-            state.messages = action.payload.rows;
+            state.messages = action.payload;
         },
         [getMessages.rejected]: (state) => {
             state.status = statusConstants.REJECTED;
