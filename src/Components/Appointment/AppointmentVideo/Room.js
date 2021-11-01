@@ -47,8 +47,9 @@ const Room = ({ roomName, room, handleLogout, openAppointmentWindow, appointment
     $('.sc-closed-icon').on('click', function(e) {
       $('.chat-container').toggleClass("closed");
       e.preventDefault();
+      console.log(appointmentId)
     });
-    dispatch(AppointmentActions.fetchAppointmentDetail(appointmentId));
+    //dispatch(AppointmentActions.fetchAppointmentDetail(appointmentId));
   },[])
 
   return (
@@ -69,7 +70,7 @@ const Room = ({ roomName, room, handleLogout, openAppointmentWindow, appointment
           <h2> Waiting for the Aman Sahota </h2>
         </div>
       </div>
-      <ChatBox appointmentId = {appointmentId} />
+      <ChatBox selectedAppointment = {appointmentId} />
         <a href="#" className="sc-closed-icon"><i class="fas fa-comment"></i></a>
       {/* <div class="text-center mt-10 border-t pt-5">
         <img
