@@ -116,16 +116,17 @@ export default function Example() {
                             className="notification-wrapper origin-top-right absolute right-0 w-72 rounded-md shadow-lg bg-white"
                         >
                             {notifications.map((i,index) => {
+                                let colorChange=i.seen===false?'unread':''
                                 return (
                                     <div className="">
                                         <Menu.Item>
                                             {({ active }) => (
-                                                <Link to={`/home/appointments/${i.user_message.appointment_id}`}
+                                                <a href={`/home/appointments/${i.user_message.appointment_id}`}
                                                     className={classNames(
                                                         active
                                                             ? "bg-gray-100 text-gray-900 calibre-regular border-b"
                                                             : "text-gray-700 calibre-regular border-b relative",
-                                                        "block px-4 py-4 text-sm font-16 unread"
+                                                            `block px-4 py-4 text-sm font-16 ${colorChange}`
                                                     )}
                                                 >
                                                     <span className="overflow-ellipsis overflow-hidden truncate inline-block max-w-120 align-middle">
@@ -150,7 +151,7 @@ export default function Example() {
                                                             </span>
                                                         }
                                                     </a>
-                                                </Link>
+                                                </a>
                                             )}
                                         </Menu.Item>
                                     </div>
