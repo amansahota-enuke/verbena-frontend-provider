@@ -38,26 +38,27 @@ const VideoChat = () => {
     };
 
     const joinRoom = async () => {
-        const tokenObj = await checkToken();
-        if (tokenObj) {
-            console.log("yes");
-            connectRoom(tokenObj.token);
-        } else {
-            console.log("no");
+        try {
             const response = await VideoService.getToken(appointmentId);
-            connectRoom(response.data.data);
+            const room  = await Video.connect(response.data.data, {
+                name: `room-appointment-${appointmentId}`,
+            })
+            setRoom(room)
+        } catch (error) {
+            console.log(error)
         }
     };
 
     useEffect(() => {
         dispatch(AppointmentActions.fetchAppointmentDetail(appointmentId));
+        joinRoom();
     }, []);
 
-    useEffect(() => {
-        if (user.id && selectedAppointment.appointment_videos) {
-            joinRoom();
-        }
-    }, [selectedAppointment, user]);
+    // useEffect(() => {
+    //     if (user.id && selectedAppointment.appointment_videos) {
+    //         joinRoom();
+    //     }
+    // }, [selectedAppointment, user]);
 
     const handleLogout = useCallback((type) => {
         setRoom((prevRoom) => {
