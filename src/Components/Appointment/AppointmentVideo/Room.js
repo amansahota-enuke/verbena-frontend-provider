@@ -67,7 +67,7 @@ const Room = ({ roomName, room, handleLogout, openAppointmentWindow, appointment
         </div>
         <div>
           <div className="remote-participants">{remoteParticipants}</div>
-          <h2> Waiting for the Aman Sahota </h2>
+          <h2> Waiting for the {appointmentDetails.patient.first_name} {appointmentDetails.patient.last_name} </h2>
         </div>
       </div>
       <ChatBox selectedAppointment = {appointmentId} />

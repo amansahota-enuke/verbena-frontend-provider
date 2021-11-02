@@ -76,14 +76,14 @@ export default function Example() {
         const res = await AppointmentService.getNotifications()
         const arr = res.data.data.messages
         console.log(arr,787878)
-        showNotifications(prevArray => [...prevArray, ...arr])
+        showNotifications([...arr])
         changeCount(res.data.data.unseenMessagesCount)
       }
       useEffect(() => {
-        // setInterval(()=>{
-        //   getAllNotifications()
-        // },5000);
-        getAllNotifications()
+        setInterval(()=>{
+          getAllNotifications()
+        },5000);
+        //getAllNotifications()
       },[])
       
 
