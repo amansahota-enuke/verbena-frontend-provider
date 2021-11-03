@@ -73,7 +73,7 @@ export default function Example() {
                                                     !location.pathname.includes(
                                                         "video"
                                                     )
-                                                        ? `/home/appointments/${notification.user_message.appointment_id}`
+                                                        ? `/home/appointments/${notification.user_message.appointment_id}?chat=open`
                                                         : ""
                                                 }
                                                 className={classNames(
@@ -95,12 +95,14 @@ export default function Example() {
                                                 {!notification.seen && (
                                                     <button
                                                         className="absolute right-8 font-12"
-                                                        onClick={() =>
+                                                        onClick={(e) => {
+                                                            e.preventDefault();
+                                                            e.stopPropagation();
                                                             updateNotification(
                                                                 notification,
                                                                 "seen"
-                                                            )
-                                                        }
+                                                            );
+                                                        }}
                                                     >
                                                         <span>
                                                             Mark As Read
@@ -109,12 +111,14 @@ export default function Example() {
                                                 )}
                                                 <button
                                                     className="absolute right-4 font-12"
-                                                    onClick={() =>
+                                                    onClick={(e) => {
+                                                        e.preventDefault();
+                                                        e.stopPropagation();
                                                         updateNotification(
                                                             notification,
                                                             "removed"
-                                                        )
-                                                    }
+                                                        );
+                                                    }}
                                                 >
                                                     <span>
                                                         <i className="fas fa-times"></i>

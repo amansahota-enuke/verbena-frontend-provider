@@ -12,15 +12,19 @@ const ChatBox = ({ chatBoxOpen, selectedAppointment }) => {
     const user = useSelector(selector.user);
     const [message, setMessage] = useState("");
     const [messageList, setMessageList] = useState([]);
-    const [loader, setLoader] = useState(false);
     const dispatch = useDispatch();
 
     useEffect(() => {
+        let messageInterval = null;
         if (id && Number(id)) {
-            setInterval(() => {
+            messageInterval = setInterval(() => {
                 dispatch(ChatActions.getMessages(id));
             }, 1000);
         }
+
+        return () => {
+            clearInterval(messageInterval);
+        };
     }, [id]);
 
     useEffect(() => {
@@ -31,7 +35,6 @@ const ChatBox = ({ chatBoxOpen, selectedAppointment }) => {
 
     const sendData = async () => {
         if (message !== "") {
-            setLoader(true);
             const requestBody = {
                 id,
                 body: {
@@ -41,7 +44,6 @@ const ChatBox = ({ chatBoxOpen, selectedAppointment }) => {
             };
             await ChatService.sendMessage(requestBody);
             setMessage("");
-            setLoader(false);
         }
     };
 
@@ -50,15 +52,13 @@ const ChatBox = ({ chatBoxOpen, selectedAppointment }) => {
         messagesEndRef.current.scrollIntoView();
     };
 
-    useEffect(() => {
-        scrollToBottom();
-    }, [messageList]);
+    useEffect(scrollToBottom, [messageList]);
 
     return (
         <div>
             <div className={`chat-container ${!chatBoxOpen && "closed"}`}>
                 <div className="chat-container-body">
-                    {loader || messageList.length === 0 ? (
+                    {messageList.length === 0 ? (
                         <ButtonLoader color="#000" />
                     ) : (
                         messageList.map((msg, index) => {

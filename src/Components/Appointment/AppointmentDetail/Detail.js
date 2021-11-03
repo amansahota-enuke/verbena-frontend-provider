@@ -1,16 +1,24 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
+import { useLocation } from "react-router";
 import { toast } from "react-toastify";
 import { AppointmentActions } from "../../../redux/slice/appointment.slice";
 import { AppointmentService } from "../../../services";
 import ChatBox from "./ChatBox";
 
 function Detail({ selectedAppointment }) {
+    const location = useLocation();
     const dispatch = useDispatch();
     const [complaint, setComplaint] = useState("");
     const [diagnosis, setDiagnosis] = useState("");
     const [assesmentPlans, setAssesmentPlans] = useState("");
     const [chatBoxOpen, setChatBoxOpen] = useState(false);
+
+    useEffect(()=>{
+        if(location.search.includes("chat")&&location.search.includes("open")){
+            setChatBoxOpen(true)
+        }
+    },[])
 
     useEffect(() => {
         if (selectedAppointment && selectedAppointment.appointment_detail) {
