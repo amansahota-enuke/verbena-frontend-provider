@@ -14,11 +14,14 @@ function Detail({ selectedAppointment }) {
     const [assesmentPlans, setAssesmentPlans] = useState("");
     const [chatBoxOpen, setChatBoxOpen] = useState(false);
 
-    useEffect(()=>{
-        if(location.search.includes("chat")&&location.search.includes("open")){
-            setChatBoxOpen(true)
+    useEffect(() => {
+        if (
+            location.search.includes("chat") &&
+            location.search.includes("open")
+        ) {
+            setChatBoxOpen(true);
         }
-    },[])
+    }, []);
 
     useEffect(() => {
         if (selectedAppointment && selectedAppointment.appointment_detail) {
@@ -37,9 +40,11 @@ function Detail({ selectedAppointment }) {
     const saveDetail = async () => {
         try {
             let requestBody = {
-                provider_complaint: complaint,
-                provider_diagnosis: diagnosis,
-                provider_assesment_plans: assesmentPlans,
+                ...(complaint && { provider_complaint: complaint }),
+                ...(diagnosis && { provider_diagnosis: diagnosis }),
+                ...(assesmentPlans && {
+                    provider_assesment_plans: assesmentPlans,
+                }),
             };
 
             await AppointmentService.saveAppointmentDetail(
@@ -96,7 +101,7 @@ function Detail({ selectedAppointment }) {
                     onChange={(e) => setAssesmentPlans(e.target.value)}
                 ></textarea>
             </div>
-            {!["ongoing"].includes(selectedAppointment.status) && (
+            {!["ongoing","completed"].includes(selectedAppointment.status) && (
                 <>
                     <ChatBox
                         chatBoxOpen={chatBoxOpen}

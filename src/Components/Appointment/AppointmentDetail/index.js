@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
+import { DownloadIcon } from "@heroicons/react/outline";
 
 import { FullWidthContainer } from "../..";
 import statusConstants from "../../../constants/status.constants";
@@ -13,7 +14,7 @@ import QuestionnaireDetail from "./QuestionnaireDetail";
 import Report from "./Report";
 import Medication from "./Medication";
 import Detail from "./Detail";
-import { AppointmentService, CommonService } from "../../../services";
+import { AppointmentService } from "../../../services";
 
 function AppointmentDetail() {
     const dispatch = useDispatch();
@@ -46,13 +47,11 @@ function AppointmentDetail() {
 
     const savePdf = async () => {
         try {
-            console.log("test1234");
             const response = await AppointmentService.getPdf(id);
-            console.log(response.data)
             const blob = new Blob([response.data], { type: "application/pdf" });
             const link = document.createElement("a");
             link.href = window.URL.createObjectURL(blob);
-            link.download = `sample.pdf`;
+            link.download = `appointment-report-${id}-${Date.now()}.pdf`;
             link.click();
         } catch (error) {
             console.log("Error Saving Details");
@@ -72,6 +71,19 @@ function AppointmentDetail() {
                 <h2 className="hepta-bold primary-text-color mb-10">
                     Appointment Details
                 </h2>
+                {["pending", "completed"].includes(
+                    selectedAppointment.status
+                ) && (
+                    <p className="text-right">
+                        <button
+                            className="calibre-regular font-16 leading-none btn-ready-visit px-3 py-3 rounded-full uppercase text-white primary-bg-color"
+                            onClick={savePdf}
+                        >
+                            <DownloadIcon className="h-6 inline-block align-middle" />{" "}
+                            Download Report
+                        </button>
+                    </p>
+                )}
                 <div className="">
                     <DoctorDetail selectedAppointment={selectedAppointment} />
 
@@ -93,8 +105,6 @@ function AppointmentDetail() {
                     />
 
                     <Detail selectedAppointment={selectedAppointment} />
-
-                    <button onClick={savePdf}>Download</button>
                 </div>
             </div>
         </FullWidthContainer>

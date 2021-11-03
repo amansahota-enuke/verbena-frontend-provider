@@ -114,6 +114,22 @@ const cancelAppointment = createAsyncThunk(
     }
 );
 
+const completeAppointment = createAsyncThunk(
+    "appointment/completeAppointment",
+    async (payload, thunkApi) => {
+        try {
+            const response = await AppointmentService.completeAppointment(
+                payload
+            );
+            toast.success(response.data.message);
+            return response.data.data;
+        } catch (error) {
+            toast.error(error.response.data.message);
+            return thunkApi.rejectWithValue("error");
+        }
+    }
+);
+
 export const AppointmentActions = {
     fetchAppointmentCancelReasons,
     fetchAppointmentList,
@@ -122,6 +138,7 @@ export const AppointmentActions = {
     updateAppointmentStatus,
     rescheduleAppointment,
     cancelAppointment,
+    completeAppointment,
 };
 
 const AppointmentSlice = createSlice({
@@ -199,6 +216,15 @@ const AppointmentSlice = createSlice({
             state.status = statusConstants.FULFILLED;
         },
         [cancelAppointment.rejected]: (state) => {
+            state.status = statusConstants.REJECTED;
+        },
+        [completeAppointment.pending]: (state) => {
+            state.status = statusConstants.PENDING;
+        },
+        [completeAppointment.fulfilled]: (state, action) => {
+            state.status = statusConstants.FULFILLED;
+        },
+        [completeAppointment.rejected]: (state) => {
             state.status = statusConstants.REJECTED;
         },
     },

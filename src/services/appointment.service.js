@@ -13,6 +13,8 @@ const AppointmentService = {
         ApiService.put(`/appointment/reschedule/${id}`, body),
     cancelAppointment: ({ id, body }) =>
         ApiService.put(`/appointment/cancel/${id}`, body),
+    completeAppointment: ({ id, body }) =>
+        ApiService.put(`/appointment/complete/${id}`, body),
     saveAppointmentReport: (id, body) =>
         ApiService.post(`/appointment/report/${id}`, body),
     saveAppointmentMedication: (id, body) =>

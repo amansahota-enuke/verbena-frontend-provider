@@ -8,6 +8,7 @@ import selector from "../../redux/selector";
 import StartAppointment from "./StartAppointment";
 import RescheduleAppointment from "./RescheduleAppointment";
 import CancelAppointment from "./CancelAppointment";
+import CompleteAppointment from "./CompleteAppointment";
 
 const Confirmation = () => {
     const isOpen = useSelector(selector.confirmationStatus);
@@ -70,6 +71,8 @@ const SelectedConfirmation = () => {
             return <CancelAppointment />;
         case confirmationConstants.START_APPOINTMENT:
             return <StartAppointment />;
+        case confirmationConstants.COMPLETE_APPOINTMENT:
+            return <CompleteAppointment />;
         default:
             return "";
     }

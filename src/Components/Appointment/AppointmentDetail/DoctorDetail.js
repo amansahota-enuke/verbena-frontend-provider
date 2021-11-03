@@ -1,6 +1,5 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
 
 import confirmationConstants from "../../../constants/confirmation.constants";
 import selector from "../../../redux/selector";
@@ -9,7 +8,6 @@ import { AppointmentActions } from "../../../redux/slice/appointment.slice";
 
 function DoctorDetail({ selectedAppointment }) {
     const dispatch = useDispatch();
-    const history = useHistory();
     const user = useSelector(selector.user);
 
     const parseName = (name) => {
@@ -143,11 +141,16 @@ function DoctorDetail({ selectedAppointment }) {
                                         <button
                                             type="button"
                                             className="btn-reschedule calibre-regular font-16 px-3 py-2 rounded-full uppercase text-white primary-dim-bg-color mr-3"
-                                            onClick={() =>
-                                                updateAppointmentStatus(
-                                                    "pending"
-                                                )
-                                            }
+                                            onClick={() => {
+                                                dispatch(
+                                                    ConfirmationActions.setConfirmationType(
+                                                        confirmationConstants.COMPLETE_APPOINTMENT
+                                                    )
+                                                );
+                                                dispatch(
+                                                    ConfirmationActions.openConfirmation()
+                                                );
+                                            }}
                                         >
                                             Complete Appointment
                                         </button>
