@@ -58,60 +58,55 @@ const ChatBox = ({ chatBoxOpen, selectedAppointment }) => {
         <div>
             <div className={`chat-container ${!chatBoxOpen && "closed"}`}>
                 <div className="chat-container-body">
-                    {messageList.length === 0 ? (
-                        <ButtonLoader color="#000" />
-                    ) : (
-                        messageList.map((msg, index) => {
-                            if (msg.created_by === "provider") {
-                                return (
-                                    <div
-                                        key={index}
-                                        className="msg-container to-msg-container"
-                                    >
-                                        <img
-                                            src={
-                                                user.profile_logo
-                                                    ? process.env
-                                                          .REACT_APP_API_SERVER_URL +
-                                                      user.profile_logo
-                                                    : "https://res.cloudinary.com/dx94hnzfl/image/upload/v1612594885/Avatar_jarzmi.png"
-                                            }
-                                            className="from-msg-profile-pic"
-                                        />
-                                        <div className="msg-text-container from-msg-text-container">
-                                            <p className="msg-text from-msg-text">
-                                                {msg.text}
-                                            </p>
-                                        </div>
+                    {messageList.map((msg, index) => {
+                        if (msg.created_by === "provider") {
+                            return (
+                                <div
+                                    key={index}
+                                    className="msg-container to-msg-container"
+                                >
+                                    <img
+                                        src={
+                                            user.profile_logo
+                                                ? process.env
+                                                      .REACT_APP_API_SERVER_URL +
+                                                  user.profile_logo
+                                                : "https://res.cloudinary.com/dx94hnzfl/image/upload/v1612594885/Avatar_jarzmi.png"
+                                        }
+                                        className="from-msg-profile-pic"
+                                    />
+                                    <div className="msg-text-container from-msg-text-container">
+                                        <p className="msg-text from-msg-text">
+                                            {msg.text}
+                                        </p>
                                     </div>
-                                );
-                            } else {
-                                return (
-                                    <div key={index} className="msg-container">
-                                        <img
-                                            src={
-                                                selectedAppointment.patient &&
-                                                selectedAppointment.patient
-                                                    .profile_image_path
-                                                    ? process.env
-                                                          .REACT_APP_API_SERVER_URL +
-                                                      selectedAppointment
-                                                          .patient
-                                                          .profile_image_path
-                                                    : "https://res.cloudinary.com/dx94hnzfl/image/upload/v1612593409/Ellipse_1_2_uziel2.png"
-                                            }
-                                            className="to-msg-profile-pic"
-                                        />
-                                        <div className="msg-text-container to-msg-text-container">
-                                            <p className="msg-text to-msg-text">
-                                                {msg.text}
-                                            </p>
-                                        </div>
+                                </div>
+                            );
+                        } else {
+                            return (
+                                <div key={index} className="msg-container">
+                                    <img
+                                        src={
+                                            selectedAppointment.patient &&
+                                            selectedAppointment.patient
+                                                .profile_image_path
+                                                ? process.env
+                                                      .REACT_APP_API_SERVER_URL +
+                                                  selectedAppointment.patient
+                                                      .profile_image_path
+                                                : "https://res.cloudinary.com/dx94hnzfl/image/upload/v1612593409/Ellipse_1_2_uziel2.png"
+                                        }
+                                        className="to-msg-profile-pic"
+                                    />
+                                    <div className="msg-text-container to-msg-text-container">
+                                        <p className="msg-text to-msg-text">
+                                            {msg.text}
+                                        </p>
                                     </div>
-                                );
-                            }
-                        })
-                    )}
+                                </div>
+                            );
+                        }
+                    })}
                     <div ref={messagesEndRef} />
                 </div>
 
