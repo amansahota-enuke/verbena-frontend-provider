@@ -1,6 +1,6 @@
 // This example requires Tailwind CSS v2.0+ /
 import { Fragment, useEffect } from "react";
-import { useLocation, useHistory } from "react-router-dom";
+import { useLocation, Link } from "react-router-dom";
 import { Menu, Transition } from "@headlessui/react";
 import { useSelector } from "react-redux";
 import selector from "../../redux/selector";
@@ -13,7 +13,6 @@ function classNames(...classes) {
 
 export default function Example() {
     const location = useLocation();
-    const history = useHistory();
     const dispatch = useDispatch();
     const notificationCount = useSelector(selector.notificationCount);
     const notifications = useSelector(selector.notifications);
@@ -69,19 +68,14 @@ export default function Example() {
                                 <div key={index} className="">
                                     <Menu.Item>
                                         {({ active }) => (
-                                            <div
-                                                onClick={(e) => {
-                                                    e.preventDefault();
-                                                    if (
-                                                        !location.pathname.includes(
-                                                            "video"
-                                                        )
-                                                    ) {
-                                                        history.push(
-                                                            `/home/appointments/${notification.user_message.appointment_id}`
-                                                        );
-                                                    }
-                                                }}
+                                            <Link
+                                                to={
+                                                    !location.pathname.includes(
+                                                        "video"
+                                                    )
+                                                        ? `/home/appointments/${notification.user_message.appointment_id}`
+                                                        : ""
+                                                }
                                                 className={classNames(
                                                     active
                                                         ? "bg-gray-100 text-gray-900 calibre-regular border-b"
@@ -126,7 +120,7 @@ export default function Example() {
                                                         <i className="fas fa-times"></i>
                                                     </span>
                                                 </button>
-                                            </div>
+                                            </Link>
                                         )}
                                     </Menu.Item>
                                 </div>
