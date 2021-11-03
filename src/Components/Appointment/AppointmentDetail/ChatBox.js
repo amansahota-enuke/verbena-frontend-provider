@@ -1,151 +1,141 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { AppointmentActions } from "../../../redux/slice/appointment.slice";
-import { AppointmentService } from "../../../services";
+import { ChatActions } from "../../../redux/slice/chat.slice";
+import { ChatService } from "../../../services";
 import selector from "../../../redux/selector";
+import { useParams } from "react-router";
+import { ButtonLoader } from "../..";
 
-const ChatBox = ({selectedAppointment}) => {
-  
-  const messagesList = useSelector(selector.chatMessages);
-  const appointmentDetails = useSelector(selector.selectedAppointment);
-  const [message, setMessage] = useState('')
-  const [messages, showMessages] = useState([])
-  const dispatch = useDispatch();
-  let arr = []
-  useEffect(() => {
-    dispatch(AppointmentActions.getMessages(selectedAppointment));
-    dispatch(AppointmentActions.fetchAppointmentDetail(selectedAppointment));
-  }, [selectedAppointment]);
+const ChatBox = ({ chatBoxOpen, selectedAppointment }) => {
+    const { id } = useParams();
+    const messages = useSelector(selector.messages);
+    const user = useSelector(selector.user);
+    const [message, setMessage] = useState("");
+    const [messageList, setMessageList] = useState([]);
+    const [loader, setLoader] = useState(false);
+    const dispatch = useDispatch();
 
-  useEffect(() => {
-    showMessages(messagesList)
-  }, [messagesList])
-
-  const sendData = async () => {
-    if (message !== '') {
-      const requestBody = {
-        id: selectedAppointment,
-        body: {
-          text: message,
-          created_by: 'provider'
+    useEffect(() => {
+        if (id && Number(id)) {
+            setInterval(() => {
+                dispatch(ChatActions.getMessages(id));
+            }, 1000);
         }
-      }
-      await AppointmentService.sendMessage(requestBody)
+    }, [id]);
 
-      showMessages(prevArray => [...prevArray, requestBody.body])
-      console.log(selectedAppointment)
-      setMessage('')
-    }
-  }
+    useEffect(() => {
+        if (messages.length !== messageList.length) {
+            setMessageList(messages);
+        }
+    }, [messages]);
 
-  const messagesEndRef = useRef(null);
-  const scrollToBottom = () => {
-    messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
-  };
-  useEffect(scrollToBottom, [messages]);
+    const sendData = async () => {
+        if (message !== "") {
+            setLoader(true);
+            const requestBody = {
+                id,
+                body: {
+                    text: message,
+                    created_by: "provider",
+                },
+            };
+            await ChatService.sendMessage(requestBody);
+            setMessage("");
+            setLoader(false);
+        }
+    };
 
-  return (
-    <div>
-      <div class="chat-container closed"> 
-        
-          <div className="chat-container-body">
-            {messages.map((i) => {
-              if (i.created_by === 'provider') {
-                return (
-                  <div class="msg-container to-msg-container">
-                    <img src="https://res.cloudinary.com/dx94hnzfl/image/upload/v1612594885/Avatar_jarzmi.png" class="from-msg-profile-pic" />
-                    <div class="msg-text-container from-msg-text-container">
-                      <p class='msg-text from-msg-text'>{i.text}</p>
-                    </div>
-                  </div>
-                );
-              } else {
-                return (
-                  <div class="msg-container">
-                    <img src="https://res.cloudinary.com/dx94hnzfl/image/upload/v1612593409/Ellipse_1_2_uziel2.png" class="to-msg-profile-pic" />
-                    <div class="msg-text-container to-msg-text-container">
-                      <p class='msg-text to-msg-text'>{i.text}</p>
-                    </div>
-                  </div>
-                )
-              }
-            })}
-            <div ref={messagesEndRef} />
-          </div>
-        
-        <div className="sc-user-input">
-          {/* <input
-          className="border"
-            placeholder="Enter your message"
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
-            onKeyPress={(e) => {
-              if (e.key === "Enter") {
-                sendData();
-              }
-            }}
-          ></input> */}
-          <textarea className="border"
-            placeholder="Enter your message"
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
-            onKeyPress={(e) => {
-              if (e.key === "Enter") {
-                sendData();
-              }
-            }}>
+    const messagesEndRef = useRef();
+    const scrollToBottom = () => {
+        messagesEndRef.current.scrollIntoView();
+    };
 
-          </textarea>
-          <button className="px-6 calibre-regular primary-bg-color text-white font-16" onClick={sendData}><i class="fas fa-paper-plane"></i></button>
+    useEffect(() => {
+        scrollToBottom();
+    }, [messageList]);
+
+    return (
+        <div>
+            <div className={`chat-container ${!chatBoxOpen && "closed"}`}>
+                <div className="chat-container-body">
+                    {loader || messageList.length === 0 ? (
+                        <ButtonLoader color="#000" />
+                    ) : (
+                        messageList.map((msg, index) => {
+                            if (msg.created_by === "provider") {
+                                return (
+                                    <div
+                                        key={index}
+                                        className="msg-container to-msg-container"
+                                    >
+                                        <img
+                                            src={
+                                                user.profile_logo
+                                                    ? process.env
+                                                          .REACT_APP_API_SERVER_URL +
+                                                      user.profile_logo
+                                                    : "https://res.cloudinary.com/dx94hnzfl/image/upload/v1612594885/Avatar_jarzmi.png"
+                                            }
+                                            className="from-msg-profile-pic"
+                                        />
+                                        <div className="msg-text-container from-msg-text-container">
+                                            <p className="msg-text from-msg-text">
+                                                {msg.text}
+                                            </p>
+                                        </div>
+                                    </div>
+                                );
+                            } else {
+                                return (
+                                    <div key={index} className="msg-container">
+                                        <img
+                                            src={
+                                                selectedAppointment.patient &&
+                                                selectedAppointment.patient
+                                                    .profile_image_path
+                                                    ? process.env
+                                                          .REACT_APP_API_SERVER_URL +
+                                                      selectedAppointment
+                                                          .patient
+                                                          .profile_image_path
+                                                    : "https://res.cloudinary.com/dx94hnzfl/image/upload/v1612593409/Ellipse_1_2_uziel2.png"
+                                            }
+                                            className="to-msg-profile-pic"
+                                        />
+                                        <div className="msg-text-container to-msg-text-container">
+                                            <p className="msg-text to-msg-text">
+                                                {msg.text}
+                                            </p>
+                                        </div>
+                                    </div>
+                                );
+                            }
+                        })
+                    )}
+                    <div ref={messagesEndRef} />
+                </div>
+
+                <div className="sc-user-input">
+                    <textarea
+                        className="border"
+                        placeholder="Enter your message"
+                        value={message}
+                        onChange={(e) => setMessage(e.target.value)}
+                        onKeyPress={(e) => {
+                            if (e.key === "Enter") {
+                                sendData();
+                            }
+                        }}
+                    ></textarea>
+                    <button
+                        className="px-6 calibre-regular primary-bg-color text-white font-16"
+                        onClick={sendData}
+                    >
+                        <i className="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-  );
-}
-export default ChatBox
-
-// import React, {Component} from 'react'
-// import {Launcher} from 'react-chat-window'
- 
-// class ChatBox extends Component {
- 
-//   constructor() {
-//     super();
-//     this.state = {
-//       messageList: []
-//     };
-//   }
- 
-//   _onMessageWasSent(message) {
-//     this.setState({
-//       messageList: [...this.state.messageList, message]
-//     })
-//   }
- 
-//   _sendMessage(text) {
-//     if (text.length > 0) {
-//       this.setState({
-//         messageList: [...this.state.messageList, {
-//           author: 'them',
-//           type: 'text',
-//           data: { text }
-//         }]
-//       })
-//     }
-//   }
- 
-//   render() {
-//     return (<div>
-//       <Launcher
-//         agentProfile={{
-//           teamName: 'react-chat-window',
-//           imageUrl: 'https://a.slack-edge.com/66f9/img/avatars-teams/ava_0001-34.png'
-//         }}
-//         onMessageWasSent={this._onMessageWasSent.bind(this)}
-//         messageList={this.state.messageList}
-//         showEmoji
-//       />
-//     </div>)
-//   }
-// }
-// export default ChatBox;
+    );
+};
+export default ChatBox;

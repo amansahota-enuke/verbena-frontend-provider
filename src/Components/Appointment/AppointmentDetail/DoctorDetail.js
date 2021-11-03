@@ -136,18 +136,6 @@ function DoctorDetail({ selectedAppointment }) {
                     <div>
                         <div className="quick-btn">
                             <div className="flex">
-                                {selectedAppointment.status === "ongoing" && (
-                                    <button
-                                        onClick={() =>
-                                            history.push(
-                                                `/home/appointments/video/${selectedAppointment.id}`
-                                            )
-                                        }
-                                        className="modal-open calibre-regular font-16 btn-ready-visit px-3 py-2 rounded-full uppercase text-white primary-bg-color mr-3"
-                                    >
-                                        Rejoin
-                                    </button>
-                                )}
                                 {["ongoing", "patientDone"].includes(
                                     selectedAppointment.status
                                 ) && (

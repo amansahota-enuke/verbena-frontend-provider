@@ -95,11 +95,11 @@ const validationSchema = Yup.object({
         .required("State is a required field")
         .min(1, "State is a required field"),
     zipcode: Yup.string().required("Zipcode is a required field"),
-    bio: Yup.string(),
+    bio: Yup.string().nullable(),
     patient_testimonial: Yup.array().of(
         Yup.object()
             .shape({
-                value: Yup.string(),
+                value: Yup.string().nullable(),
             })
             .required()
     ),

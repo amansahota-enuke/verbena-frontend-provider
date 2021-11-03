@@ -59,12 +59,15 @@ const QuestionnaireDetail = () => {
                         </Disclosure.Button>
                         <Disclosure.Panel className="pt-0 pb-2 text-sm">
                             <div className="bg-white rounded-md mb-3">
-                                {questionnaireAnswers.map((question) => {
+                                {questionnaireAnswers.map((question, index) => {
                                     const showQuestion =
                                         checkQuestion(question);
                                     if (showQuestion) {
                                         return (
-                                            <div className="health-info border-b-1">
+                                            <div
+                                                key={question.id}
+                                                className="health-info border-b-1"
+                                            >
                                                 <h3 className="text-xl dark-color px-4 pt-2 pb-0 calibre-bold">
                                                     {question.text}
                                                 </h3>
@@ -72,7 +75,12 @@ const QuestionnaireDetail = () => {
                                                     .length > 0 ? (
                                                     question.patient_questionnaires.map(
                                                         (response) => (
-                                                            <p className="text-xl px-4 py-0 mb-3 calibre-regular font-16">
+                                                            <p
+                                                                key={
+                                                                    response.id
+                                                                }
+                                                                className="text-xl px-4 py-0 mb-3 calibre-regular font-16"
+                                                            >
                                                                 {response.answer_text
                                                                     ? response.answer_text
                                                                     : response
@@ -82,7 +90,10 @@ const QuestionnaireDetail = () => {
                                                         )
                                                     )
                                                 ) : (
-                                                    <p className="text-xl px-4 py-2 calibre-regular text-2x">
+                                                    <p
+                                                        key={index}
+                                                        className="text-xl px-4 py-2 calibre-regular text-2x"
+                                                    >
                                                         No Response
                                                     </p>
                                                 )}

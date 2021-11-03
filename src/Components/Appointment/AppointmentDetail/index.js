@@ -13,6 +13,7 @@ import QuestionnaireDetail from "./QuestionnaireDetail";
 import Report from "./Report";
 import Medication from "./Medication";
 import Detail from "./Detail";
+import { AppointmentService, CommonService } from "../../../services";
 
 function AppointmentDetail() {
     const dispatch = useDispatch();
@@ -42,6 +43,21 @@ function AppointmentDetail() {
             setOldMedication(selectedAppointment.appointment_medications);
         }
     }, [selectedAppointment]);
+
+    const savePdf = async () => {
+        try {
+            console.log("test1234");
+            const response = await AppointmentService.getPdf(id);
+            console.log(response.data)
+            const blob = new Blob([response.data], { type: "application/pdf" });
+            const link = document.createElement("a");
+            link.href = window.URL.createObjectURL(blob);
+            link.download = `sample.pdf`;
+            link.click();
+        } catch (error) {
+            console.log("Error Saving Details");
+        }
+    };
 
     return (
         <FullWidthContainer>
@@ -77,6 +93,8 @@ function AppointmentDetail() {
                     />
 
                     <Detail selectedAppointment={selectedAppointment} />
+
+                    <button onClick={savePdf}>Download</button>
                 </div>
             </div>
         </FullWidthContainer>

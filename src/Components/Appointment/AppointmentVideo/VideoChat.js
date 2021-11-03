@@ -1,6 +1,5 @@
 import React, { useState, useCallback, useEffect } from "react";
 import { useHistory, useParams } from "react-router-dom";
-import { toast } from "react-toastify";
 import Video from "twilio-video";
 
 import { VideoService } from "../../../services";
@@ -16,36 +15,16 @@ const VideoChat = () => {
     const { appointmentId } = useParams();
     const [room, setRoom] = useState(null);
     const selectedAppointment = useSelector(selector.selectedAppointment);
-    const user = useSelector(selector.user);
-
-    const connectRoom = async (token) => {
-        Video.connect(token, {
-            name: `room-appointment-${appointmentId}`,
-        })
-            .then((room) => {
-                setRoom(room);
-            })
-            .catch((err) => {
-                toast.error(err);
-            });
-    };
-
-    const checkToken = () => {
-        const tokenArr = selectedAppointment.appointment_videos;
-        return tokenArr.find(
-            (item) => Number(item.provider_id) === Number(user.id)
-        );
-    };
 
     const joinRoom = async () => {
         try {
             const response = await VideoService.getToken(appointmentId);
-            const room  = await Video.connect(response.data.data, {
+            const room = await Video.connect(response.data.data, {
                 name: `room-appointment-${appointmentId}`,
-            })
-            setRoom(room)
+            });
+            setRoom(room);
         } catch (error) {
-            console.log(error)
+            console.log(error);
         }
     };
 
@@ -53,12 +32,6 @@ const VideoChat = () => {
         dispatch(AppointmentActions.fetchAppointmentDetail(appointmentId));
         joinRoom();
     }, []);
-
-    // useEffect(() => {
-    //     if (user.id && selectedAppointment.appointment_videos) {
-    //         joinRoom();
-    //     }
-    // }, [selectedAppointment, user]);
 
     const handleLogout = useCallback((type) => {
         setRoom((prevRoom) => {
@@ -105,11 +78,10 @@ const VideoChat = () => {
     if (room) {
         render = (
             <Room
-                roomName={`room-appointment-${appointmentId}`}
+                selectedAppointment={selectedAppointment}
                 room={room}
                 handleLogout={handleLogout}
                 openAppointmentWindow={openAppointmentWindow}
-                appointmentId = {appointmentId}
             />
         );
     } else {

@@ -7,6 +7,7 @@ import PatientService from "./patient.service";
 import AcuityService from "./acuity.service";
 import QuestionnaireService from "./questionnaire.service";
 import VideoService from "./video.service";
+import ChatService from "./chat.service";
 
 export {
     ApiService,
@@ -18,4 +19,5 @@ export {
     AcuityService,
     QuestionnaireService,
     VideoService,
+    ChatService,
 };
