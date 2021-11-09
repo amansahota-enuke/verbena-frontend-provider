@@ -58,6 +58,11 @@ const ChatBox = ({ chatBoxOpen, selectedAppointment }) => {
         <div>
             <div className={`chat-container ${!chatBoxOpen && "closed"}`}>
                 <div className="chat-container-body">
+                <div className="chat-header">
+                        <p>
+                        Patient/Provider chat box is active for 48 hours.
+                        </p>
+                        </div>
                     {messageList.map((msg, index) => {
                         if (msg.created_by === "provider") {
                             return (
