@@ -45,18 +45,18 @@ function AppointmentDetail() {
         }
     }, [selectedAppointment]);
 
-    const savePdf = async () => {
-        try {
-            const response = await AppointmentService.getPdf(id);
-            const blob = new Blob([response.data], { type: "application/pdf" });
-            const link = document.createElement("a");
-            link.href = window.URL.createObjectURL(blob);
-            link.download = `appointment-report-${id}-${Date.now()}.pdf`;
-            link.click();
-        } catch (error) {
-            console.log("Error Saving Details");
-        }
-    };
+    async function savePdf() {
+        const file = await AppointmentService.getPdf(id);
+        const fileBlog = await file.blob();
+        const fileURL = URL.createObjectURL(fileBlog);
+
+        const link = document.createElement("a");
+        link.href = fileURL;
+        link.download = fileName;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
 
     return (
         <FullWidthContainer>
