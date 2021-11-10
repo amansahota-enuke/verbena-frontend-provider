@@ -41,10 +41,10 @@ export default function Example() {
         <Menu as="div" className="relative inline-block mr-4 mt-3">
             {({ open }) => (
                 <>
-                    <Menu.Button className="calibre-regular">
-                        <i className="font-24 far fa-bell mr-4"></i>
+                    <Menu.Button className="calibre-regular relative mr-4">
+                        <i className="font-20 far fa-bell"></i>
                         {Number(notificationCount) !== 0 && (
-                            <span className="notify-count h-5 w-5 rounded-full primary-bg-color text-white font-12 absolute -top-2 left-3 leading-5">
+                            <span className="notify-count h-5 w-5 rounded-full primary-bg-color text-white font-12 absolute -top-2 leading-5">
                                 {notificationCount}
                             </span>
                         )}

@@ -84,11 +84,11 @@ const Room = ({
             <div class="px-4 py-6 rounded-lg border bg-white mt-10 border-t">
                 <div class="flex justify-between items-center">
                     <div className="flex justify-end">
-                        <button
+                        {/* <button
                             className="btn-login calibre-regular font-16 uppercase primary-bg-color text-white mr-3"
                         >
                             Share Screen
-                        </button>
+                        </button> */}              
                         <button
                             className="btn-reschedule px-3 py-2 calibre-regular font-16 rounded-full uppercase text-white primary-dim-bg-color mr-3"
                             onClick={() => openAppointmentWindow()}

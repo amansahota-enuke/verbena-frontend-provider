@@ -1293,3 +1293,7 @@ outline: 0 none;
 }
 
 a.unread { background: #fffaee; }
+
+span.notify-count {
+  left: 10px;
+}

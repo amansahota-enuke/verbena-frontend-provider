@@ -75,10 +75,7 @@ function StartAppointment() {
                                 </div>
                                 <div>
                                     <h3 className="calibre-regular leading-none text-base light-dark-gray-color">
-                                        {selectedAppointment.appointment_datetime &&
-                                            moment(
-                                                selectedAppointment.appointment_datetime
-                                            ).format("HH:mm A")}
+                                    {moment(selectedAppointment.appointment_datetime, "hh:mm").format('LT')}  
                                     </h3>
                                 </div>
                             </div>
@@ -109,7 +106,8 @@ function StartAppointment() {
                         <div className="w-2.5 mr-4">:-</div>
                         <div className="w-auto">
                             <h3 className="leading-none text-lg calibre-bold">
-                                29 Years
+                                {selectedAppointment.patient &&
+                                        moment().diff(selectedAppointment.patient.dob, 'years') }
                             </h3>
                         </div>
                     </div>
@@ -122,7 +120,8 @@ function StartAppointment() {
                         <div className="w-2.5 mr-4">:-</div>
                         <div className="w-auto">
                             <h3 className="leading-none text-lg calibre-bold">
-                                Male
+                            {selectedAppointment.patient && selectedAppointment.patient.gender==="M"?
+                                        "Male":"Female"}
                             </h3>
                         </div>
                     </div>
