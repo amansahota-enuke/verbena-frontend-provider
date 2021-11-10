@@ -60,7 +60,7 @@ function StartAppointment() {
                                 `${selectedAppointment.provider.first_name} ${selectedAppointment.provider.last_name}`}
                         </h3>
                         <h6 className="text-base uppercase mb-3 light-gray-color">
-                            Dermatologist
+                        Gynecologist
                         </h6>
                         <div>
                             <div className="flex">
