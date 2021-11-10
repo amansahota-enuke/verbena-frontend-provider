@@ -1297,3 +1297,8 @@ a.unread { background: #fffaee; }
 span.notify-count {
   left: 10px;
 }
+
+img.profile-image{
+  width: 30px;
+  height: 30px;
+}
