@@ -37,58 +37,58 @@ const LeftMenu = ({ show }) => {
             >
                 <div>
                     <a
-                        className="block border-b-1 p-2 calibre-regular"
+                        className="block border-b-1 pl-4 pt-3 pb-3 p-2 calibre-regular"
                         title="Verbena Home"
                         href={process.env.REACT_APP_VERBENA_HOME}
                     >
                         <span className="icon sprite-menu home"></span>
-                        <span className="title uppercase">Verbena Home</span>
+                        <span className="title captilaize font-18 pl-3">Verbena Home</span>
                     </a>
 
                     <Link
-                        className="block border-b-1 p-2 caliber-regular"
+                        className="block border-b-1 pl-4 pt-3 pb-3 p-2 caliber-regular"
                         to="/home/dashboard"
                         title="Patient Dashboard"
                     >
                         <span className="icon sprite-menu dashboard"></span>
-                        <span className="title uppercase">Dashboard</span>
+                        <span className="title captilaize font-18 pl-3">Dashboard</span>
                     </Link>
 
                     <Link
-                        className="block border-b-1 p-2 caliber-regular"
+                        className="block border-b-1 pl-4 pt-3 pb-3 p-2 caliber-regular"
                         to="/home/appointments"
                         title="Appointments"
                     >
                         <span className="icon sprite-menu appointment"></span>
-                        <span className="title uppercase">Appointments</span>
+                        <span className="title captilaize font-18 pl-3">Appointments</span>
                     </Link>
 
                     <Link
-                        className="block border-b-1 p-2 caliber-regular"
+                        className="block border-b-1 pl-4 pt-3 pb-3 p-2 caliber-regular"
                         to="/home/patients"
                         title="Patients"
                     >
                         <span className="icon sprite-menu sp"></span>
-                        <span className="title uppercase">Patients</span>
+                        <span className="title captilaize font-18 pl-3">Patients</span>
                     </Link>
 
                     <button
-                        className="block border-b-1 p-2 caliber-regular cursor-pointer w-full"
+                        className="block border-b-1 pl-4 pt-3 pb-3 p-2 caliber-regular cursor-pointer w-full"
                         title="Manage Calendar"
                         disabled={Number(user.status) === 0 ? true : false}
                         onClick={() => openAcuityWindow()}
                     >
                         <span className="icon sprite-menu mc"></span>
-                        <span className="title uppercase">Manage Calendar</span>
+                        <span className="title captilaize font-18 pl-3">Manage Calendar</span>
                     </button>
 
                     <Link
-                        className="block border-b-1 p-2 caliber-regular"
+                        className="block border-b-1 pl-4 pt-3 pb-3 p-2 caliber-regular"
                         to="/home/profile"
                         title="Profile"
                     >
                         <span className="icon sprite-menu profile"></span>
-                        <span className="title uppercase">Profile</span>
+                        <span className="title captilaize font-18 pl-3">Profile</span>
                     </Link>
                 </div>
             </div>

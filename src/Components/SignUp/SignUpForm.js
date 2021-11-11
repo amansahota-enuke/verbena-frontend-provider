@@ -844,7 +844,7 @@ const SignUpForm = (props) => {
                         </div>
 
                         <div className="form-footer xl:px-32 lg:px-32 md:px-10 sm:px-5 px-4 border-t-2 xl:py-10 lg:py-10 md:py-4 sm:py-4 py-4">
-                            <div className="flex items-center justify-end">
+                            <div className="flex items-center justify-start">
                                 <button
                                     disabled={processing}
                                     type="button"

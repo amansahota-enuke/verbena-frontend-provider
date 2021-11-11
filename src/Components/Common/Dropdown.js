@@ -49,7 +49,7 @@ export default function Example() {
                                 alt=""
                                 title=""
                             />
-                            <span>{!!user.first_name && parseName(user.first_name)}{" "}
+                            <span className="font-18">{!!user.first_name && parseName(user.first_name)}{" "}
                             {!!user.last_name && parseName(user.last_name)}</span>
                         </Menu.Button>
                     </div>
