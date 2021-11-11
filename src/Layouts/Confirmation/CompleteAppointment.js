@@ -22,7 +22,7 @@ function TestConfirmation() {
             AppointmentActions.completeAppointment({
                 id: selectedAppointment.id,
                 body: {
-                    time,
+                    time_spent:time
                 },
             })
         );
