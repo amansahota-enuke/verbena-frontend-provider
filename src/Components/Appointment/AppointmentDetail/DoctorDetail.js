@@ -5,9 +5,15 @@ import confirmationConstants from "../../../constants/confirmation.constants";
 import selector from "../../../redux/selector";
 import { ConfirmationActions } from "../../../redux/slice/confirmation.slice";
 import { AppointmentActions } from "../../../redux/slice/appointment.slice";
+import { Link, useHistory, useParams } from "react-router-dom";
+import { UserActions } from "../../../redux/slice/user.slice";
+import { useEffect } from "react";
+
 
 function DoctorDetail({ selectedAppointment }) {
     const dispatch = useDispatch();
+    const { appointmentId } = useParams();
+
     const user = useSelector(selector.user);
 
     const parseName = (name) => {
@@ -58,6 +64,10 @@ function DoctorDetail({ selectedAppointment }) {
             );
         }
     };
+    useEffect(()=>{
+        dispatch(UserActions.getProfile(appointmentId))
+    },[])
+
 
     return (
         <>
@@ -81,7 +91,7 @@ function DoctorDetail({ selectedAppointment }) {
                             </div>
                             <div>
                                 <h3 className="hepta-slab mb-2 text-xl leading-none">
-                                    {`Dr.${
+                                    {`Dr. ${
                                         user.first_name &&
                                         parseName(user.first_name)
                                     } ${
