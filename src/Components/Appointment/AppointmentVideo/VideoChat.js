@@ -33,7 +33,7 @@ const VideoChat = () => {
         joinRoom();
     }, []);
 
-    const handleLogout = useCallback(async(type) => {
+    const handleLogout = useCallback((type) => {
         setRoom((prevRoom) => {
             if (prevRoom) {
                 prevRoom.localParticipant.tracks.forEach((trackPub) => {
@@ -43,10 +43,7 @@ const VideoChat = () => {
             }
             return null;
         });
-        await dispatch(AppointmentActions.updateAppointmentStatus({
-            id: appointmentId,
-            body: { status: "patientStart" },
-        }));
+        
         history.push(`/home/appointments/${appointmentId}`);
     }, []);
 
