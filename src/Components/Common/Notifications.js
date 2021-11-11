@@ -38,10 +38,10 @@ export default function Example() {
     };
 
     return (
-        <Menu as="div" className="relative inline-block mr-4 mt-3">
+        <Menu as="div" className="relative inline-block xl:mr-4 lg:mr-4 md:mr-4 sm:mr-0 mr-0 xl:mt-3 lg:mt-3 md:mt-0 sm:mt-0 mt-0">
             {({ open }) => (
                 <>
-                    <Menu.Button className="calibre-regular relative mr-4">
+                    <Menu.Button className="calibre-regular relative xl:mr-4 lg:mr-4 md:mr-4 sm:mr-0 mr-0">
                         <i className="font-20 far fa-bell"></i>
                         {Number(notificationCount) !== 0 && (
                             <span className="notify-count h-5 w-5 rounded-full primary-bg-color text-white font-12 absolute -top-2 leading-5">
