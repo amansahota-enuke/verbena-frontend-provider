@@ -37,7 +37,7 @@ const LeftMenu = ({ show }) => {
             >
                 <div>
                     <a
-                        className="block border-b-1 pl-4 pt-3 pb-3 p-2 calibre-regular"
+                        className="block border-b-1 pl-4 pt-3 pb-3 calibre-regular"
                         title="Verbena Home"
                         href={process.env.REACT_APP_VERBENA_HOME}
                     >
@@ -46,7 +46,7 @@ const LeftMenu = ({ show }) => {
                     </a>
 
                     <Link
-                        className="block border-b-1 pl-4 pt-3 pb-3 p-2 caliber-regular"
+                        className="block border-b-1 pl-4 pt-3 pb-3 calibre-regular"
                         to="/home/dashboard"
                         title="Patient Dashboard"
                     >
@@ -55,7 +55,7 @@ const LeftMenu = ({ show }) => {
                     </Link>
 
                     <Link
-                        className="block border-b-1 pl-4 pt-3 pb-3 p-2 caliber-regular"
+                        className="block border-b-1 pl-4 pt-3 pb-3 calibre-regular"
                         to="/home/appointments"
                         title="Appointments"
                     >
@@ -64,7 +64,7 @@ const LeftMenu = ({ show }) => {
                     </Link>
 
                     <Link
-                        className="block border-b-1 pl-4 pt-3 pb-3 p-2 caliber-regular"
+                        className="block border-b-1 pl-4 pt-3 pb-3 calibre-regular"
                         to="/home/patients"
                         title="Patients"
                     >
@@ -73,7 +73,7 @@ const LeftMenu = ({ show }) => {
                     </Link>
 
                     <button
-                        className="block border-b-1 pl-4 pt-3 pb-3 p-2 caliber-regular cursor-pointer w-full"
+                        className="block border-b-1 pl-4 pt-3 pb-3 calibre-regular cursor-pointer w-full"
                         title="Manage Calendar"
                         disabled={Number(user.status) === 0 ? true : false}
                         onClick={() => openAcuityWindow()}
@@ -83,7 +83,7 @@ const LeftMenu = ({ show }) => {
                     </button>
 
                     <Link
-                        className="block border-b-1 pl-4 pt-3 pb-3 p-2 caliber-regular"
+                        className="block border-b-1 pl-4 pt-3 pb-3 calibre-regular"
                         to="/home/profile"
                         title="Profile"
                     >

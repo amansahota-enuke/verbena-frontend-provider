@@ -586,7 +586,7 @@ input,label,span,p,li,ul
   transition: all .3s ease-out;
   margin-left: 60px;
   margin-top: 90px;
-  padding: 30px 40px;
+  padding: 30px 30px;
 }
 
 .main-panel.expanded 

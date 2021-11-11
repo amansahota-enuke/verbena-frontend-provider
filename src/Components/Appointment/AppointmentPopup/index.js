@@ -47,7 +47,7 @@ function Index() {
     return (
         <FullWidthContainer>
             {appointmentStatus === statusConstants.PENDING && <Loader />}
-            <div className="container mx-auto px-4 sm:px-6">
+            <div className="">
                 {/* Appoint ment Detail */}
                 {selectedAppointment.status === "cancelled" && (
                     <p className="text-center px-2 py-2 bg-red-500 text-white text-lg">
