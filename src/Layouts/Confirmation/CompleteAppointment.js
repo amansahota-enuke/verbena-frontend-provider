@@ -54,7 +54,7 @@ function TestConfirmation() {
             <div className="mt-2">
                 <input
                     type="text"
-                    className="custom-input ca-width input-border-color border"
+                    className="custom-input  input-border-color border"
                     placeholder="Enter Time(in minutes)"
                     value={time}
                     onChange={(e) => {

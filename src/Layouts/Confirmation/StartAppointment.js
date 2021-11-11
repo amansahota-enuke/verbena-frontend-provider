@@ -97,7 +97,7 @@ function StartAppointment() {
                             </h3>
                         </div>
                     </div>
-                    <div className="flex items-center mb-4">
+                    {/* <div className="flex items-center mb-4">
                         <div className="w-36">
                             <h3 className="leading-none text-lg calibre-regular">
                                 Age
@@ -110,18 +110,22 @@ function StartAppointment() {
                                         moment().diff(selectedAppointment.patient.dob, 'years') }
                             </h3>
                         </div>
-                    </div>
+                    </div> */}
                     <div className="flex items-center">
                         <div className="w-36">
                             <h3 className="leading-none text-lg calibre-regular">
-                                Gender
+                                Reason for visit
                             </h3>
                         </div>
                         <div className="w-2.5 mr-4">:-</div>
                         <div className="w-auto">
                             <h3 className="leading-none text-lg calibre-bold">
-                            {selectedAppointment.patient && selectedAppointment.patient.gender==="M"?
-                                        "Male":"Female"}
+                            {selectedAppointment.appointment_reason_text
+                                                ? selectedAppointment.appointment_reason_text
+                                                : selectedAppointment.appointment_reason
+                                                ? selectedAppointment
+                                                      .appointment_reason.name
+                                                : ""}
                             </h3>
                         </div>
                     </div>
