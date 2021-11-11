@@ -1307,3 +1307,20 @@ img.profile-image{
   height: 40px;
   object-fit: cover;
 }
+
+.custom-pagination .pagination > li > a, 
+.custom-pagination .pagination > li > span
+{
+ color: #009b98;
+}
+
+.custom-pagination .pagination > li > a
+{
+  border: 1px solid #009b98;
+}
+
+.custom-pagination .pagination > li.active > a
+{
+  color: #fff;
+  background-color: #009b98;
+}
