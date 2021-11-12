@@ -29,7 +29,7 @@ const Header = ({ handleToggle }) => {
                                     }}
                                 >
                                     <img
-                                        className="w-8"
+                                        className="xl:w-8 lg:w-8 md:w08 sm:w-6 w-6"
                                         src="/images/bars.png"
                                         alt=""
                                         title=""

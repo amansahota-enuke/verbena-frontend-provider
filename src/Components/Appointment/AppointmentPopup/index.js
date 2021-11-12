@@ -54,7 +54,7 @@ function Index() {
                         Cancelled
                     </p>
                 )}
-                <h2 className="hepta-bold primary-text-color mb-4">
+                <h2 className="hepta-bold font-32 primary-text-color mb-2">
                     Appointment Details
                 </h2>
                 <div className="col-span-4">

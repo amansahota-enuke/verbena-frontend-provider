@@ -80,7 +80,7 @@ function AppointmentDetail() {
                         Cancelled
                     </p>
                 )}
-                <h2 className="hepta-bold primary-text-color mb-10">
+                <h2 className="hepta-bold font-32 primary-text-color mb-2">
                     Appointment Details
                 </h2>
                 {["pending", "completed"].includes(
@@ -88,7 +88,7 @@ function AppointmentDetail() {
                 ) && (
                     <p className="text-right">
                         <button
-                            className="calibre-regular font-16 leading-none btn-ready-visit px-3 py-3 rounded-full uppercase text-white primary-bg-color"
+                            className="calibre-regular font-18 leading-none btn-ready-visit px-3 py-3 rounded-full uppercase text-white primary-bg-color"
                             onClick={savePdf}
                         >
                             <DownloadIcon className="h-6 inline-block align-middle" />{" "}

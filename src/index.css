@@ -731,7 +731,7 @@ ul#tabs li.active
   .main-panel{margin-left: 0;}
   .left-menu{left:-80px;}
   .main-panel.expanded{margin-left: 0;}
-  .main-panel.expanded .left-menu{left: 0;}
+  .main-panel.expanded .left-menu{left: 0;margin-top:75px;overflow: scroll;height: calc(100% - 75px);}
 }
 
 
@@ -754,6 +754,8 @@ ul#tabs li.active
   transition: all .3s ease-out;
   margin-top: 85px;
   text-align: center;
+  z-index: 999;
+  box-shadow: 0 0 35px 0 rgba(154,161,171,.15);
 }
 
 /* .left-menu:hover

@@ -227,7 +227,7 @@ function Medication({ appointmentId, oldMedication, setOldMedication }) {
                 {medication.length + oldMedication.length > 0 && (
                     <div className="justify-center">
                         <button
-                            className="btn-login calibre-regular font-16 uppercase primary-bg-color text-white"
+                            className="btn-login calibre-regular font-18 uppercase primary-bg-color text-white"
                             onClick={() => saveMedication()}
                         >
                             save
