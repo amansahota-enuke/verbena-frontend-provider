@@ -951,7 +951,7 @@ const Profile = () => {
                         <Link
                             disabled={processing}
                             type="button"
-                            className="btn-create-account calibre-regular font-16 uppercase primary-text-color mr-3"
+                            className="btn-create-account calibre-regular font-18 uppercase primary-text-color mr-3"
                             to="/home/dashboard"
                         >
                             Cancel
@@ -959,7 +959,7 @@ const Profile = () => {
                         <button
                             disabled={processing}
                             type="submit"
-                            className="disabled:opacity-50 btn-login calibre-regular font-16 uppercase primary-bg-color text-white"
+                            className="disabled:opacity-50 btn-login calibre-regular font-18 uppercase primary-bg-color text-white"
                         >
                             <span className="calibre-regular">
                                 {processing ? <ButtonLoader /> : "Update"}

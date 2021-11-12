@@ -68,7 +68,7 @@ function TestConfirmation() {
             <div className="mt-4">
                 <button
                     type="button"
-                    className="btn-create-account calibre-regular font-16 uppercase primary-text-color mr-3"
+                    className="btn-create-account calibre-regular font-18 uppercase primary-text-color mr-3"
                     onClick={closeModal}
                 >
                     Cancel
@@ -76,7 +76,7 @@ function TestConfirmation() {
                 <button
                     disabled={!time || processing}
                     type="button"
-                    className="disabled:opacity-50 btn-login calibre-regular font-16 uppercase primary-bg-color text-white"
+                    className="disabled:opacity-50 btn-login calibre-regular font-18 uppercase primary-bg-color text-white"
                     onClick={completeAppointment}
                 >
                     {processing ? <ButtonLoader /> : <span>Submit</span>}
