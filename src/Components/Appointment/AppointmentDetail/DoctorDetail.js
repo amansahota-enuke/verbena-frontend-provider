@@ -99,7 +99,7 @@ function DoctorDetail({ selectedAppointment }) {
                                         parseName(user.last_name)
                                     }`}
                                 </h3>
-                                <h6 className="text-base uppercase mb-0 light-gray-color calibre-regular">
+                                <h6 className="text-base uppercase mb-0 light-dark-gray-color calibre-regular">
                                     {user.provider_speciality_master &&
                                         user.provider_speciality_master.name}
                                 </h6>
@@ -107,7 +107,7 @@ function DoctorDetail({ selectedAppointment }) {
                                     <div className="edu-icon mr-3">
                                         <i className="fas fa-graduation-cap"></i>
                                     </div>
-                                    <div className="light-gray-color capitalize font-18 calibre-regular">
+                                    <div className="light-dark-gray-color capitalize font-18 mb-0 calibre-regular">
                                         {user.hospital_affiliations &&
                                             JSON.parse(
                                                 user.hospital_affiliations
@@ -129,7 +129,7 @@ function DoctorDetail({ selectedAppointment }) {
                                     <div className="address-icon mr-3">
                                         <i className="fas fa-map-marker-alt"></i>
                                     </div>
-                                    <div className="light-gray-color font-18 calibre-regular">
+                                    <div className="light-dark-gray-color font-18 calibre-regular">
                                         {user.address &&
                                             `${user.address.address_line1}, ${
                                                 user.address.address_line2 + ","

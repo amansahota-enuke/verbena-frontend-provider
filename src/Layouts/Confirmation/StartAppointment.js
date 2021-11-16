@@ -59,13 +59,13 @@ function StartAppointment() {
                             {selectedAppointment.provider &&
                                 `${selectedAppointment.provider.first_name} ${selectedAppointment.provider.last_name}`}
                         </h3>
-                        <h6 className="text-base uppercase mb-3 light-gray-color">
+                        <h6 className="font-18 uppercase mb-3 light-dark-gray-color calibre-regular">
                         Gynecologist
                         </h6>
                         <div>
                             <div className="flex">
                                 <div>
-                                    <h3 className="calibre-regular leading-none text-base light-dark-gray-color border-r-2 pr-2 mr-2">
+                                    <h3 className="font-16 calibre-regular leading-none light-dark-gray-color border-r-2 pr-2 mr-2">
                                         <i className="fas fa-calendar mr-2"></i>
                                         {selectedAppointment.appointment_datetime &&
                                             moment(
@@ -74,7 +74,7 @@ function StartAppointment() {
                                     </h3>
                                 </div>
                                 <div>
-                                    <h3 className="calibre-regular leading-none text-base light-dark-gray-color">
+                                    <h3 className="font-16 calibre-regular leading-none light-dark-gray-color">
                                     {moment(selectedAppointment.appointment_datetime, "hh:mm").format('LT')}  
                                     </h3>
                                 </div>
