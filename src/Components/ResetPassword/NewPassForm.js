@@ -49,7 +49,7 @@ function NewPassForm(props) {
                 <div className="bg-white p-10 login-box px-8 py-10 mb-10">
                     <div className="flex justify-between mb-10 items-end">
                         <div>
-                            <h1 className="hepta-bold primary-text-color lh-40">
+                            <h1 className="hepta-bold primary-text-color lh-40 font-32">
                                 Create New Password
                             </h1>
                         </div>
@@ -107,7 +107,7 @@ function NewPassForm(props) {
                         <div className="d-flex items-center mb-5">
                             <button
                                 type="submit"
-                                className="btn-login calibre-bold font-18 uppercase primary-bg-color text-white mr-3"
+                                className="btn-login calibre-regular tracking-wider font-16 uppercase primary-bg-color text-white mr-3"
                             >
                                 Update Password
                             </button>

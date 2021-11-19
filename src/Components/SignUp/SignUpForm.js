@@ -245,7 +245,7 @@ const SignUpForm = (props) => {
                         <div className="form-content xl:px-32 lg:px-32 md:px-10 sm:px-5 px-4 py-10">
                             <div className="flex xl:flex-nowrap lg:flex-nowrap md:flex-wrap sm:flex-wrap flex-wrap justify-between items-end mb-16">
                                 <div>
-                                    <h1 className="hepta-bold primary-text-color lh-40">
+                                    <h1 className="hepta-bold primary-text-color lh-40 font-32">
                                         Provider Contact Form
                                     </h1>
                                 </div>
@@ -848,7 +848,7 @@ const SignUpForm = (props) => {
                                 <button
                                     disabled={processing}
                                     type="button"
-                                    className="disabled:opacity-50 btn-create-account calibre-bold font-18 uppercase primary-text-color mr-3"
+                                    className="disabled:opacity-50 btn-create-account calibre-regular tracking-wider font-16 uppercase primary-text-color mr-3"
                                     onClick={() => history.goBack()}
                                 >
                                     Cancel
@@ -856,9 +856,9 @@ const SignUpForm = (props) => {
                                 <button
                                     disabled={processing}
                                     type="submit"
-                                    className="disabled:opacity-50 btn-login calibre-bold font-18 uppercase primary-bg-color text-white"
+                                    className="disabled:opacity-50 btn-login calibre-regular tracking-wider font-16 uppercase primary-bg-color text-white"
                                 >
-                                    <span className="calibre-bold">
+                                    <span className="calibre-regular">
                                         {processing ? (
                                             <ButtonLoader />
                                         ) : (
