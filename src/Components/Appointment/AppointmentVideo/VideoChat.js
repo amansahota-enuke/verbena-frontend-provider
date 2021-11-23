@@ -2,7 +2,7 @@ import React, { useState, useCallback, useEffect } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import Video from "twilio-video";
 
-import { VideoService } from "../../../services";
+import { VideoService, AppointmentService } from "../../../services";
 import Room from "./Room";
 import { Loader } from "../../";
 import { useDispatch, useSelector } from "react-redux";
@@ -43,10 +43,13 @@ const VideoChat = () => {
             }
             return null;
         });
-        // await dispatch(AppointmentActions.updateAppointmentStatus({
-        //     id: appointmentId,
-        //     body: { status: "patientStart" },
-        // }));
+        const res = await AppointmentService.getAppointmentDetail(appointmentId)
+        if(res.data.data.status !== 'pending'){
+            await dispatch(AppointmentActions.updateAppointmentStatus({
+                id: appointmentId,
+                body: { status: "ongoing" },
+            }));
+        }
         history.push(`/home/appointments/${appointmentId}`);
     }, []);
 
@@ -69,7 +72,11 @@ const VideoChat = () => {
         }
     }, [room, handleLogout]);
 
-    const openAppointmentWindow = () => {
+    const openAppointmentWindow = async() => {
+        await dispatch(AppointmentActions.updateAppointmentStatus({
+            id: appointmentId,
+            body: { status: "ongoing" },
+        }));
         let popUpObj = window.open(
             `${window.location.origin}/appointment/${appointmentId}`,
             "_blank",

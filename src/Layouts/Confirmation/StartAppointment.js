@@ -13,16 +13,18 @@ function StartAppointment() {
     const selectedAppointment = useSelector(selector.selectedAppointment);
 
     const joinRoom = async () => {
-        const actionResult = await dispatch(
-            AppointmentActions.updateAppointmentStatus({
-                id: selectedAppointment.id,
-                body: { status: "ongoing" },
-            })
-        );
-        if (!actionResult.hasOwnProperty("error")) {
-            dispatch(ConfirmationActions.closeConfirmation());
+        // const actionResult = await dispatch(
+        //     AppointmentActions.updateAppointmentStatus({
+        //         id: selectedAppointment.id,
+        //         body: { status: "ongoing" },
+        //     })
+        // );
+        // if (!actionResult.hasOwnProperty("error")) {
+        //     dispatch(ConfirmationActions.closeConfirmation());
+        //     history.push(`/home/appointments/video/${selectedAppointment.id}`);
+        // }
+        dispatch(ConfirmationActions.closeConfirmation());
             history.push(`/home/appointments/video/${selectedAppointment.id}`);
-        }
     };
 
     const closeModal = () => {
@@ -60,7 +62,8 @@ function StartAppointment() {
                                 `${selectedAppointment.provider.first_name} ${selectedAppointment.provider.last_name}`}
                         </h3>
                         <h6 className="font-18 uppercase mb-3 light-dark-gray-color calibre-regular">
-                        Gynecologist
+                        {selectedAppointment.provider && 
+                            selectedAppointment.provider.provider_speciality_master.name}
                         </h6>
                         <div>
                             <div className="flex">

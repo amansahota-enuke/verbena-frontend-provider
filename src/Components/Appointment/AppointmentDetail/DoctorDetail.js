@@ -108,14 +108,14 @@ function DoctorDetail({ selectedAppointment }) {
                                         <i className="fas fa-graduation-cap"></i>
                                     </div>
                                     <div className="light-dark-gray-color capitalize font-18 mb-0 calibre-regular">
-                                        {user.hospital_affiliations &&
+                                        {user.board_certifications &&
                                             JSON.parse(
-                                                user.hospital_affiliations
+                                                user.board_certifications
                                             ).map((hospital, index) => {
                                                 let test = index + 1;
                                                 if (
                                                     JSON.parse(
-                                                        user.hospital_affiliations
+                                                        user.board_certifications
                                                     ).length === test
                                                 ) {
                                                     return hospital.value;
