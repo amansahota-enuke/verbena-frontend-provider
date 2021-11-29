@@ -9,7 +9,7 @@ import StartAppointment from "./StartAppointment";
 import RescheduleAppointment from "./RescheduleAppointment";
 import CancelAppointment from "./CancelAppointment";
 import CompleteAppointment from "./CompleteAppointment";
-
+import SubscriptionSuccess from "./SubscriptionSuccess"
 const Confirmation = () => {
     const isOpen = useSelector(selector.confirmationStatus);
 
@@ -73,6 +73,8 @@ const SelectedConfirmation = () => {
             return <StartAppointment />;
         case confirmationConstants.COMPLETE_APPOINTMENT:
             return <CompleteAppointment />;
+        case confirmationConstants.SUBSCRIPTION_SUCCESS:
+            return <SubscriptionSuccess />;
         default:
             return "";
     }

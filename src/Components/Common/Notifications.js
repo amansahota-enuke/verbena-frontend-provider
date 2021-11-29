@@ -86,12 +86,34 @@ export default function Example() {
                                                     }`
                                                 )}
                                             >
-                                                <span className="overflow-ellipsis overflow-hidden truncate inline-block max-w-120 align-middle">
-                                                    {
-                                                        notification
-                                                            .user_message.text
-                                                    }
-                                                </span>
+                                                <div className="inline-flex">
+                                                    <div className="chat-user-img mr-3 bg-cover">
+                                                    <img
+                                                        src={
+                                                            notification.patient.profile_image_path
+                                                                ? process.env
+                                                                    .REACT_APP_API_SERVER_URL +
+                                                                    notification.patient.profile_image_path
+                                                                : "https://res.cloudinary.com/dx94hnzfl/image/upload/v1612593409/Ellipse_1_2_uziel2.png"
+                                                        }
+                                                    />
+                                                    </div>
+                                                    <div className="chat-user-content">
+                                                    <h4 className="font-14">{
+                                                            notification
+                                                                .patient.first_name+" "+notification
+                                                                .patient.last_name
+                                                        } </h4>
+                                                    <span
+                                                    className="overflow-ellipsis overflow-hidden truncate inline-block max-w-120 align-middle"
+                                                    >
+                                                        {
+                                                            notification
+                                                                .user_message.text
+                                                        }
+                                                    </span>
+                                                    </div>
+                                                </div>
                                                 {!notification.seen && (
                                                     <button
                                                         className="absolute right-8 font-12"

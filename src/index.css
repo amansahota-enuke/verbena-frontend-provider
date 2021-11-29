@@ -1326,3 +1326,10 @@ img.profile-image{
   color: #fff;
   background-color: #009b98;
 }
+.chat-user-img
+{
+  height: 34px;
+  width:34px;
+  border-radius: 100%;
+  border: 1px solid #d1d1d1;
+}

@@ -25,7 +25,8 @@ import AppointmentVideo from "./Appointment/AppointmentVideo";
 import AppointmentPopup from "./Appointment/AppointmentPopup";
 import PatientList from "./Patient/PatientList";
 import PatientDetail from "./Patient/PatientDetail";
-
+import Subscription from "./Subscription/Payments";
+import SubscriptionBooked from "./Subscription/SubscriptionBooked";
 export {
     //Common
     Header,
@@ -55,4 +56,7 @@ export {
     AppointmentPopup,
     PatientList,
     PatientDetail,
+    //Subscription
+    Subscription,
+    SubscriptionBooked
 };

@@ -56,6 +56,10 @@ const Layout = ({ match }) => {
                         path={`${match.path}/profile`}
                         component={ProfilePage}
                     />
+                    {/* <Route
+                        path={`${match.path}/subscription`}
+                        component={SubscriptionPage}
+                    /> */}
                     <Route component={Error} />
                 </Switch>
             </div>

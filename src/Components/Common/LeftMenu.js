@@ -90,6 +90,15 @@ const LeftMenu = ({ show }) => {
                         <span className="icon sprite-menu profile"></span>
                         <span className="title captilaize font-18 pl-3">Profile</span>
                     </Link>
+
+                    {/* <Link
+                        className="block border-b-1 pl-4 pr-4 pt-3 pb-3 caliber-regular"
+                        to="/home/subscription"
+                        title="Profile"
+                    >
+                        <span class="fa fa-rocket" ></span>
+                        <span className="title capitalize font-18 pl-3">Subscription</span>
+                    </Link> */}
                 </div>
             </div>
         </>

@@ -6,11 +6,13 @@ import {
     LoginPage,
     ForgotPasswordPage,
     UpdatePasswordPage,
+    SubscriptionPage,
 } from "./Pages";
-import { ScrollToTop, Footer, AppointmentPopup } from "./Components";
+import { ScrollToTop, Footer, AppointmentPopup, Subscription } from "./Components";
 import { PrivateRoute } from "./Components";
 import { TokenService } from "./services";
 import Confirmation from "./Layouts/Confirmation";
+
 
 function App() {
     return (
@@ -32,6 +34,7 @@ function App() {
                         <PrivateRoute path="/home" component={Layout} />
                         <Route path="/login" component={LoginPage} />
                         <Route path="/signup" component={SignUpPage} />
+                        <Route path="/subscription" component={SubscriptionPage} />
                         <Route
                             path="/forgot-password"
                             component={ForgotPasswordPage}
