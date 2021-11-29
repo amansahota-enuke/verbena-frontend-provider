@@ -40,7 +40,7 @@ function Subscribed() {
           </div>
           <div>
             <h3 className="hepta-slab mb-1 leading-none text-xl">
-              Patient Subscription Plan Details
+              Provider Subscription Plan Details
             </h3>
             <h6 className="font-18 calibre-regular uppercase mb-0 light-dark-gray-color">
               
@@ -66,7 +66,7 @@ function Subscribed() {
           <div className="flex items-center mb-4">
             <div className="dd w-36">
               <h3 className="leading-none text-lg calibre-regular">
-                Patient Name
+                Provider Name
               </h3>
             </div>
             <div className="w-2.5 mr-4">:-</div>
