@@ -7,11 +7,6 @@ import selector from "../../../redux/selector";
 function Subscribed() {
   const subscriptionDetails = useSelector(selector.subscriptionData)
 
-  useEffect(() => {
-    if(subscriptionDetails){
-      console.log(subscriptionDetails)
-    }
-}, []);
   return (
     <>
       <h2 className="hepta-slab font-32 text-center primary-text-color mb-5">
@@ -98,14 +93,14 @@ function Subscribed() {
             <div className="w-2.5 mr-4">:-</div>
             <div className="w-auto">
               <h3 className="leading-none text-lg calibre-bold">
-                {subscriptionDetails && subscriptionDetails.plan.interval}
+                Monthly
               </h3>
             </div>
           </div>
           <div className="flex items-center mb-4">
             <div className="dd w-36">
               <h3 className="leading-none text-lg calibre-regular">
-                Expiry Date
+                Expiration
               </h3>
             </div>
             <div className="w-2.5 mr-4">:-</div>

@@ -215,7 +215,7 @@ const SignUpForm = (props) => {
         const actionResult = await dispatch(UserActions.signUp(formData));
         setProcessing(false);
         if (!actionResult.hasOwnProperty("error")) {
-            history.push("/subscription");
+            history.push("/setupfee");
         }
     };
 

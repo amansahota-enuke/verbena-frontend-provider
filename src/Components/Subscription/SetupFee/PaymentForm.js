@@ -10,19 +10,18 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 
-import { Loader } from "../../";
+import { Loader } from "../../..";
 import confirmationConstants from "../../../constants/confirmation.constants";
 import statusConstants from "../../../constants/status.constants";
 import selector from "../../../redux/selector";
-import { AppointmentActions } from "../../../redux/slice/appointment.slice";
 import { ConfirmationActions } from "../../../redux/slice/confirmation.slice";
-import {SubscriptionActions} from "../../../redux/slice/subscription.slice"
-import { UserActions } from "../../../redux/slice/user.slice";
-import { PaymentService, UserService} from "../../../services";
+import PaymentService  from "../../../services/payment.service";
 import ButtonLoader from "../../Common/ButtonLoader";
+import { UserService } from "../../../services";
 
-function PaymentForms() {
+function PaymentForm() {
     const dispatch = useDispatch();
+    const history = useHistory()
     const [errors, setErrors] = useState({
         number: "",
         expiry: "",
@@ -35,74 +34,63 @@ function PaymentForms() {
         cvc: true,
     });
     const [clientSecret, setClientSecret] = useState("");
-    const user = useSelector(selector.user);
     const stripe = useStripe();
     const elements = useElements();
-    const history = useHistory()
-    
+
+    const fetchClientSecret = async () => {
+        try {
+            const response = await PaymentService.fetchPaymentIntent();
+            setClientSecret(response.data.data);
+        } catch (error) {
+            toast.error(error.response.data.message);
+        }
+    };
+
     useEffect(() => {
-        dispatch(UserActions.getProfile())
+        fetchClientSecret();
     }, []);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setProcessing(true);
-        const result = await stripe.createPaymentMethod({
-            type: 'card',
-            card: elements.getElement(CardNumberElement, CardExpiryElement),
-            billing_details: {
-                email: user.email,
-                name: user.first_name
+
+        const payload = await stripe.confirmCardPayment(clientSecret, {
+            payment_method: {
+                card: elements.getElement(CardNumberElement),
             },
         });
 
-        const res = await PaymentService.addSubscriptions({
-            'payment_method': result.paymentMethod.id,
-            'email': user.email,
-            'name' : `${user.first_name} ${user.last_name}`
-        })
-        // if (res.data.data.latest_invoice.payment_intent.status === 'requires_action') {
-        //     const res2 = await stripe.confirmCardPayment(res.data.data.latest_invoice.payment_intent.client_secret)
-        //     setProcessing(false);
-        //     if (res2.error) {
-        //         toast.error(res2.error.message);
-        //     } else {
-        //         saveSubscription(res.data.data)
-        //         dispatch(
-        //             ConfirmationActions.setConfirmationType(
-        //                 confirmationConstants.SUBSCRIPTION_SUCCESS
-        //             )
-        //         );
-        //         dispatch(ConfirmationActions.openConfirmation());
-        //     }
-        // } else {
-            setProcessing(false);
-            if (res.error) {
-                toast.error(res.error.message);
-            } else {
-                saveSubscription(res.data.data)
+        console.log("payload", payload);
 
-                dispatch(
-                    ConfirmationActions.setConfirmationType(
-                        confirmationConstants.SUBSCRIPTION_SUCCESS
-                    )
-                )
-                dispatch(ConfirmationActions.openConfirmation());
-            }
-        // }
+        setProcessing(false);
+        if (payload.error) {
+            toast.error(payload.error.message);
+            //save error
+            //payment failed pop-up
+        } else {
+            //save payload
+            saveTransaction(payload)
+            //payment success pop-up
+            // dispatch(
+            //     ConfirmationActions.setConfirmationType(
+            //         confirmationConstants.PAYMENT_SUCCESS
+            //     )
+            // );
+            // dispatch(ConfirmationActions.openConfirmation());
+        }
     };
 
-    const saveSubscription = async payload=>{
+    const saveTransaction = async payload => {
         try {
             const requestBody = {
-                customer_id:payload.customer,
-                subscription_id:payload.id,
-                amount:payload.latest_invoice.amount_paid,
-                status: payload.status,
-                res_body:JSON.stringify(payload)
+                payment_intent_id: payload.paymentIntent.id,
+                amount: payload.paymentIntent.amount,
+                currency: payload.paymentIntent.currency,
+                status: payload.paymentIntent.status,
+                res_body: JSON.stringify(payload.paymentIntent)
             }
-            const response = await PaymentService.saveSubscription(requestBody)
-            dispatch(SubscriptionActions.SubscriptionDetails(payload))
+            const response = await PaymentService.saveTransaction(requestBody)
+            history.push(`/subscription`)
             toast.success(response.data.messageF)
         } catch (error) {
             toast.error(error)
@@ -151,17 +139,17 @@ function PaymentForms() {
                     Payment Information
                 </h2>
                 <h6 className="mb-4">
-                    Monthly Subscript
+                    <strong>Verbena Set up Fee</strong>
                 </h6>
                 <div className="flex items-center mb-4">
-                    <div className="dd w-32">
+                    <div className="dd w-12">
                         <h3 className="leading-none text-lg calibre-regular">
-                            Subscription :-
+                            Fee :-
                         </h3>
                     </div>
                     <div className="w-auto">
                         <h3 className="leading-none text-lg calibre-bold">
-                            $149/month
+                            $250
                         </h3>
                     </div>
                 </div>
@@ -240,4 +228,4 @@ function PaymentForms() {
     );
 }
 
-export default PaymentForms;
+export default PaymentForm;

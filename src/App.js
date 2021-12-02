@@ -7,6 +7,7 @@ import {
     ForgotPasswordPage,
     UpdatePasswordPage,
     SubscriptionPage,
+    SetupFeePage
 } from "./Pages";
 import { ScrollToTop, Footer, AppointmentPopup, Subscription } from "./Components";
 import { PrivateRoute } from "./Components";
@@ -34,6 +35,7 @@ function App() {
                         <PrivateRoute path="/home" component={Layout} />
                         <Route path="/login" component={LoginPage} />
                         <Route path="/signup" component={SignUpPage} />
+                        <Route path="/setupfee" component={SetupFeePage} />
                         <Route path="/subscription" component={SubscriptionPage} />
                         <Route
                             path="/forgot-password"
