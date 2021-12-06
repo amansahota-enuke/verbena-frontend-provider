@@ -7,11 +7,11 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import PhoneInput from "react-phone-number-input/input";
 import { isPossiblePhoneNumber } from "react-phone-number-input";
 
-import { UserActions } from "../../redux/slice/user.slice";
+import { UserActions } from "../../../redux/slice/user.slice";
 import { toast } from "react-toastify";
-import { CommonService } from "../../services";
-import { Loader } from "../";
-import ButtonLoader from "../Common/ButtonLoader";
+import { CommonService } from "../../../services";
+import { Loader } from "../..";
+import ButtonLoader from "../../Common/ButtonLoader";
 
 const SignUpForm = (props) => {
     const dispatch = useDispatch();
@@ -215,7 +215,7 @@ const SignUpForm = (props) => {
         const actionResult = await dispatch(UserActions.signUp(formData));
         setProcessing(false);
         if (!actionResult.hasOwnProperty("error")) {
-            history.push("/setupfee");
+            history.push("/signup/privacy-policy");
         }
     };
 

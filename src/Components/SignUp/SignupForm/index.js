@@ -1,6 +1,6 @@
 import React from "react";
 
-import { BoxedWidthContainer } from "..";
+import { BoxedWidthContainer } from "../..";
 import SignUpForm from "./SignUpForm";
 
 const SignUp = () => {

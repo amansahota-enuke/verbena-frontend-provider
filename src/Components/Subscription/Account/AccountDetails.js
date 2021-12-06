@@ -1,11 +1,16 @@
 import moment from "moment";
 import React, { useEffect, useState } from "react";
 import PaymentService from "../../../services/payment.service"
+import { ConfirmationActions } from "../../../redux/slice/confirmation.slice";
+import confirmationConstants from "../../../constants/confirmation.constants";
+import { useDispatch, useSelector } from "react-redux";
+import { SubscriptionActions } from "../../../redux/slice/subscription.slice";
 
 function AccountDetails() {
+    const dispatch = useDispatch()
     const [test, setTest] = useState()
 
-    const getSubscriptionData = async()=>{
+    const getSubscriptionData = async () => {
         const res = await PaymentService.getSubscriptionDetails()
         setTest(res.data.data)
     }
@@ -13,6 +18,16 @@ function AccountDetails() {
     useEffect(() => {
         getSubscriptionData()
     }, [])
+
+    const handleCancel = () => {
+        dispatch(SubscriptionActions.SubscriptionId(test.subscription_id))
+        dispatch(
+            ConfirmationActions.setConfirmationType(
+                confirmationConstants.SUBSCRIPTION_CANCEL
+            )
+        )
+        dispatch(ConfirmationActions.openConfirmation());
+    }
 
     return (
         <>
@@ -41,7 +56,7 @@ function AccountDetails() {
                         <div className="w-2.5 mr-4">:-</div>
                         <div className="w-auto">
                             <h3 className="leading-none text-lg calibre-bold">
-                            {test && JSON.parse(test.res_body).latest_invoice.customer_email}
+                                {test && JSON.parse(test.res_body).latest_invoice.customer_email}
                             </h3>
                         </div>
                     </div>
@@ -87,18 +102,18 @@ function AccountDetails() {
                     </div>
                 </div>
                 <div className="p-10 px-5 py-5">
-                    <div className="flex justify-start items-center">
-                        <a href = {test && JSON.parse(test.res_body).latest_invoice.invoice_pdf }
+                    <div className="flex justify-start">
+                        <a href={test && JSON.parse(test.res_body).latest_invoice.invoice_pdf}
                             type="button"
                             className="btn-login calibre-regular font-18 uppercase primary-bg-color text-white"
                         >
                             Download Receipt
                         </a>
-                        <a className="pl-4">
+                        <button className="pl-4" onClick={handleCancel}>
                             Cancel
-                        </a>
+                        </button>
                     </div>
-                    
+
                 </div>
             </div>
         </>

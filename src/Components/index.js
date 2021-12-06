@@ -13,7 +13,7 @@ import BoxedWidthContainer from "./Container/BoxedWidthContainer";
 import FullWidthContainer from "./Container/FullWidthContainer";
 
 import Login from "./Login";
-import SignUp from "./SignUp";
+import SignUp from "./SignUp/SignupForm";
 import ForgotPassword from "./ForgotPassword";
 import ResetPassword from "./ResetPassword";
 
@@ -29,6 +29,7 @@ import Subscription from "./Subscription/Payments";
 import SubscriptionBooked from "./Subscription/SubscriptionBooked";
 import SetupFee from "./Subscription/SetupFee";
 import Account from "./Subscription/Account";
+import PrivacyPolicy from "./SignUp/PrivacyPolicy"
 
 export {
     //Common
@@ -65,5 +66,7 @@ export {
     //Setup fee
     SetupFee,
     //Account Details
-    Account
+    Account,
+    //Privacy Policy
+    PrivacyPolicy,
 };

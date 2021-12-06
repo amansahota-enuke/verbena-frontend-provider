@@ -26,7 +26,8 @@ const selector = {
     notifications:(state)=>state.chat.notifications,
     notificationCount:(state)=>state.chat.notificationCount,
     //Subscription Details
-    subscriptionData:(state)=>state.subscription.subscriptionData
+    subscriptionData:(state)=>state.subscription.subscriptionData,
+    subscribedId:(state)=>state.subscription.subscriptionId,
 };
 
 export default selector;
