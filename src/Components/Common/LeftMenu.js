@@ -99,14 +99,14 @@ const LeftMenu = ({ show }) => {
                         <span class="fa fa-rocket" ></span>
                         <span className="title capitalize font-18 pl-3">Subscription</span>
                     </Link> */}
-                    <Link
+                    {/* <Link
                         className="block border-b-1 pl-4 pt-3 pb-3 calibre-regular"
                         to="/home/profile"
                         title="Profile"
                     >
                         <span className="icon sprite-menu profile"></span>
                         <span className="title captilaize font-18 pl-3">Profile</span>
-                    </Link>
+                    </Link> */}
                 </div>
             </div>
         </>
