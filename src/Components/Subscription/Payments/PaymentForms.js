@@ -151,7 +151,7 @@ function PaymentForms() {
                     Payment Information
                 </h2>
                 <h6 className="mb-4">
-                    Monthly Subscript
+                    Monthly Subscription
                 </h6>
                 <div className="flex items-center mb-4">
                     <div className="dd w-32">

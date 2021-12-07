@@ -3,9 +3,18 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory, useParams } from "react-router-dom";
 import selector from "../../../redux/selector";
+import { SubscriptionActions } from "../../../redux/slice/subscription.slice";
 
 function Subscribed() {
+  const dispatch = useDispatch()
+  const history = useHistory()
   const subscriptionDetails = useSelector(selector.subscriptionData)
+
+  const handleChange = async()=>{
+    await dispatch(SubscriptionActions.checkSetUpfeeDetails())
+    await dispatch(SubscriptionActions.checkSubscription())
+    history.push(`/home/dashboard`)
+  }
 
   return (
     <>
@@ -138,13 +147,13 @@ function Subscribed() {
         </div>
         <div className="p-10 px-5 py-5">
           <div className="flex justify-start">
-            <Link
+            <button
               type="button"
               className="btn-login calibre-regular font-18 uppercase primary-bg-color text-white"
-              to={`/home/dashboard`}
+              onClick={handleChange}
             >
               Go To dashboard
-            </Link>
+            </button>
           </div>
         </div>
       </div>

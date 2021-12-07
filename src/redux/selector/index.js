@@ -28,6 +28,8 @@ const selector = {
     //Subscription Details
     subscriptionData:(state)=>state.subscription.subscriptionData,
     subscribedId:(state)=>state.subscription.subscriptionId,
+    userSubscriptionDetails:(state)=>state.subscription.data,
+    setUpfeeDetails:(state)=>state.subscription.setUpfeeData,
 };
 
 export default selector;
