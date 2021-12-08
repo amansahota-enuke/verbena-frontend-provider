@@ -12,13 +12,13 @@ const Payments = () => {
     const history = useHistory();
     return (
         <>
-            <button
+            {/* <button
                 onClick={() => history.goBack()}
                 type="button"
                 className="px-4 py-2 rounded-full mb-3 calibre-regular leading-none font-18 uppercase primary-bg-color text-white"
             >
                 <i className="fas fa-arrow-left mr-2"></i> Back
-            </button>
+            </button> */}
             <BoxedWidthContainer>
                 <Elements stripe={promise}>
                     <PaymentForms />
