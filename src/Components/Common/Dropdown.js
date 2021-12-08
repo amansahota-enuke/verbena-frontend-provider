@@ -38,19 +38,19 @@ export default function Example() {
             {({ open }) => (
                 <>
                     <div>
-                        <Menu.Button className="">
+                    <Menu.Button className="calibre-regular">
                             <img
                                 src={
                                     profileImage
                                         ? profileImage
                                         : "/images/user.png"
                                 }
-                                className="mr-2 w-10 rounded-full"
+                                className="profile-image mr-2 inline-block border rounded-full"
                                 alt=""
                                 title=""
                             />
-                            {!!user.first_name && parseName(user.first_name)}{" "}
-                            {!!user.last_name && parseName(user.last_name)}
+                            <span className="font-18 xl:inline-block lg:inline-block md:inline-block sm:hidden hidden">{!!user.first_name && parseName(user.first_name)}{" "}
+                            {!!user.last_name && parseName(user.last_name)}</span>
                         </Menu.Button>
                     </div>
 
@@ -81,6 +81,21 @@ export default function Example() {
                                             )}
                                         >
                                             Profile
+                                        </Link>
+                                    )}
+                                </Menu.Item>
+                                <Menu.Item>
+                                    {({ active }) => (
+                                        <Link
+                                            to="/home/account"
+                                            className={classNames(
+                                                active
+                                                    ? "bg-gray-100 text-gray-900"
+                                                    : "text-gray-700",
+                                                "block px-4 py-2 text-sm"
+                                            )}
+                                        >
+                                            Account
                                         </Link>
                                     )}
                                 </Menu.Item>

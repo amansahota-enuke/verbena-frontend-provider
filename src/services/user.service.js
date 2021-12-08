@@ -9,6 +9,9 @@ const UserService = {
         ApiService.post("/auth/reset-password", payload),
     getProfile: () => ApiService.get("/profile"),
     updateProfile: (payload) => ApiService.put("/profile", payload),
+    addSubscriptions: (body) => ApiService.post(`/auth/addSubscription`, body),
+    saveSubscription: (body) => ApiService.post(`/auth/save-subscription`, body),
+    fetchPaymentIntent: () => ApiService.get(`/auth/get-client-secret`)
 };
 
 export default UserService;

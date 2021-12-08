@@ -13,7 +13,7 @@ import BoxedWidthContainer from "./Container/BoxedWidthContainer";
 import FullWidthContainer from "./Container/FullWidthContainer";
 
 import Login from "./Login";
-import SignUp from "./SignUp";
+import SignUp from "./SignUp/SignupForm";
 import ForgotPassword from "./ForgotPassword";
 import ResetPassword from "./ResetPassword";
 
@@ -25,6 +25,11 @@ import AppointmentVideo from "./Appointment/AppointmentVideo";
 import AppointmentPopup from "./Appointment/AppointmentPopup";
 import PatientList from "./Patient/PatientList";
 import PatientDetail from "./Patient/PatientDetail";
+import Subscription from "./Subscription/Payments";
+import SubscriptionBooked from "./Subscription/SubscriptionBooked";
+import SetupFee from "./Subscription/SetupFee";
+import Account from "./Subscription/Account";
+import PrivacyPolicy from "./SignUp/PrivacyPolicy"
 
 export {
     //Common
@@ -55,4 +60,13 @@ export {
     AppointmentPopup,
     PatientList,
     PatientDetail,
+    //Subscription
+    Subscription,
+    SubscriptionBooked,
+    //Setup fee
+    SetupFee,
+    //Account Details
+    Account,
+    //Privacy Policy
+    PrivacyPolicy,
 };

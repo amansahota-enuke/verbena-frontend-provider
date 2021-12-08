@@ -1,39 +1,53 @@
 // This example requires Tailwind CSS v2.0+ /
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useEffect } from "react";
+import { useLocation, Link } from "react-router-dom";
 import { Menu, Transition } from "@headlessui/react";
-import { TokenService } from "../../services";
-import { Link, useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
 import selector from "../../redux/selector";
-import { BellIcon } from "@heroicons/react/solid";
 import { useDispatch } from "react-redux";
-import { AppointmentActions } from "../../redux/slice/appointment.slice";
-import { AppointmentService } from "../../services";
+import { ChatActions } from "../../redux/slice/chat.slice";
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(" ");
 }
 
 export default function Example() {
-    const notifications = useSelector(selector.chatNotifications);
+    const location = useLocation();
     const dispatch = useDispatch();
+    const notificationCount = useSelector(selector.notificationCount);
+    const notifications = useSelector(selector.notifications);
 
     useEffect(() => {
         setInterval(() => {
-            dispatch(AppointmentActions.getNotifications());
+            dispatch(ChatActions.getNotifications());
         }, 5000);
     }, []);
 
+    const updateNotification = async (notification, type) => {
+        const actionResult = await dispatch(
+            ChatActions.updateNotification({
+                id: notification.id,
+                body: {
+                    type,
+                },
+            })
+        );
+        if (!actionResult.hasOwnProperty("error")) {
+            dispatch(ChatActions.getNotifications());
+        }
+    };
+
     return (
-        <Menu as="div" className="relative inline-block">
+        <Menu as="div" className="relative inline-block xl:mr-4 lg:mr-4 md:mr-4 sm:mr-0 mr-0 xl:mt-3 lg:mt-3 md:mt-0 sm:mt-0 mt-0">
             {({ open }) => (
                 <>
-                    <Menu.Button className="calibre-regular">
-                        {/* <svg class="w-10 h-8" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z"></path></svg> */}
-                        <i className="font-24 far fa-bell mr-4"></i>
-                        <span className="notify-count h-5 w-5 rounded-full primary-bg-color text-white font-12 absolute -top-2 left-3 leading-5">
-                            {notifications.length}
-                        </span>
+                    <Menu.Button className="calibre-regular relative xl:mr-4 lg:mr-4 md:mr-4 sm:mr-0 mr-0">
+                        <i className="font-20 far fa-bell"></i>
+                        {Number(notificationCount) !== 0 && (
+                            <span className="notify-count h-5 w-5 rounded-full primary-bg-color text-white font-12 absolute -top-2 leading-5">
+                                {notificationCount}
+                            </span>
+                        )}
                     </Menu.Button>
 
                     <Transition
@@ -50,44 +64,93 @@ export default function Example() {
                             static
                             className="notification-wrapper origin-top-right absolute right-0 w-72 rounded-md shadow-lg bg-white"
                         >
-                            {notifications.map((i) => {
-                                return (
-                                    <div className="">
-                                        <Menu.Item>
-                                            {({ active }) => (
-                                                <Link
-                                                    className={classNames(
-                                                        active
-                                                            ? "bg-gray-100 text-gray-900 calibre-regular border-b"
-                                                            : "text-gray-700 calibre-regular border-b relative",
-                                                        "block px-4 py-4 text-sm font-16"
-                                                    )}
-                                                >
-                                                    <span className="overflow-ellipsis overflow-hidden truncate inline-block max-w-120 align-middle">
-                                                        {i.user_message.text}
-                                                    </span>
-                                                    <a
-                                                        href="#"
-                                                        className="absolute right-4 font-12"
+                            {notifications.map((notification, index) => (
+                                <div key={index} className="">
+                                    <Menu.Item>
+                                        {({ active }) => (
+                                            <Link
+                                                to={
+                                                    !location.pathname.includes(
+                                                        "video"
+                                                    )
+                                                        ? `/home/appointments/${notification.user_message.appointment_id}?chat=open`
+                                                        : ""
+                                                }
+                                                className={classNames(
+                                                    active
+                                                        ? "bg-gray-100 text-gray-900 calibre-regular border-b"
+                                                        : "text-gray-700 calibre-regular border-b relative",
+                                                    `block px-4 py-4 text-sm font-16 ${
+                                                        !notification.seen &&
+                                                        "unread"
+                                                    }`
+                                                )}
+                                            >
+                                                <div className="inline-flex">
+                                                    <div className="chat-user-img mr-3 bg-cover">
+                                                    <img
+                                                        src={
+                                                            notification.patient.profile_image_path
+                                                                ? process.env
+                                                                    .REACT_APP_API_SERVER_URL +
+                                                                    notification.patient.profile_image_path
+                                                                : "https://res.cloudinary.com/dx94hnzfl/image/upload/v1612593409/Ellipse_1_2_uziel2.png"
+                                                        }
+                                                    />
+                                                    </div>
+                                                    <div className="chat-user-content">
+                                                    <h4 className="font-14">{
+                                                            notification
+                                                                .patient.first_name+" "+notification
+                                                                .patient.last_name
+                                                        } </h4>
+                                                    <span
+                                                    className="overflow-ellipsis overflow-hidden truncate inline-block max-w-120 align-middle"
                                                     >
-                                                        <span>
-                                                            <i className="fas fa-times"></i>
-                                                        </span>
-                                                    </a>
-                                                    <a
-                                                        href="#"
+                                                        {
+                                                            notification
+                                                                .user_message.text
+                                                        }
+                                                    </span>
+                                                    </div>
+                                                </div>
+                                                {!notification.seen && (
+                                                    <button
                                                         className="absolute right-8 font-12"
+                                                        onClick={(e) => {
+                                                            e.preventDefault();
+                                                            e.stopPropagation();
+                                                            updateNotification(
+                                                                notification,
+                                                                "seen"
+                                                            );
+                                                        }}
                                                     >
                                                         <span>
                                                             Mark As Read
                                                         </span>
-                                                    </a>
-                                                </Link>
-                                            )}
-                                        </Menu.Item>
-                                    </div>
-                                );
-                            })}
+                                                    </button>
+                                                )}
+                                                <button
+                                                    className="absolute right-4 font-12"
+                                                    onClick={(e) => {
+                                                        e.preventDefault();
+                                                        e.stopPropagation();
+                                                        updateNotification(
+                                                            notification,
+                                                            "removed"
+                                                        );
+                                                    }}
+                                                >
+                                                    <span>
+                                                        <i className="fas fa-times"></i>
+                                                    </span>
+                                                </button>
+                                            </Link>
+                                        )}
+                                    </Menu.Item>
+                                </div>
+                            ))}
                         </Menu.Items>
                     </Transition>
                 </>

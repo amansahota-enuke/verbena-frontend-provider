@@ -10,6 +10,7 @@ import {
     ProfilePage,
     PatientPage,
     DashboardPage,
+    AccountPage
 } from "../Pages";
 
 const Layout = ({ match }) => {
@@ -55,6 +56,10 @@ const Layout = ({ match }) => {
                     <Route
                         path={`${match.path}/profile`}
                         component={ProfilePage}
+                    />
+                    <Route
+                        path={`${match.path}/account`}
+                        component={AccountPage}
                     />
                     <Route component={Error} />
                 </Switch>

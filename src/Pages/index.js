@@ -6,6 +6,9 @@ import DashboardPage from "./Home/Dashboard";
 import ProfilePage from "./Home/Profile";
 import AppointmentPage from "./Home/Appointment";
 import PatientPage from "./Home/Patient";
+import SubscriptionPage from "./Subscription";
+import SetupFeePage from "./SetupFee";
+import AccountPage from "./Home/Account/AccountPage"
 
 export {
     //Auth
@@ -18,4 +21,7 @@ export {
     ProfilePage,
     AppointmentPage,
     PatientPage,
+    SubscriptionPage,
+    SetupFeePage,
+    AccountPage
 };

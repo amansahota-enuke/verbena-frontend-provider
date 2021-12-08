@@ -1,15 +1,19 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
 
 import confirmationConstants from "../../../constants/confirmation.constants";
 import selector from "../../../redux/selector";
 import { ConfirmationActions } from "../../../redux/slice/confirmation.slice";
 import { AppointmentActions } from "../../../redux/slice/appointment.slice";
+import { Link, useHistory, useParams } from "react-router-dom";
+import { UserActions } from "../../../redux/slice/user.slice";
+import { useEffect } from "react";
+
 
 function DoctorDetail({ selectedAppointment }) {
     const dispatch = useDispatch();
-    const history = useHistory();
+    const { appointmentId } = useParams();
+
     const user = useSelector(selector.user);
 
     const parseName = (name) => {
@@ -60,6 +64,10 @@ function DoctorDetail({ selectedAppointment }) {
             );
         }
     };
+    useEffect(()=>{
+        dispatch(UserActions.getProfile(appointmentId))
+    },[])
+
 
     return (
         <>
@@ -83,7 +91,7 @@ function DoctorDetail({ selectedAppointment }) {
                             </div>
                             <div>
                                 <h3 className="hepta-slab mb-2 text-xl leading-none">
-                                    {`Dr.${
+                                    {`Dr. ${
                                         user.first_name &&
                                         parseName(user.first_name)
                                     } ${
@@ -91,7 +99,7 @@ function DoctorDetail({ selectedAppointment }) {
                                         parseName(user.last_name)
                                     }`}
                                 </h3>
-                                <h6 className="text-base uppercase mb-3 light-dark-gray-color calibre-regular">
+                                <h6 className="text-base uppercase mb-0 light-dark-gray-color calibre-regular">
                                     {user.provider_speciality_master &&
                                         user.provider_speciality_master.name}
                                 </h6>
@@ -99,15 +107,15 @@ function DoctorDetail({ selectedAppointment }) {
                                     <div className="edu-icon mr-3">
                                         <i className="fas fa-graduation-cap"></i>
                                     </div>
-                                    <div className="light-gray-color text-base calibre-regular">
-                                        {user.hospital_affiliations &&
+                                    <div className="light-dark-gray-color capitalize font-18 mb-0 calibre-regular">
+                                        {user.board_certifications &&
                                             JSON.parse(
-                                                user.hospital_affiliations
+                                                user.board_certifications
                                             ).map((hospital, index) => {
                                                 let test = index + 1;
                                                 if (
                                                     JSON.parse(
-                                                        user.hospital_affiliations
+                                                        user.board_certifications
                                                     ).length === test
                                                 ) {
                                                     return hospital.value;
@@ -121,7 +129,7 @@ function DoctorDetail({ selectedAppointment }) {
                                     <div className="address-icon mr-3">
                                         <i className="fas fa-map-marker-alt"></i>
                                     </div>
-                                    <div className="light-gray-color text-base calibre-regular">
+                                    <div className="light-dark-gray-color font-18 calibre-regular">
                                         {user.address &&
                                             `${user.address.address_line1}, ${
                                                 user.address.address_line2 + ","
@@ -136,18 +144,6 @@ function DoctorDetail({ selectedAppointment }) {
                     <div>
                         <div className="quick-btn">
                             <div className="flex">
-                                {selectedAppointment.status === "ongoing" && (
-                                    <button
-                                        onClick={() =>
-                                            history.push(
-                                                `/home/appointments/video/${selectedAppointment.id}`
-                                            )
-                                        }
-                                        className="modal-open calibre-regular font-16 btn-ready-visit px-3 py-2 rounded-full uppercase text-white primary-bg-color mr-3"
-                                    >
-                                        Rejoin
-                                    </button>
-                                )}
                                 {["ongoing", "patientDone"].includes(
                                     selectedAppointment.status
                                 ) && (
@@ -155,11 +151,16 @@ function DoctorDetail({ selectedAppointment }) {
                                         <button
                                             type="button"
                                             className="btn-reschedule calibre-regular font-16 px-3 py-2 rounded-full uppercase text-white primary-dim-bg-color mr-3"
-                                            onClick={() =>
-                                                updateAppointmentStatus(
-                                                    "pending"
-                                                )
-                                            }
+                                            onClick={() => {
+                                                dispatch(
+                                                    ConfirmationActions.setConfirmationType(
+                                                        confirmationConstants.COMPLETE_APPOINTMENT
+                                                    )
+                                                );
+                                                dispatch(
+                                                    ConfirmationActions.openConfirmation()
+                                                );
+                                            }}
                                         >
                                             Complete Appointment
                                         </button>

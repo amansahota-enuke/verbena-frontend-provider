@@ -7,11 +7,11 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import PhoneInput from "react-phone-number-input/input";
 import { isPossiblePhoneNumber } from "react-phone-number-input";
 
-import { UserActions } from "../../redux/slice/user.slice";
+import { UserActions } from "../../../redux/slice/user.slice";
 import { toast } from "react-toastify";
-import { CommonService } from "../../services";
-import { Loader } from "../";
-import ButtonLoader from "../Common/ButtonLoader";
+import { CommonService } from "../../../services";
+import { Loader } from "../..";
+import ButtonLoader from "../../Common/ButtonLoader";
 
 const SignUpForm = (props) => {
     const dispatch = useDispatch();
@@ -215,7 +215,7 @@ const SignUpForm = (props) => {
         const actionResult = await dispatch(UserActions.signUp(formData));
         setProcessing(false);
         if (!actionResult.hasOwnProperty("error")) {
-            history.push("/home");
+            history.push("/signup/privacy-policy");
         }
     };
 
@@ -245,7 +245,7 @@ const SignUpForm = (props) => {
                         <div className="form-content xl:px-32 lg:px-32 md:px-10 sm:px-5 px-4 py-10">
                             <div className="flex xl:flex-nowrap lg:flex-nowrap md:flex-wrap sm:flex-wrap flex-wrap justify-between items-end mb-16">
                                 <div>
-                                    <h1 className="hepta-bold primary-text-color lh-40">
+                                    <h1 className="hepta-bold primary-text-color lh-40 font-32">
                                         Provider Contact Form
                                     </h1>
                                 </div>
@@ -844,11 +844,11 @@ const SignUpForm = (props) => {
                         </div>
 
                         <div className="form-footer xl:px-32 lg:px-32 md:px-10 sm:px-5 px-4 border-t-2 xl:py-10 lg:py-10 md:py-4 sm:py-4 py-4">
-                            <div className="flex items-center justify-end">
+                            <div className="flex items-center justify-start">
                                 <button
                                     disabled={processing}
                                     type="button"
-                                    className="disabled:opacity-50 btn-create-account calibre-bold font-18 uppercase primary-text-color mr-3"
+                                    className="disabled:opacity-50 btn-create-account calibre-regular tracking-wider font-16 uppercase primary-text-color mr-3"
                                     onClick={() => history.goBack()}
                                 >
                                     Cancel
@@ -856,9 +856,9 @@ const SignUpForm = (props) => {
                                 <button
                                     disabled={processing}
                                     type="submit"
-                                    className="disabled:opacity-50 btn-login calibre-bold font-18 uppercase primary-bg-color text-white"
+                                    className="disabled:opacity-50 btn-login calibre-regular tracking-wider font-16 uppercase primary-bg-color text-white"
                                 >
-                                    <span className="calibre-bold">
+                                    <span className="calibre-regular">
                                         {processing ? (
                                             <ButtonLoader />
                                         ) : (

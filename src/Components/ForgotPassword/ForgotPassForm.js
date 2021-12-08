@@ -45,7 +45,7 @@ function ForgotPassForm() {
                 <div className="bg-white p-10 login-box px-8 py-10 mb-10">
                     <div className="flex justify-between mb-10 items-end">
                         <div>
-                            <h1 className="hepta-bold primary-text-color lh-40">
+                            <h1 className="hepta-bold primary-text-color lh-40 font-32">
                                 Forgot Password
                             </h1>
                         </div>
@@ -85,14 +85,14 @@ function ForgotPassForm() {
                         <div className="d-flex items-center mb-5">
                             <button
                                 type="button"
-                                className="btn-create-account calibre-regular font-16 uppercase primary-text-color mr-3"
+                                className="btn-create-account calibre-regular tracking-wider font-16 uppercase primary-text-color mr-3"
                                 onClick={() => history.goBack()}
                             >
                                 Cancel
                             </button>
                             <button
                                 type="submit"
-                                className="btn-login calibre-regular font-16 uppercase primary-bg-color text-white mr-3"
+                                className="btn-login calibre-regular font-16 tracking-wider uppercase primary-bg-color text-white mr-3"
                             >
                                 Continue
                             </button>

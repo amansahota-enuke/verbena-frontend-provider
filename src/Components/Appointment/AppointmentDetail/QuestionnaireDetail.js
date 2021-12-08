@@ -47,8 +47,8 @@ const QuestionnaireDetail = () => {
             <Disclosure>
                 {({ open }) => (
                     <>
-                        <Disclosure.Button className="flex justify-between w-full py-4 text-sm font-medium text-left rounded-lg bg-white px-2 mb-2">
-                            <h4 className="hepta-slab mb-0">
+                        <Disclosure.Button className="flex items-center justify-between w-full py-4 font-medium text-left rounded-t-lg rounded-r-lg rounded-b-none bg-white px-2 mb-0">
+                            <h4 className="hepta-slab mb-0 font-28">
                                 Questionnaire Details
                             </h4>
                             <ChevronDownIcon
@@ -57,22 +57,30 @@ const QuestionnaireDetail = () => {
                                 } w-5 h-5 text-black`}
                             />
                         </Disclosure.Button>
-                        <Disclosure.Panel className="pt-0 pb-2 text-sm">
-                            <div className="bg-white rounded-md mb-3">
-                                {questionnaireAnswers.map((question) => {
+                        <Disclosure.Panel className="pt-0 pb-2">
+                            <div className="bg-white rounded-t-none mb-3">
+                                {questionnaireAnswers.map((question, index) => {
                                     const showQuestion =
                                         checkQuestion(question);
                                     if (showQuestion) {
                                         return (
-                                            <div className="health-info border-b-1">
-                                                <h3 className="text-xl dark-color px-4 pt-2 pb-0 calibre-bold">
+                                            <div
+                                                key={question.id}
+                                                className="health-info border-b-1"
+                                            >
+                                                <h3 className="font-18 dark-color px-4 pt-2 pb-0 calibre-bold">
                                                     {question.text}
                                                 </h3>
                                                 {question.patient_questionnaires
                                                     .length > 0 ? (
                                                     question.patient_questionnaires.map(
                                                         (response) => (
-                                                            <p className="text-xl px-4 py-0 mb-3 calibre-regular font-16">
+                                                            <p
+                                                                key={
+                                                                    response.id
+                                                                }
+                                                                className="px-4 py-0 mb-3 calibre-regular font-16"
+                                                            >
                                                                 {response.answer_text
                                                                     ? response.answer_text
                                                                     : response
@@ -82,7 +90,10 @@ const QuestionnaireDetail = () => {
                                                         )
                                                     )
                                                 ) : (
-                                                    <p className="text-xl px-4 py-2 calibre-regular text-2x">
+                                                    <p
+                                                        key={index}
+                                                        className="font-18 px-4 py-2 calibre-regular text-2x"
+                                                    >
                                                         No Response
                                                     </p>
                                                 )}

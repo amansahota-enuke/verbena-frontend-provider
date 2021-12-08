@@ -79,7 +79,7 @@ function Report({ appointmentId, oldReports, setOldReports }) {
 
     return (
         <>
-            <h4 className="hepta-slab px-4 py-3 rounded-md mb-2 bg-white">Lab Test <button
+            <h4 className="hepta-slab px-4 py-3 rounded-md mb-2 bg-white mt-3">Lab Test <button
                 className="rounded-full p-2 w-8 h-8 calibre-bold font-18 uppercase primary-bg-color text-white"
                 onClick={() => addReport()}
             >
@@ -168,7 +168,7 @@ function Report({ appointmentId, oldReports, setOldReports }) {
                 {reports.length + oldReports.length > 0 && (
                         <div className="justify-center mb-5">
                             <button
-                                className="btn-login calibre-regular font-16 uppercase primary-bg-color text-white"
+                                className="btn-login calibre-regular font-18 uppercase primary-bg-color text-white"
                                 onClick={() => saveReport()}
                             >
                                 save

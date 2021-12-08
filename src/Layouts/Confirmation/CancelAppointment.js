@@ -73,7 +73,7 @@ function RescheduleAppointment() {
             </Dialog.Title>
             <p>
                 We understand life can get in the way. Cancelling or missing
-                your appointments too many times will result in your account
+                your appointment too many times will result in your account
                 being locked.
             </p>
             <div className="bg-white mb-10">
@@ -81,7 +81,7 @@ function RescheduleAppointment() {
                     <div className="grid grid-cols-6 gap-6">
                         <div className="col-span-6">
                             <div className="input-label calibre-bold mb-4">
-                                Whats the reason for your cancellation ?
+                                What's the reason for your cancellation ?
                             </div>
                             {appointmentCancelReasons.length === 0 ? (
                                 <ButtonLoader color="#000" />

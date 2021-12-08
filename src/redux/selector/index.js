@@ -11,8 +11,6 @@ const selector = {
     appointmentCount: (state) => state.appointment.count,
     selectedAppointment: (state) => state.appointment.selectedAppointment,
     appointmentCancelReasons: (state) => state.appointment.cancelReasons,
-    chatMessages:(state)=>state.appointment.messages,
-    chatNotifications:(state)=>state.appointment.notifications,
     //Patient Reducer
     patientStatus: (state) => state.patient.status,
     patientList: (state) => state.patient.patientList,
@@ -22,6 +20,16 @@ const selector = {
     questionnaireStatus: (state) => state.questionnaire.status,
     basicQuestionnaire: (state) => state.questionnaire.basicQuestionnaire,
     questionnaireAnswers: (state) => state.questionnaire.answers,
+    // Chat Reducer
+    chatStatus:(state)=>state.chat.status,
+    messages:(state)=>state.chat.messages,
+    notifications:(state)=>state.chat.notifications,
+    notificationCount:(state)=>state.chat.notificationCount,
+    //Subscription Details
+    subscriptionData:(state)=>state.subscription.subscriptionData,
+    subscribedId:(state)=>state.subscription.subscriptionId,
+    userSubscriptionDetails:(state)=>state.subscription.data,
+    setUpfeeDetails:(state)=>state.subscription.setUpfeeData,
 };
 
 export default selector;

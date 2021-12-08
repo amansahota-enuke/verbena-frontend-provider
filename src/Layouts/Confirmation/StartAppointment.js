@@ -13,16 +13,18 @@ function StartAppointment() {
     const selectedAppointment = useSelector(selector.selectedAppointment);
 
     const joinRoom = async () => {
-        const actionResult = await dispatch(
-            AppointmentActions.updateAppointmentStatus({
-                id: selectedAppointment.id,
-                body: { status: "ongoing" },
-            })
-        );
-        if (!actionResult.hasOwnProperty("error")) {
-            dispatch(ConfirmationActions.closeConfirmation());
+        // const actionResult = await dispatch(
+        //     AppointmentActions.updateAppointmentStatus({
+        //         id: selectedAppointment.id,
+        //         body: { status: "ongoing" },
+        //     })
+        // );
+        // if (!actionResult.hasOwnProperty("error")) {
+        //     dispatch(ConfirmationActions.closeConfirmation());
+        //     history.push(`/home/appointments/video/${selectedAppointment.id}`);
+        // }
+        dispatch(ConfirmationActions.closeConfirmation());
             history.push(`/home/appointments/video/${selectedAppointment.id}`);
-        }
     };
 
     const closeModal = () => {
@@ -59,13 +61,14 @@ function StartAppointment() {
                             {selectedAppointment.provider &&
                                 `${selectedAppointment.provider.first_name} ${selectedAppointment.provider.last_name}`}
                         </h3>
-                        <h6 className="text-base uppercase mb-3 light-gray-color">
-                            Dermatologist
+                        <h6 className="font-18 uppercase mb-3 light-dark-gray-color calibre-regular">
+                        {selectedAppointment.provider && 
+                            selectedAppointment.provider.provider_speciality_master.name}
                         </h6>
                         <div>
                             <div className="flex">
                                 <div>
-                                    <h3 className="calibre-regular leading-none text-base light-dark-gray-color border-r-2 pr-2 mr-2">
+                                    <h3 className="font-16 calibre-regular leading-none light-dark-gray-color border-r-2 pr-2 mr-2">
                                         <i className="fas fa-calendar mr-2"></i>
                                         {selectedAppointment.appointment_datetime &&
                                             moment(
@@ -74,11 +77,8 @@ function StartAppointment() {
                                     </h3>
                                 </div>
                                 <div>
-                                    <h3 className="calibre-regular leading-none text-base light-dark-gray-color">
-                                        {selectedAppointment.appointment_datetime &&
-                                            moment(
-                                                selectedAppointment.appointment_datetime
-                                            ).format("HH:mm A")}
+                                    <h3 className="font-16 calibre-regular leading-none light-dark-gray-color">
+                                    {moment(selectedAppointment.appointment_datetime, "hh:mm").format('LT')}  
                                     </h3>
                                 </div>
                             </div>
@@ -100,7 +100,7 @@ function StartAppointment() {
                             </h3>
                         </div>
                     </div>
-                    <div className="flex items-center mb-4">
+                    {/* <div className="flex items-center mb-4">
                         <div className="w-36">
                             <h3 className="leading-none text-lg calibre-regular">
                                 Age
@@ -109,20 +109,26 @@ function StartAppointment() {
                         <div className="w-2.5 mr-4">:-</div>
                         <div className="w-auto">
                             <h3 className="leading-none text-lg calibre-bold">
-                                29 Years
+                                {selectedAppointment.patient &&
+                                        moment().diff(selectedAppointment.patient.dob, 'years') }
                             </h3>
                         </div>
-                    </div>
+                    </div> */}
                     <div className="flex items-center">
                         <div className="w-36">
                             <h3 className="leading-none text-lg calibre-regular">
-                                Gender
+                                Reason for visit
                             </h3>
                         </div>
                         <div className="w-2.5 mr-4">:-</div>
                         <div className="w-auto">
                             <h3 className="leading-none text-lg calibre-bold">
-                                Male
+                            {selectedAppointment.appointment_reason_text
+                                                ? selectedAppointment.appointment_reason_text
+                                                : selectedAppointment.appointment_reason
+                                                ? selectedAppointment
+                                                      .appointment_reason.name
+                                                : ""}
                             </h3>
                         </div>
                     </div>

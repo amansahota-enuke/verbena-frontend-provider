@@ -95,11 +95,11 @@ const validationSchema = Yup.object({
         .required("State is a required field")
         .min(1, "State is a required field"),
     zipcode: Yup.string().required("Zipcode is a required field"),
-    bio: Yup.string(),
+    bio: Yup.string().nullable(),
     patient_testimonial: Yup.array().of(
         Yup.object()
             .shape({
-                value: Yup.string(),
+                value: Yup.string().nullable(),
             })
             .required()
     ),
@@ -334,7 +334,7 @@ const Profile = () => {
                 <div className="form-content xl:px-32 lg:px-32 md:px-16 sm:px-10 px-4 py-10">
                     <div className="flex justify-between mb-10 items-end">
                         <div>
-                            <h1 className="hepta-bold primary-text-color whitespace-nowrap">
+                            <h1 className="hepta-bold primary-text-color whitespace-nowrap font-32">
                                 Edit Profile
                             </h1>
                         </div>
@@ -947,7 +947,7 @@ const Profile = () => {
                 </div>
 
                 <div className="form-footer xl:px-32 lg:px-32 md:px-16 sm:px-10 px-4 border-t-2 py-10">
-                    <div className="flex items-center justify-end">
+                    <div className="flex items-center justify-start">
                         <Link
                             disabled={processing}
                             type="button"

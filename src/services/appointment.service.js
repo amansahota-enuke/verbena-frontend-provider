@@ -13,16 +13,15 @@ const AppointmentService = {
         ApiService.put(`/appointment/reschedule/${id}`, body),
     cancelAppointment: ({ id, body }) =>
         ApiService.put(`/appointment/cancel/${id}`, body),
+    completeAppointment: ({ id, body }) =>
+        ApiService.put(`/appointment/complete/${id}`, body),
     saveAppointmentReport: (id, body) =>
         ApiService.post(`/appointment/report/${id}`, body),
     saveAppointmentMedication: (id, body) =>
         ApiService.post(`/appointment/medication/${id}`, body),
     saveAppointmentDetail: (id, body) =>
         ApiService.post(`/appointment/details/${id}`, body),
-    getMessages:(id)=>ApiService.get(`/chat/get-messages/${id}`),
-    sendMessage: ({id,body}) =>
-        ApiService.post(`/chat/add-message/${id}`, body),
-    getNotifications:(id)=>ApiService.get(`/chat/getNotifications`),
+    getPdf: (id) => ApiService.get(`/appointment/pdf/${id}`),
 };
 
 export default AppointmentService;

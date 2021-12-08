@@ -1,9 +1,8 @@
 import React, { useState, useCallback, useEffect } from "react";
 import { useHistory, useParams } from "react-router-dom";
-import { toast } from "react-toastify";
 import Video from "twilio-video";
 
-import { VideoService } from "../../../services";
+import { VideoService, AppointmentService } from "../../../services";
 import Room from "./Room";
 import { Loader } from "../../";
 import { useDispatch, useSelector } from "react-redux";
@@ -16,50 +15,25 @@ const VideoChat = () => {
     const { appointmentId } = useParams();
     const [room, setRoom] = useState(null);
     const selectedAppointment = useSelector(selector.selectedAppointment);
-    const user = useSelector(selector.user);
-
-    const connectRoom = async (token) => {
-        Video.connect(token, {
-            name: `room-appointment-${appointmentId}`,
-        })
-            .then((room) => {
-                setRoom(room);
-            })
-            .catch((err) => {
-                toast.error(err);
-            });
-    };
-
-    const checkToken = () => {
-        const tokenArr = selectedAppointment.appointment_videos;
-        return tokenArr.find(
-            (item) => Number(item.provider_id) === Number(user.id)
-        );
-    };
 
     const joinRoom = async () => {
-        const tokenObj = await checkToken();
-        if (tokenObj) {
-            console.log("yes");
-            connectRoom(tokenObj.token);
-        } else {
-            console.log("no");
+        try {
             const response = await VideoService.getToken(appointmentId);
-            connectRoom(response.data.data);
+            const room = await Video.connect(response.data.data, {
+                name: `room-appointment-${appointmentId}`,
+            });
+            setRoom(room);
+        } catch (error) {
+            console.log(error);
         }
     };
 
     useEffect(() => {
         dispatch(AppointmentActions.fetchAppointmentDetail(appointmentId));
+        joinRoom();
     }, []);
 
-    useEffect(() => {
-        if (user.id && selectedAppointment.appointment_videos) {
-            joinRoom();
-        }
-    }, [selectedAppointment, user]);
-
-    const handleLogout = useCallback((type) => {
+    const handleLogout = useCallback(async(type) => {
         setRoom((prevRoom) => {
             if (prevRoom) {
                 prevRoom.localParticipant.tracks.forEach((trackPub) => {
@@ -69,6 +43,13 @@ const VideoChat = () => {
             }
             return null;
         });
+        const res = await AppointmentService.getAppointmentDetail(appointmentId)
+        if(res.data.data.status !== 'pending'){
+            await dispatch(AppointmentActions.updateAppointmentStatus({
+                id: appointmentId,
+                body: { status: "ongoing" },
+            }));
+        }
         history.push(`/home/appointments/${appointmentId}`);
     }, []);
 
@@ -91,7 +72,11 @@ const VideoChat = () => {
         }
     }, [room, handleLogout]);
 
-    const openAppointmentWindow = () => {
+    const openAppointmentWindow = async() => {
+        await dispatch(AppointmentActions.updateAppointmentStatus({
+            id: appointmentId,
+            body: { status: "ongoing" },
+        }));
         let popUpObj = window.open(
             `${window.location.origin}/appointment/${appointmentId}`,
             "_blank",
@@ -104,7 +89,7 @@ const VideoChat = () => {
     if (room) {
         render = (
             <Room
-                roomName={`room-appointment-${appointmentId}`}
+                selectedAppointment={selectedAppointment}
                 room={room}
                 handleLogout={handleLogout}
                 openAppointmentWindow={openAppointmentWindow}
