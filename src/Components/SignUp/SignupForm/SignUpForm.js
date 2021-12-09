@@ -8,10 +8,10 @@ import PhoneInput from "react-phone-number-input/input";
 import { isPossiblePhoneNumber } from "react-phone-number-input";
 
 import { UserActions } from "../../../redux/slice/user.slice";
-import { toast } from "react-toastify";
 import { CommonService } from "../../../services";
 import { Loader } from "../..";
 import ButtonLoader from "../../Common/ButtonLoader";
+import { ToastContainer, toast } from "react-toastify";
 
 const SignUpForm = (props) => {
     const dispatch = useDispatch();
@@ -28,6 +28,8 @@ const SignUpForm = (props) => {
 
     const [practiceLogo, setPracticeLogo] = useState("");
     const [practiceLogoUrl, setPracticeLogoUrl] = useState("");
+
+    const [test,setTest] = useState(false)
 
     const fetchReferenceData = async () => {
         try {
@@ -216,6 +218,8 @@ const SignUpForm = (props) => {
         setProcessing(false);
         if (!actionResult.hasOwnProperty("error")) {
             history.push("/signup/privacy-policy");
+        }else{
+            setTest(true)
         }
     };
 
@@ -868,6 +872,7 @@ const SignUpForm = (props) => {
                                 </button>
                             </div>
                         </div>
+                        {test ? <ToastContainer/> : ""}
                     </form>
                 </div>
             </div>

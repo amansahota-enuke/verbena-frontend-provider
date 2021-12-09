@@ -9,7 +9,6 @@ const SignUp = () => {
         <>
             <BoxedWidthContainer>
                 <SignUpForm />
-                <ToastContainer />
             </BoxedWidthContainer>
         </>
     );

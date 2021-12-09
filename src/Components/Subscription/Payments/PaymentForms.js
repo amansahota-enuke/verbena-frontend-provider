@@ -77,8 +77,8 @@ function PaymentForms() {
         //     }
         // } else {
             setProcessing(false);
-            if (res.error) {
-                toast.error(res.error.message);
+            if (res.data.error) {
+                toast.error(res.data.message);
             } else {
                 saveSubscription(res.data.data)
 

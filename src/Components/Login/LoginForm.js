@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import { useDispatch } from "react-redux";
 import { useHistory, Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
@@ -7,6 +7,7 @@ import * as Yup from "yup";
 
 import { UserActions } from "../../redux/slice/user.slice";
 import { SubscriptionActions } from "../../redux/slice/subscription.slice";
+import { ToastContainer, toast } from "react-toastify";
 
 const initialValues = {
     email: "",
@@ -23,6 +24,7 @@ const validationSchema = Yup.object({
 const LoginForm = (props) => {
     const history = useHistory();
     const dispatch = useDispatch();
+    const [test,setTest] = useState(false)
 
     const {
         register,
@@ -39,6 +41,8 @@ const LoginForm = (props) => {
             await dispatch(SubscriptionActions.checkSetUpfeeDetails())
             await dispatch(SubscriptionActions.checkSubscription())
             history.push("/home");
+        }else{
+            setTest(true)
         }
     };
 
@@ -114,6 +118,7 @@ const LoginForm = (props) => {
                             Forgot password?
                         </Link>
                     </div>
+                    {test ? <ToastContainer/> : ""}
                 </form>
             </div>
         </>
