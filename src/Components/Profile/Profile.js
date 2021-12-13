@@ -380,7 +380,7 @@ const Profile = () => {
                                 </span>
                             </div>
 
-                            <div className="col-span-6">
+                            {/* <div className="col-span-6">
                                 <div className="input-label calibre-regular mb-4">
                                     Provider Type
                                 </div>
@@ -401,7 +401,7 @@ const Profile = () => {
                                                     key={type.id}
                                                     value={type.id}
                                                 >
-                                                    {type.type}
+                                                    {`${type.type}(${type.short_form})`}
                                                 </option>
                                             ))}
                                         </select>
@@ -410,7 +410,7 @@ const Profile = () => {
                                 <span className="text-red-500 block mt-2">
                                     {errors.provider_type?.message}
                                 </span>
-                            </div>
+                            </div> */}
 
                             <div className="col-span-6">
                                 <div className="input-label calibre-regular mb-4">
@@ -533,6 +533,37 @@ const Profile = () => {
                                 />
                                 <span className="text-red-500 block mt-2">
                                     {errors.email?.message}
+                                </span>
+                            </div>
+                            <div className="col-span-6">
+                                <div className="input-label calibre-regular mb-4">
+                                    Provider Type
+                                </div>
+                                <Controller
+                                    name="provider_type"
+                                    control={control}
+                                    render={({ field }) => (
+                                        <select
+                                            disabled={processing}
+                                            className="disabled:opacity-50 input-border-color ca-width border custom-select"
+                                            {...field}
+                                        >
+                                            <option value={0}>
+                                                Select Type
+                                            </option>
+                                            {types.map((type) => (
+                                                <option
+                                                    key={type.id}
+                                                    value={type.id}
+                                                >
+                                                    {`${type.type}(${type.short_form})`}
+                                                </option>
+                                            ))}
+                                        </select>
+                                    )}
+                                />
+                                <span className="text-red-500 block mt-2">
+                                    {errors.provider_type?.message}
                                 </span>
                             </div>
                             <div className="col-span-6">
