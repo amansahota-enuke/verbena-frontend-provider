@@ -21,7 +21,7 @@ function Subscribed() {
       <h2 className="hepta-slab font-32 text-center primary-text-color mb-5">
         Thank You
       </h2>
-      <p className="text-center mb-12 font-18">
+      <p className="text-center mb-12 font-20">
         Thank you for subscribing to Verbena, healthcare your way. Your Monthly
         membership will ensure safe, convenient access to your patient anytime,
       </p>

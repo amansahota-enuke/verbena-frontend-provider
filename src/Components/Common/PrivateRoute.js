@@ -1,41 +1,44 @@
-import React from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { Redirect, Route } from "react-router-dom";
-import { TokenService } from "../../services";
+import { PaymentService, TokenService } from "../../services";
 import PropTypes from "prop-types";
-import { useDispatch, useSelector } from "react-redux";
-import selector from "../../redux/selector";
-import { SubscriptionActions } from "../../redux/slice/subscription.slice";
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
-    const dispatch = useDispatch()
     const token = TokenService.getToken();
-    const userSetUpFeeDetails = useSelector(selector.setUpfeeDetails)
-    const userSubscription = useSelector(selector.userSubscriptionDetails)
+    const [validation, setValidation] = useState(true)
+    const [page, setPage] = useState("")
 
-    // const subscriptionValidation = async props => {
-    //     await dispatch(SubscriptionActions.checkSetUpfeeDetails())
-    //     await dispatch(SubscriptionActions.checkSubscription())
-    //     if(!userSetUpFeeDetails){
-    //         return <Redirect to="/signup/privacy-policy" />
-    //     }else if(!userSubscription){
-    //         return <Redirect to="/subscription" />
-    //     }else if(userSubscription.status !== "active"){
-    //         return <Redirect to="/subscription" />
-    //     }else{
-    //         return <Component {...props} />
-    //     }
-    // }
-
-    // const loginValidation=()=>{
-    //     return <Redirect to="/login" />
-    // }
+    useEffect(async () => {
+        const setupFeeDetails = await PaymentService.fetchSetupFeeDetails()
+        const subscriptionDetails = await PaymentService.getSubscriptionDetails()
+        if (!setupFeeDetails.data.data) {
+            setPage("setupfee")
+            setValidation(false)
+        } else if (!subscriptionDetails.data.data) {
+            setPage("subscription")
+            setValidation(false)
+        } else if (subscriptionDetails.data.data.status !== "active") {
+            setPage("subscription")
+            setValidation(false)
+        } else {
+            setValidation(true)
+        }
+    })
 
     return (
         <Route
             {...rest}
             render={(props) =>
-                // token ? subscriptionValidation(props) : loginValidation()
-                token ? <Component {...props} /> : <Redirect to="/login" />
+                token ? (validation ? (
+                    <Component {...props} />
+                ) : (
+                    page === "setupfee" ? (
+                        <Redirect to="/setupfee" />
+                    ) : (
+                        <Redirect to="/subscription" />
+                    )
+                )) : <Redirect to="/login" />
+                // token ? <Component {...props} /> : <Redirect to="/login" />
             }
         />
     );

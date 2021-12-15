@@ -17,6 +17,10 @@ function PrivacyPolicyForm() {
     history.push('/setupfee')
   }
 
+  const handleTermsandServices = () => {
+    history.push('/signup/termsandservices')
+  }
+
   return (
     <>
       <div className="bg-white create-account mb-10">
@@ -312,6 +316,15 @@ function PrivacyPolicyForm() {
             <p className="dd text-lg caliber-regular mb-4 dark-gray-color">
               You can reach us by email at info@verbenacare.com or at the following mailing address: 30 Mayflower Drive, Tenafly, NJ 07670
             </p>
+          </div>
+          <div className="col-span-6">
+            <button 
+            type="button"
+            onClick={handleTermsandServices}
+            className="mb-3 font-18 text-blue-600 underline"
+            >
+              Verbena Terms and Services
+            </button>
           </div>
           <div className="col-span-6">
             <div className="checkbox-default">

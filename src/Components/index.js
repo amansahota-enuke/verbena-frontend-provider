@@ -29,7 +29,8 @@ import Subscription from "./Subscription/Payments";
 import SubscriptionBooked from "./Subscription/SubscriptionBooked";
 import SetupFee from "./Subscription/SetupFee";
 import Account from "./Subscription/Account";
-import PrivacyPolicy from "./SignUp/PrivacyPolicy"
+import PrivacyPolicy from "./SignUp/PrivacyPolicy";
+import TermsAndServices from "./SignUp/TermsAndServices";
 
 export {
     //Common
@@ -69,4 +70,5 @@ export {
     Account,
     //Privacy Policy
     PrivacyPolicy,
+    TermsAndServices,
 };

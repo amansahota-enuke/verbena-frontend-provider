@@ -556,7 +556,7 @@ const Profile = () => {
                                                     key={type.id}
                                                     value={type.id}
                                                 >
-                                                    {`${type.type}(${type.short_form})`}
+                                                    {`${type.type} (${type.short_form})`}
                                                 </option>
                                             ))}
                                         </select>
