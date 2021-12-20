@@ -39,7 +39,7 @@ function SubscriptionCancel() {
       </Dialog.Title>
       <div className="mt-2 text-center">
         <p className="text-md text-black-500">
-          Subscription gets cancelled after current period, Are you sure, want to cancel subscription
+        Your subscription will be cancelled immediately. Are you sure you want to cancel your subscription?
         </p>
       </div>
 
