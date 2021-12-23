@@ -88,6 +88,11 @@ function AppointmentList() {
                                 onChange={(e) =>
                                     setAppointmentId(e.target.value)
                                 }
+                                onKeyPress={(e) => {
+                                    if (e.key === "Enter") {
+                                        getAppointment();
+                                    }
+                                }}
                             />
                         </div>
                         <div className="relative">
@@ -97,6 +102,11 @@ function AppointmentList() {
                                 placeholder="Patient Name"
                                 value={patientName}
                                 onChange={(e) => setPatientName(e.target.value)}
+                                onKeyPress={(e) => {
+                                    if (e.key === "Enter") {
+                                        getAppointment();
+                                    }
+                                }}
                             />
                         </div>
                         <div className="relative">
@@ -108,6 +118,11 @@ function AppointmentList() {
                                 onChange={(e) =>
                                     setPatientNumber(e.target.value)
                                 }
+                                onKeyPress={(e) => {
+                                    if (e.key === "Enter") {
+                                        getAppointment();
+                                    }
+                                }}
                             />
                         </div>
                         <div className="relative">
@@ -119,6 +134,11 @@ function AppointmentList() {
                                 onChange={(e) =>
                                     setPatientEmail(e.target.value)
                                 }
+                                onKeyPress={(e) => {
+                                    if (e.key === "Enter") {
+                                        getAppointment();
+                                    }
+                                }}
                             />
                         </div>
                         <div className="relative">

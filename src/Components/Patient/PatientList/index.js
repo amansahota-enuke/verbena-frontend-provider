@@ -83,6 +83,11 @@ function PatientList() {
                                 placeholder="Patient Name"
                                 value={patientName}
                                 onChange={(e) => setPatientName(e.target.value)}
+                                onKeyPress={(e) => {
+                                    if (e.key === "Enter") {
+                                        getPatientList();
+                                    }
+                                }}
                             />
                         </div>
                         <div className="relative">
@@ -94,6 +99,11 @@ function PatientList() {
                                 onChange={(e) =>
                                     setPatientNumber(e.target.value)
                                 }
+                                onKeyPress={(e) => {
+                                    if (e.key === "Enter") {
+                                        getPatientList();
+                                    }
+                                }}
                             />
                         </div>
                         <div className="relative">
@@ -105,6 +115,11 @@ function PatientList() {
                                 onChange={(e) =>
                                     setPatientEmail(e.target.value)
                                 }
+                                onKeyPress={(e) => {
+                                    if (e.key === "Enter") {
+                                        getPatientList();
+                                    }
+                                }}
                             />
                         </div>
                         <div className="relative">
@@ -114,6 +129,11 @@ function PatientList() {
                                 placeholder="Patient ID"
                                 value={patientId}
                                 onChange={(e) => setPatientId(e.target.value)}
+                                onKeyPress={(e) => {
+                                    if (e.key === "Enter") {
+                                        getPatientList();
+                                    }
+                                }}
                             />
                         </div>
                         <div className="relative">
