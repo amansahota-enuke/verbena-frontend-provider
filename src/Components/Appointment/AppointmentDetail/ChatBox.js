@@ -7,25 +7,26 @@ import { useParams } from "react-router";
 import { ButtonLoader } from "../..";
 
 const ChatBox = ({ chatBoxOpen, selectedAppointment }) => {
-    const { id } = useParams();
+    const { id, appointmentId } = useParams();
     const messages = useSelector(selector.messages);
     const user = useSelector(selector.user);
     const [message, setMessage] = useState("");
     const [messageList, setMessageList] = useState([]);
     const dispatch = useDispatch();
+    const selectedId = id ? id : appointmentId
 
     useEffect(() => {
         let messageInterval = null;
-        if (id && Number(id)) {
+        if (selectedId && Number(selectedId)) {
             messageInterval = setInterval(() => {
-                dispatch(ChatActions.getMessages(id));
+                dispatch(ChatActions.getMessages(selectedId));
             }, 1000);
         }
 
         return () => {
             clearInterval(messageInterval);
         };
-    }, [id]);
+    }, [selectedId]);
 
     useEffect(() => {
         if (messages.length !== messageList.length) {
@@ -36,7 +37,7 @@ const ChatBox = ({ chatBoxOpen, selectedAppointment }) => {
     const sendData = async () => {
         if (message !== "") {
             const requestBody = {
-                id: id,
+                id: selectedId,
                 body: {
                     text: message,
                     created_by: "provider",
