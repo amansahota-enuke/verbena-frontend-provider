@@ -1,5 +1,5 @@
 import LoginPage from "./Login/Login";
-import SignUpPage from "./SignUp/SignUp";
+import SignUpPage from "./SignUp";
 import ForgotPasswordPage from "./ForgotPassword/ForgotPassword";
 import UpdatePasswordPage from "./UpdatePassword/NewPassword";
 import DashboardPage from "./Home/Dashboard";

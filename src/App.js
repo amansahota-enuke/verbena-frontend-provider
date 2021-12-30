@@ -35,8 +35,8 @@ function App() {
                         <PrivateRoute path="/home" component={Layout} />
                         <Route path="/login" component={LoginPage} />
                         <Route path="/signup" component={SignUpPage} />
-                        <Route path="/setupfee" component={SetupFeePage} />
-                        <Route path="/subscription" component={SubscriptionPage} />
+                        <PrivateRoute path="/setupfee" component={SetupFeePage} />
+                        <PrivateRoute path="/subscription" component={SubscriptionPage} />
                         <Route
                             path="/forgot-password"
                             component={ForgotPasswordPage}

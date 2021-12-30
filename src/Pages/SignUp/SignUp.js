@@ -1,9 +1,23 @@
 import React from "react";
-import { Route, Switch } from "react-router-dom";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { Route, Switch, useParams } from "react-router-dom";
 
 import { SignUp, PrivacyPolicy, TermsAndServices } from "../../Components";
+import { UserActions } from "../../redux/slice/user.slice";
+import { TokenService } from "../../services";
 
-const SignUpPage = (props) => {
+const SignUpPageRoutes = (props) => {
+    const dispatch = useDispatch();
+    const { token } = useParams();
+    
+    useEffect(()=>{
+        if(token){
+            TokenService.setToken(token);
+            dispatch(UserActions.getProfile())
+        }
+    },[]);
+
     return (
         <>
             <Switch>
@@ -15,4 +29,4 @@ const SignUpPage = (props) => {
     );
 };
 
-export default SignUpPage;
+export default SignUpPageRoutes;
