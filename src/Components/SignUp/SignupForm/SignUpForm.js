@@ -123,9 +123,6 @@ const SignUpForm = (props) => {
                     .required()
             )
             .min(1),
-        consultation_fee: Yup.number()
-            .required("Consultation fee is a required field")
-            .min(1, "Consultation fee is a required field"),
         address_line1: Yup.string().required("Address is a required field"),
         address_line2: Yup.string(),
         city: Yup.string().required("City is a required field"),
@@ -133,7 +130,11 @@ const SignUpForm = (props) => {
             .required("State is a required field")
             .min(1, "State is a required field"),
         zipcode: Yup.string().required("Zipcode is a required field"),
-        password: Yup.string().required("Password is a required field"),
+        password: Yup.string().required("Password is a required field")
+        .matches(
+            /^.*(?=.{8,})((?=.*[!@#$%^&*()\-_=+{};:,<.>]){1})(?=.*\d)((?=.*[a-z]){1})((?=.*[A-Z]){1}).*$/,
+            "Password must contain at least 8 characters, one uppercase, one lowercase, one number and one special case character"
+          ),
         confirmPassword: Yup.string()
             .required("Passsword is a required field")
             .oneOf([Yup.ref("password"), null], "Password must match"),
@@ -156,7 +157,6 @@ const SignUpForm = (props) => {
             board_certifications: [{}],
             awards_publications: [{}],
             languages_spoken: [{ value: "English" }],
-            consultation_fee: 0,
             address_line1: "",
             address_line2: "",
             city: "",
@@ -733,22 +733,6 @@ const SignUpForm = (props) => {
 
                                     <div className="col-span-6">
                                         <div className="input-label calibre-regular mb-4">
-                                            Consultation Fee
-                                        </div>
-                                        <input
-                                            disabled={processing}
-                                            type="text"
-                                            className="disabled:opacity-50 custom-input ca-width input-border-color border"
-                                            placeholder="Enter Consultation Fee"
-                                            {...register("consultation_fee")}
-                                        />
-                                        <span className="text-red-500 block mt-2">
-                                            {errors.consultation_fee?.message}
-                                        </span>
-                                    </div>
-
-                                    <div className="col-span-6">
-                                        <div className="input-label calibre-regular mb-4">
                                             Address Line 1
                                         </div>
                                         <input
@@ -861,7 +845,7 @@ const SignUpForm = (props) => {
                                             disabled={processing}
                                             type="password"
                                             className="disabled:opacity-50 custom-input ca-width input-border-color border"
-                                            placeholder="Enter Confrim Password"
+                                            placeholder="Enter Confirm Password"
                                             {...register("confirmPassword")}
                                         />
                                         <span className="text-red-500 block mt-2">

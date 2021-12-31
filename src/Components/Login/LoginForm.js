@@ -101,13 +101,14 @@ const LoginForm = (props) => {
                             Login
                         </button>
 
+                    <a href="mailto:registration@verbenacare.com?subject=I am interested in registering for Verbena">
                         <button
                             type="button"
                             className="btn-create-account calibre-regular tracking-wider font-16 uppercase primary-text-color"
-                            onClick={() => history.push("/signup")}
                         >
-                            Create Account
+                            Contacts
                         </button>
+                    </a>
                     </div>
 
                     <div className="d-flex items-center mb-20 font-16 calibre-regular">
