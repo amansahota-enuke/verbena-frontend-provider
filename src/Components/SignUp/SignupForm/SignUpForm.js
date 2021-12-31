@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import * as Yup from "yup";
 import { Controller, useFieldArray, useForm } from "react-hook-form";
@@ -12,6 +12,8 @@ import { CommonService } from "../../../services";
 import { Loader } from "../..";
 import ButtonLoader from "../../Common/ButtonLoader";
 import { ToastContainer, toast } from "react-toastify";
+import { useLocation } from 'react-router';
+import queryString from 'query-string';
 
 const SignUpForm = (props) => {
     const dispatch = useDispatch();
@@ -30,6 +32,12 @@ const SignUpForm = (props) => {
     const [practiceLogoUrl, setPracticeLogoUrl] = useState("");
 
     const [test,setTest] = useState(false)
+
+    const location = useLocation();
+
+    const token = queryString.parse(location.search)._key
+
+    const [validToken, setToken] = useState("")
 
     const fetchReferenceData = async () => {
         try {
@@ -51,7 +59,9 @@ const SignUpForm = (props) => {
 
     useEffect(() => {
         fetchReferenceData();
+        setToken(token)
     }, []);
+    
 
     const validationSchema = Yup.object({
         first_name: Yup.string().required("Firstname is a required field"),
@@ -213,6 +223,8 @@ const SignUpForm = (props) => {
             formData.append("profile_logo", profileLogo, profileLogo.name);
         if (practiceLogo)
             formData.append("practice_logo", practiceLogo, practiceLogo.name);
+        if(validToken)
+        formData.append("token", validToken)
 
         const actionResult = await dispatch(UserActions.signUp(formData));
         setProcessing(false);
