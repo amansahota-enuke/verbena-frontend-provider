@@ -19,12 +19,15 @@ const SignUpPageRoutes = (props) => {
 
     useEffect(async () => {
         if (token) {
+            console.log("anudeep",token)
             const res = await UserService.checkToken({
                 token: token
             })
             if (!res.data.data) {
                 setValid(false)
             }
+        }else{
+            setValid(false)
         }
     }, []);
 
