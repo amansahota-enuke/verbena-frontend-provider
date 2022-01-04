@@ -8,7 +8,7 @@ const fetchPatientList = createAsyncThunk(
     async (payload, thunkApi) => {
         try {
             const response = await PatientService.getPatientList(payload);
-            toast.success(response.data.message);
+            // toast.success(response.data.message);
             return response.data.data;
         } catch (error) {
             toast.error(error.response.data.message);
@@ -22,7 +22,7 @@ const fetchPatientDetail = createAsyncThunk(
     async (payload, thunkApi) => {
         try {
             const response = await PatientService.getPatientDetail(payload);
-            toast.success(response.data.message);
+            // toast.success(response.data.message);
             return response.data.data;
         } catch (error) {
             toast.error(error.response.data.message);

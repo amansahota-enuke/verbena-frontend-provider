@@ -8,7 +8,7 @@ const getMessages = createAsyncThunk(
     async (payload, thunkApi) => {
         try {
             const response = await ChatService.getMessages(payload);
-            toast.success(response.data.message);
+            // toast.success(response.data.message);
             return response.data.data;
         } catch (error) {
             toast.error(error.response.data.message);
@@ -22,8 +22,7 @@ const getNotifications = createAsyncThunk(
     async (payload, thunkApi) => {
         try {
             const response = await ChatService.getNotifications(payload);
-            console.log(response.data.data);
-            toast.success(response.data.message);
+            // toast.success(response.data.message);
             return response.data.data;
         } catch (error) {
             toast.error(error.response.data.message);
@@ -37,7 +36,7 @@ const updateNotification = createAsyncThunk(
     async (payload, thunkApi) => {
         try {
             const response = await ChatService.updateNotification(payload);
-            toast.success(response.data.message);
+            // toast.success(response.data.message);
             return response.data.data;
         } catch (error) {
             toast.error(error.response.data.message);
@@ -46,12 +45,6 @@ const updateNotification = createAsyncThunk(
     }
 );
 
-export const ChatActions = {
-    getMessages,
-    getNotifications,
-    updateNotification,
-};
-
 const ChatSlice = createSlice({
     name: "chat",
     initialState: {
@@ -59,6 +52,12 @@ const ChatSlice = createSlice({
         messages: [],
         notificationCount: 0,
         notifications: [],
+        socketData:""
+    },
+    reducers: {
+        UserSocket: (state, action) => {
+            state.socketData = action.payload;
+        },
     },
     extraReducers: {
         [getMessages.pending]: (state) => {
@@ -93,5 +92,12 @@ const ChatSlice = createSlice({
         },
     },
 });
+
+export const ChatActions = {
+    ...ChatSlice.actions,
+    getMessages,
+    getNotifications,
+    updateNotification,
+};
 
 export default ChatSlice.reducer;

@@ -25,6 +25,7 @@ const selector = {
     messages:(state)=>state.chat.messages,
     notifications:(state)=>state.chat.notifications,
     notificationCount:(state)=>state.chat.notificationCount,
+    chatSocket:(state)=>state.chat.socketData,
     //Subscription Details
     subscriptionData:(state)=>state.subscription.subscriptionData,
     subscribedId:(state)=>state.subscription.subscriptionId,

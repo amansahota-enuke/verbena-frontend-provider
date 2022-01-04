@@ -13,6 +13,7 @@ const UserService = {
     saveSubscription: (body) => ApiService.post(`/auth/save-subscription`, body),
     fetchPaymentIntent: () => ApiService.get(`/auth/get-client-secret`),
     checkToken: (payload) => ApiService.post("/auth/check-token", payload),
+    changePassword: (body) => ApiService.post(`/auth/change-password`, body),
 };
 
 export default UserService;

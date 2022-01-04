@@ -9,7 +9,7 @@ const fetchAppointmentCancelReasons = createAsyncThunk(
         try {
             const response =
                 await AppointmentService.getAppointmentCancelReason();
-            toast.success(response.data.message);
+            // toast.success(response.data.message);
             return response.data.data;
         } catch (error) {
             toast.error(error.response.data.message);
@@ -25,7 +25,7 @@ const fetchAppointmentList = createAsyncThunk(
             const response = await AppointmentService.getAppointmentList(
                 payload
             );
-            toast.success(response.data.message);
+            // toast.success(response.data.message);
             return response.data.data;
         } catch (error) {
             toast.error(error.response.data.message);
@@ -41,7 +41,7 @@ const fetchAppointmentDetail = createAsyncThunk(
             const response = await AppointmentService.getAppointmentDetail(
                 payload
             );
-            toast.success(response.data.message);
+            // toast.success(response.data.message);
             return response.data.data;
         } catch (error) {
             toast.error(error.response.data.message);
@@ -57,7 +57,7 @@ const updateAppointment = createAsyncThunk(
             const response = await AppointmentService.updateAppointment(
                 payload
             );
-            toast.success(response.data.message);
+            // toast.success(response.data.message);
             return response.data.data;
         } catch (error) {
             toast.error(error.response.data.message);
@@ -73,7 +73,7 @@ const updateAppointmentStatus = createAsyncThunk(
             const response = await AppointmentService.updateAppointmentStatus(
                 payload
             );
-            toast.success(response.data.message);
+            // toast.success(response.data.message);
             return response.data.data;
         } catch (error) {
             toast.error(error.response.data.message);
@@ -89,7 +89,7 @@ const rescheduleAppointment = createAsyncThunk(
             const response = await AppointmentService.rescheduleAppointment(
                 payload
             );
-            toast.success(response.data.message);
+            // toast.success(response.data.message);
             return response.data.data;
         } catch (error) {
             toast.error(error.response.data.message);
@@ -105,7 +105,7 @@ const cancelAppointment = createAsyncThunk(
             const response = await AppointmentService.cancelAppointment(
                 payload
             );
-            toast.success(response.data.message);
+            // toast.success(response.data.message);
             return response.data.data;
         } catch (error) {
             toast.error(error.response.data.message);
@@ -121,7 +121,7 @@ const completeAppointment = createAsyncThunk(
             const response = await AppointmentService.completeAppointment(
                 payload
             );
-            toast.success(response.data.message);
+            // toast.success(response.data.message);
             return response.data.data;
         } catch (error) {
             toast.error(error.response.data.message);

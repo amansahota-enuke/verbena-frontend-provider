@@ -9,7 +9,7 @@ const fetchQuestionnaireAnswers = createAsyncThunk(
     async (payload, thunkApi) => {
         try {
             const response = await QuestionnaireService.getAnswers(payload);
-            toast.success(response.data.message);
+            // toast.success(response.data.message);
             return response.data.data;
         } catch (error) {
             toast.error(error.response.data.message);
@@ -23,7 +23,7 @@ const fetchBasicQuestionnaire = createAsyncThunk(
     async (payload, thunkApi) => {
         try {
             const response = await QuestionnaireService.getQuestionnaire(payload);
-            toast.success(response.data.message);
+            // toast.success(response.data.message);
             return response.data.data;
         } catch (error) {
             toast.error(error.response.data.message);

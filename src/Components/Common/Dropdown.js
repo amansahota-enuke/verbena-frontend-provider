@@ -99,6 +99,21 @@ export default function Example() {
                                         </Link>
                                     )}
                                 </Menu.Item>
+                                <Menu.Item>
+                                    {({ active }) => (
+                                        <Link
+                                            to="/home/security"
+                                            className={classNames(
+                                                active
+                                                    ? "bg-gray-100 text-gray-900 calibre-regular"
+                                                    : "text-gray-700 calibre-regular",
+                                                "block px-4 py-2 text-sm font-16"
+                                            )}s
+                                        >
+                                            Security
+                                        </Link>
+                                    )}
+                                </Menu.Item>
                                 <form onSubmit={(e) => handleSubmit(e)}>
                                     <Menu.Item>
                                         {({ active }) => (

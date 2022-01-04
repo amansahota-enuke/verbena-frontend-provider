@@ -31,6 +31,7 @@ import SetupFee from "./Subscription/SetupFee";
 import Account from "./Subscription/Account";
 import PrivacyPolicy from "./SignUp/PrivacyPolicy";
 import TermsAndServices from "./SignUp/TermsAndServices";
+import Security from "./Security";
 
 export {
     //Common
@@ -71,4 +72,6 @@ export {
     //Privacy Policy
     PrivacyPolicy,
     TermsAndServices,
+    //Security
+    Security,
 };

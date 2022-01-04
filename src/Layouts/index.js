@@ -10,7 +10,8 @@ import {
     ProfilePage,
     PatientPage,
     DashboardPage,
-    AccountPage
+    AccountPage,
+    SecurityPage,
 } from "../Pages";
 
 const Layout = ({ match }) => {
@@ -60,6 +61,10 @@ const Layout = ({ match }) => {
                     <Route
                         path={`${match.path}/account`}
                         component={AccountPage}
+                    />
+                    <Route
+                        path={`${match.path}/security`}
+                        component={SecurityPage}
                     />
                     <Route component={Error} />
                 </Switch>

@@ -8,7 +8,7 @@ const checkSubscription = createAsyncThunk(
     async (payload, thunkApi) => {
         try {
             const response = await PaymentService.getSubscriptionDetails()
-            toast.success(response.data.message);
+            // toast.success(response.data.message);
             return response.data.data;
         } catch (error) {
             toast.error(error.response.data.message);
@@ -22,7 +22,7 @@ const checkSetUpfeeDetails = createAsyncThunk(
     async (payload, thunkApi) => {
         try {
             const response = await PaymentService.fetchSetupFeeDetails()
-            toast.success(response.data.message);
+            // toast.success(response.data.message);
             return response.data.data;
         } catch (error) {
             toast.error(error.response.data.message);
@@ -39,7 +39,7 @@ const cancelSubscription = createAsyncThunk(
             const response = await PaymentService.cancelSubscription(
                 payload
             )
-            toast.success(response.data.message);
+            // toast.success(response.data.message);
             return response.data.data;
         } catch (error) {
             toast.error(error.response.data.message);

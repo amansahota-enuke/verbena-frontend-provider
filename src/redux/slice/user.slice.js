@@ -7,7 +7,7 @@ const login = createAsyncThunk("user/login", async (payload, thunkApi) => {
     try {
         const response = await UserService.login(payload);
         TokenService.setToken(response.data.data.token);
-        toast.success(response.data.message);
+        // toast.success(response.data.message);
         return response.data.data.provider;
     } catch (error) {
         toast.error(error.response.data.message);
@@ -19,7 +19,7 @@ const signUp = createAsyncThunk("user/signUp", async (payload, thunkApi) => {
     try {
         const response = await UserService.signUp(payload);
         TokenService.setToken(response.data.data.token);
-        toast.success(response.data.message);
+        // toast.success(response.data.message);
         return response.data.data.provider;
     } catch (error) {
         toast.error(error.response.data.message);
@@ -32,7 +32,7 @@ const forgotPassword = createAsyncThunk(
     async (payload, thunkApi) => {
         try {
             const response = await UserService.forgotPassword(payload);
-            toast.success(response.data.message);
+            // toast.success(response.data.message);
         } catch (error) {
             toast.error(error.response.data.message);
             return thunkApi.rejectWithValue("error");
@@ -45,7 +45,7 @@ const updatePassword = createAsyncThunk(
     async (payload, thunkApi) => {
         try {
             const response = await UserService.updatePassword(payload);
-            toast.success(response.data.message);
+            // toast.success(response.data.message);
         } catch (error) {
             toast.error(error.response.data.message);
             return thunkApi.rejectWithValue(error);
@@ -58,7 +58,7 @@ const getProfile = createAsyncThunk(
     async (payload, thunkApi) => {
         try {
             const response = await UserService.getProfile();
-            toast.success(response.data.message);
+            // toast.success(response.data.message);
             return response.data.data;
         } catch (error) {
             toast.error(error.response.data.message);
@@ -72,7 +72,7 @@ const updateProfile = createAsyncThunk(
     async (payload, thunkApi) => {
         try {
             const response = await UserService.updateProfile(payload);
-            toast.success(response.data.message);
+            // toast.success(response.data.message);
         } catch (error) {
             toast.error(error.response.data.message);
             return thunkApi.rejectWithValue(error);

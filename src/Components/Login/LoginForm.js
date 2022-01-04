@@ -6,8 +6,6 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 
 import { UserActions } from "../../redux/slice/user.slice";
-import { SubscriptionActions } from "../../redux/slice/subscription.slice";
-import { ToastContainer, toast } from "react-toastify";
 
 const initialValues = {
     email: "",
@@ -38,11 +36,7 @@ const LoginForm = (props) => {
     const login = async (payload) => {
         const actionResult = await dispatch(UserActions.login(payload));
         if (!actionResult.hasOwnProperty("error")) {
-            await dispatch(SubscriptionActions.checkSetUpfeeDetails())
-            await dispatch(SubscriptionActions.checkSubscription())
             history.push("/home");
-        }else{
-            setTest(true)
         }
     };
 
@@ -119,7 +113,6 @@ const LoginForm = (props) => {
                             Forgot password?
                         </Link>
                     </div>
-                    {test ? <ToastContainer/> : ""}
                 </form>
             </div>
         </>

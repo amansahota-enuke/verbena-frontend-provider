@@ -12,7 +12,7 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import store from "./redux/store";
 
-// toast.configure();
+toast.configure();
 ReactDOM.render(
     <React.StrictMode>
         <Provider store={store}>
