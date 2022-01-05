@@ -32,6 +32,7 @@ import Account from "./Subscription/Account";
 import PrivacyPolicy from "./SignUp/PrivacyPolicy";
 import TermsAndServices from "./SignUp/TermsAndServices";
 import Security from "./Security";
+import Totp from "./Totp"
 
 export {
     //Common
@@ -74,4 +75,5 @@ export {
     TermsAndServices,
     //Security
     Security,
+    Totp,
 };

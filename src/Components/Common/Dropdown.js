@@ -3,8 +3,11 @@ import { Fragment, useEffect, useState } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import { TokenService } from "../../services";
 import { Link, useHistory } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import selector from "../../redux/selector";
+import { ConfirmationActions } from "../../redux/slice/confirmation.slice";
+import confirmationConstants from "../../constants/confirmation.constants";
+import moment from "moment"
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(" ");
@@ -12,6 +15,7 @@ function classNames(...classes) {
 
 export default function Example() {
     const history = useHistory();
+    const dispatch = useDispatch()
     const handleSubmit = (e) => {
         e.preventDefault();
         TokenService.deleteToken();
@@ -26,6 +30,23 @@ export default function Example() {
             setProfileImage(
                 process.env.REACT_APP_API_SERVER_URL + user.profile_logo
             );
+        }
+
+        if(Object.keys(user).length !== 0 && !user.totp) {
+            dispatch(ConfirmationActions.setConfirmationType(
+                confirmationConstants.TWO_FA_ALERT
+            ))
+            dispatch(ConfirmationActions.openConfirmation())
+        }
+
+        if(Object.keys(user).length !== 0 ){
+            const todayDate = moment()
+            if(todayDate.diff(user.password_updated_at, 'days') >= 87){
+                dispatch(ConfirmationActions.setConfirmationType(
+                    confirmationConstants.PASSWORD_EXPIRY_POPUP
+                ))
+                dispatch(ConfirmationActions.openConfirmation())
+            }
         }
     }, [user]);
 

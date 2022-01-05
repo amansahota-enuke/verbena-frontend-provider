@@ -14,6 +14,9 @@ const UserService = {
     fetchPaymentIntent: () => ApiService.get(`/auth/get-client-secret`),
     checkToken: (payload) => ApiService.post("/auth/check-token", payload),
     changePassword: (body) => ApiService.post(`/auth/change-password`, body),
+    fetchQrCode: () => ApiService.get('/totp/get-secret'),
+    cancel2FA: () => ApiService.put('/totp/disable-totp'),
+    verifyTotp: (id, body) => ApiService.post(`/totp/verify-totp/${id}`, body),
 };
 
 export default UserService;

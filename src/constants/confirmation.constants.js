@@ -8,5 +8,7 @@ const confirmationConstants = {
     SUBSCRIPTION_CANCEL: "SUBSCRIPTION_CANCEL",
     SCAN_QR_CODE: "SCAN_QR_CODE",
     CHANGE_PASSWORD: "CHANGE_PASSWORD",
+    PASSWORD_EXPIRY_POPUP: "PASSWORD_EXPIRY_POPUP",
+    TWO_FA_ALERT: "TWO FA ALERT",
 };
 export default confirmationConstants;

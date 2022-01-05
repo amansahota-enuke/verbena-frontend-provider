@@ -12,6 +12,8 @@ import CompleteAppointment from "./CompleteAppointment";
 import SubscriptionSuccess from "./SubscriptionSuccess";
 import CancelSubscription from "./CancelSubscription";
 import ChangePassword from "./ChangePassword";
+import ScanQRCode from "./ScanQRCode";
+import AlertPopup from "./AlertPopup";
 
 const Confirmation = () => {
     const isOpen = useSelector(selector.confirmationStatus);
@@ -82,6 +84,12 @@ const SelectedConfirmation = () => {
             return <CancelSubscription />;
         case confirmationConstants.CHANGE_PASSWORD:
             return <ChangePassword />;
+        case confirmationConstants.SCAN_QR_CODE:
+            return <ScanQRCode />;
+        case confirmationConstants.TWO_FA_ALERT:
+            return <AlertPopup />;
+        case confirmationConstants.PASSWORD_EXPIRY_POPUP:
+            return <AlertPopup />;
         default:
             return "";
     }

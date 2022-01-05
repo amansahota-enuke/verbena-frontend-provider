@@ -6,9 +6,9 @@ import StatusConstants from "../../constants/status.constants";
 const login = createAsyncThunk("user/login", async (payload, thunkApi) => {
     try {
         const response = await UserService.login(payload);
-        TokenService.setToken(response.data.data.token);
+        // TokenService.setToken(response.data.data.token);
         // toast.success(response.data.message);
-        return response.data.data.provider;
+        return response.data.data;
     } catch (error) {
         toast.error(error.response.data.message);
         return thunkApi.rejectWithValue("error");
@@ -101,7 +101,7 @@ const UserSlice = createSlice({
         },
         [login.fulfilled]: (state, action) => {
             state.status = StatusConstants.FULFILLED;
-            state.data = action.payload;
+            state.data = action.payload.provider;
         },
         [login.rejected]: (state) => {
             state.status = StatusConstants.REJECTED;

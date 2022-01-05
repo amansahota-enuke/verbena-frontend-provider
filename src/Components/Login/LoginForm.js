@@ -6,6 +6,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 
 import { UserActions } from "../../redux/slice/user.slice";
+import { TokenService } from "../../services";
 
 const initialValues = {
     email: "",
@@ -36,7 +37,12 @@ const LoginForm = (props) => {
     const login = async (payload) => {
         const actionResult = await dispatch(UserActions.login(payload));
         if (!actionResult.hasOwnProperty("error")) {
-            history.push("/home");
+            if(actionResult.payload.provider.totp){
+                history.push(`/login/totp/${actionResult.payload.provider.id}/${actionResult.payload.token}`)
+            }else{
+                TokenService.setToken(actionResult.payload.token)
+                history.push('/home')
+            }
         }
     };
 
@@ -100,7 +106,7 @@ const LoginForm = (props) => {
                             type="button"
                             className="btn-create-account calibre-regular tracking-wider font-16 uppercase primary-text-color"
                         >
-                            Contacts
+                            Contact
                         </button>
                     </a>
                     </div>
