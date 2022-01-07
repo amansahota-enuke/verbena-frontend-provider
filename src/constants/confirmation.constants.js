@@ -10,5 +10,6 @@ const confirmationConstants = {
     CHANGE_PASSWORD: "CHANGE_PASSWORD",
     PASSWORD_EXPIRY_POPUP: "PASSWORD_EXPIRY_POPUP",
     TWO_FA_ALERT: "TWO FA ALERT",
+    SESSION_TIMEOUT: "SESSION_TIMEOUT",
 };
 export default confirmationConstants;

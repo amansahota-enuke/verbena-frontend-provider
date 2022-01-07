@@ -37,7 +37,7 @@ function AlertPopup() {
             <div className="mt-2">
                 <p className="text-md text-center text-black-500 font-semibold">
                     {confirmationType === confirmationConstants.TWO_FA_ALERT ? "Activate two factor authentication to make your account more secure" :
-                    `Your Password will expire in ${days} days. Please reset your password.`}
+                    `Your Password will expire in ${days} ${days === 1 ? "day" : "days"}. Please reset your password.`}
                 </p>
             </div>
 

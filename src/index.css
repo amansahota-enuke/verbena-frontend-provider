@@ -1333,3 +1333,7 @@ img.profile-image{
   border-radius: 100%;
   border: 1px solid #d1d1d1;
 }
+
+.Toastify__toast--success {
+  background: #009b98!important;
+}

@@ -20,7 +20,7 @@ const validationSchema = Yup.object({
 
 const TotpForm = (props) => {
     const history = useHistory();
-    const {userId, token} = useParams()
+    const {userId} = useParams()
     const {
         register,
         handleSubmit,
@@ -33,7 +33,7 @@ const TotpForm = (props) => {
     const login = async (payload) => {
         try{
             const response = await UserService.verifyTotp(Number(userId),payload)
-            TokenService.setToken(token)
+            TokenService.setToken(response.data.data.token)
             history.push('/home')
 
         }catch(error){
@@ -57,7 +57,7 @@ const TotpForm = (props) => {
 
                 <form onSubmit={handleSubmit(login)}>
                     <div className="flex xl:flex-nowrap lg:flex-nowrap md:flex-nowrap sm:flex-wrap flex-wrap items-center mb-5">
-                        <div className="input-label calibre-regular">Temporary One Time Password(Totp)</div>
+                        <div className="input-label calibre-regular">Temporary One Time Password (TOTP)</div>
                         <div className="w-full">
                             <input
                                 type="text"

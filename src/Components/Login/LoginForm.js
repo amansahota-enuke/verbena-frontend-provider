@@ -37,8 +37,8 @@ const LoginForm = (props) => {
     const login = async (payload) => {
         const actionResult = await dispatch(UserActions.login(payload));
         if (!actionResult.hasOwnProperty("error")) {
-            if(actionResult.payload.provider.totp){
-                history.push(`/login/totp/${actionResult.payload.provider.id}/${actionResult.payload.token}`)
+            if(!actionResult.payload.token){
+                history.push(`/login/totp/${actionResult.payload.provider.id}`)
             }else{
                 TokenService.setToken(actionResult.payload.token)
                 history.push('/home')

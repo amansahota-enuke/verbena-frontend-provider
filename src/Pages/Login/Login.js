@@ -6,7 +6,7 @@ const LoginPage = (props) => {
     return (
         <>
             <Switch>
-                <Route path={`${props.match.path}/totp/:userId/:token`} component={Totp} />
+                <Route path={`${props.match.path}/totp/:userId`} component={Totp} />
 
                 <Route path={props.match.path} component={Login} />
             </Switch>
