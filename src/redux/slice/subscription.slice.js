@@ -52,6 +52,7 @@ const SubscriptionSlice = createSlice({
     name: "subscription",
     initialState: {
         status: false,
+        setupFeeStatus: false,
         data: {},
         setUpfeeData: {},
         subscriptionData: {},
@@ -77,14 +78,14 @@ const SubscriptionSlice = createSlice({
             state.status = StatusConstants.REJECTED;
         },
         [checkSetUpfeeDetails.pending]: (state) => {
-            state.status = StatusConstants.PENDING;
+            state.setupFeeStatus = StatusConstants.PENDING;
         },
         [checkSetUpfeeDetails.fulfilled]: (state, action) => {
-            state.status = StatusConstants.FULFILLED;
+            state.setupFeeStatus = StatusConstants.FULFILLED;
             state.setUpfeeData = action.payload;
         },
         [checkSetUpfeeDetails.rejected]: (state) => {
-            state.status = StatusConstants.REJECTED;
+            state.setupFeeStatus = StatusConstants.REJECTED;
         },
     },
 });

@@ -26,7 +26,11 @@ function SessionTimeout() {
 
   return (
     <>
-      <IdleTimer ref={idleTimer} timeout={12 * 1000 * 10} onIdle={onIdle}></IdleTimer>
+      <IdleTimer
+        ref={idleTimer}
+        timeout={12 * 1000 * 10}
+        onIdle={onIdle}
+      ></IdleTimer>
 
       <Dialog.Title
         as="h3"

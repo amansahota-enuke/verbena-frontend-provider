@@ -50,7 +50,11 @@ const Layout = ({ match }) => {
 
   return (
     <>
-      <IdleTimer ref={idleTimer} timeout={9 * 1000 * 100 } onIdle={onIdle}></IdleTimer>
+      <IdleTimer
+        ref={idleTimer}
+        timeout={9 * 1000 * 100}
+        onIdle={onIdle}
+      ></IdleTimer>
 
       <Header handleToggle={handleToggle} />
       <div className={`main-panel relative ${show ? "expanded" : ""}`}>

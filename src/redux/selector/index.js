@@ -31,6 +31,8 @@ const selector = {
     subscribedId:(state)=>state.subscription.subscriptionId,
     userSubscriptionDetails:(state)=>state.subscription.data,
     setUpfeeDetails:(state)=>state.subscription.setUpfeeData,
+    subscriptionStatus:(state)=>state.subscription.status,
+    setUpfeeStatus:(state)=>state.subscription.setupFeeStatus,
 };
 
 export default selector;

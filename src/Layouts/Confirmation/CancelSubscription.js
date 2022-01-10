@@ -1,5 +1,5 @@
 import { Dialog } from "@headlessui/react";
-import React,{useState} from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import selector from "../../redux/selector";
@@ -11,23 +11,26 @@ import { ButtonLoader } from "../../Components";
 function SubscriptionCancel() {
   const dispatch = useDispatch();
   const [processing, setProcessing] = useState(null);
-  const subscriptionId = useSelector(selector.subscribedId)
+  const subscriptionId = useSelector(selector.subscribedId);
 
   const closeModal = () => {
     dispatch(ConfirmationActions.closeConfirmation());
   };
 
-  const handleSubscription = async() => {
+  const handleSubscription = async () => {
     setProcessing(true);
 
-    const actionResult = await dispatch(SubscriptionActions.cancelSubscription({
-      subscriptionId
-    }))
+    const actionResult = await dispatch(
+      SubscriptionActions.cancelSubscription({
+        subscriptionId,
+      })
+    );
     setProcessing(false);
     if (!actionResult.hasOwnProperty("error")) {
       closeModal();
-  }
-  }
+    }
+    dispatch(SubscriptionActions.checkSubscription());
+  };
 
   return (
     <>
@@ -39,7 +42,8 @@ function SubscriptionCancel() {
       </Dialog.Title>
       <div className="mt-2 text-center">
         <p className="text-md text-black-500">
-        Your subscription will be cancelled immediately. Are you sure you want to cancel your subscription?
+          Your subscription will be cancelled immediately. Are you sure you want
+          to cancel your subscription?
         </p>
       </div>
 
