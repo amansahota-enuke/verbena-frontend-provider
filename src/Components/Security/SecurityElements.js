@@ -26,7 +26,7 @@ function SecurityElements() {
 
     return (
         <><h2 className="hepta-slab font-20 text-center primary-text-color mb-5">
-            Security is important to Verbena and therefore we require a 2-step verification process. Please click enable. 
+            Security is important to Verbena and therefore we require a 2-step verification process. 
         </h2>
             <div className="bg-white login-box mb-10">
 
