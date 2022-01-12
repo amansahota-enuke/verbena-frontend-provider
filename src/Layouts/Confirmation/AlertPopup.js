@@ -25,6 +25,10 @@ function AlertPopup() {
         }
     },[])
 
+    const handleCancel = () => { 
+        dispatch(ConfirmationActions.closeConfirmation())
+    }
+
     return (
         <>
             <Dialog.Title
@@ -42,6 +46,13 @@ function AlertPopup() {
             </div>
 
             <div className="mt-4 text-center">
+                <button
+                    type="button"
+                    className="btn-login calibre-regular font-18 uppercase primary-bg-color text-white mr-4"
+                    onClick={handleCancel}
+                >
+                    Cancel
+                </button>
                 <button
                     type="button"
                     className="btn-login calibre-regular font-18 uppercase primary-bg-color text-white"

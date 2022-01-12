@@ -15,16 +15,14 @@ const initialValues = {
 };
 
 const validationSchema = Yup.object({
-    oldPassword: Yup.string().required("old Password is a required field")
-        .matches(
-            /^.*(?=.{8,})((?=.*[!@#$%^&*()\-_=+{};:,<.>]){1})(?=.*\d)((?=.*[a-z]){1})((?=.*[A-Z]){1}).*$/,
-            "Password must contain at least 8 characters, one uppercase, one lowercase, one number and one special case character"
-        ),
+    oldPassword: Yup.string().required("old Password is a required field"),
+
     newPassword: Yup.string().required("New Password is a required field")
         .matches(
             /^.*(?=.{8,})((?=.*[!@#$%^&*()\-_=+{};:,<.>]){1})(?=.*\d)((?=.*[a-z]){1})((?=.*[A-Z]){1}).*$/,
             "Password must contain at least 8 characters, one uppercase, one lowercase, one number and one special case character"
         ),
+        
     confirmPassword: Yup.string()
         .required("Confirm Passsword is a required field")
         .oneOf([Yup.ref("newPassword"), null], "Password must match"),

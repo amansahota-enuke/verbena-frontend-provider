@@ -31,7 +31,9 @@ export default function Example() {
                 process.env.REACT_APP_API_SERVER_URL + user.profile_logo
             );
         }
+    }, [user]);
 
+    useEffect(() => {
         if(Object.keys(user).length !== 0 && !user.totp) {
             dispatch(ConfirmationActions.setConfirmationType(
                 confirmationConstants.TWO_FA_ALERT
@@ -48,7 +50,7 @@ export default function Example() {
                 dispatch(ConfirmationActions.openConfirmation())
             }
         }
-    }, [user]);
+    },[])
 
     const parseName = (name) => {
         return name.charAt(0).toUpperCase() + name.substring(1).toLowerCase();
