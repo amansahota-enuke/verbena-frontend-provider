@@ -77,10 +77,9 @@ function StartAppointment() {
                 </div>
                 <div>
                   <h3 className="font-16 calibre-regular leading-none light-dark-gray-color">
-                    {moment(
-                      selectedAppointment.appointment_datetime,
-                      "hh:mm"
-                    ).format("LT")}
+                  {moment(selectedAppointment.appointment_datetime).format(
+                      "hh:mm A"
+                    )}
                   </h3>
                 </div>
               </div>

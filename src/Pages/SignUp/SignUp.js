@@ -17,9 +17,9 @@ const SignUpPageRoutes = (props) => {
     const token = queryString.parse(location.search)._key
     const [valid, setValid] = useState(true)
 
-    useEffect(async () => {
+    useEffect(() => {
+        async function checkToken(){
         if (token) {
-            console.log("anudeep",token)
             const res = await UserService.checkToken({
                 token: token
             })
@@ -29,6 +29,8 @@ const SignUpPageRoutes = (props) => {
         }else{
             setValid(false)
         }
+    }
+        checkToken()
     }, []);
 
     if (valid) {
