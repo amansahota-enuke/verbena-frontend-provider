@@ -71,7 +71,7 @@ const validationSchema = Yup.object({
     .of(
       Yup.object()
         .shape({
-          value: Yup.string().required(),
+          value: Yup.string(),
         })
         .required()
     )
