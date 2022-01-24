@@ -10,15 +10,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 
-import { Loader } from "../../";
 import confirmationConstants from "../../../constants/confirmation.constants";
-import statusConstants from "../../../constants/status.constants";
 import selector from "../../../redux/selector";
-import { AppointmentActions } from "../../../redux/slice/appointment.slice";
 import { ConfirmationActions } from "../../../redux/slice/confirmation.slice";
 import { SubscriptionActions } from "../../../redux/slice/subscription.slice";
 import { UserActions } from "../../../redux/slice/user.slice";
-import { PaymentService, UserService } from "../../../services";
+import { PaymentService } from "../../../services";
 import ButtonLoader from "../../Common/ButtonLoader";
 
 function PaymentForms() {
@@ -161,6 +158,9 @@ function PaymentForms() {
             <h3 className="leading-none text-lg calibre-bold">$199/month</h3>
           </div>
         </div>
+        <p className="calibre-bold"> 
+            Your credit card will be automatically charged $199 per month
+        </p>
       </div>
       <form onSubmit={handleSubmit} className="p-10 px-8 pt-10 pb-20 border-b">
         <div className="grid grid-cols-6 gap-6">

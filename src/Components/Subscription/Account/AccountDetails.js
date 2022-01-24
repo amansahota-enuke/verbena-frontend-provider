@@ -67,7 +67,7 @@ function AccountDetails() {
                         <div className="w-2.5 mr-4">:-</div>
                         <div className="w-auto">
                             <h3 className="leading-none text-lg calibre-bold">
-                                Annual
+                                Monthly
                             </h3>
                         </div>
                     </div>
