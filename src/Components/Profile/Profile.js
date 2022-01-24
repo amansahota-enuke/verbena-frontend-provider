@@ -74,8 +74,7 @@ const validationSchema = Yup.object({
           value: Yup.string(),
         })
         .required()
-    )
-    .min(1),
+    ),
   languages_spoken: Yup.array()
     .of(
       Yup.object()
@@ -85,9 +84,6 @@ const validationSchema = Yup.object({
         .required()
     )
     .min(1),
-  consultation_fee: Yup.number()
-    .required("Consultation fee is a required field")
-    .min(1, "Consultation fee is a required field"),
   address_line1: Yup.string().required("Address is a required field"),
   address_line2: Yup.string().nullable(),
   city: Yup.string().required("City is a required field"),
@@ -147,7 +143,6 @@ const Profile = () => {
       board_certifications: [{}],
       awards_publications: [{}],
       languages_spoken: [{ value: "English" }],
-      consultation_fee: 0,
       address_line1: "",
       address_line2: "",
       city: "",
@@ -171,7 +166,6 @@ const Profile = () => {
           "last_name",
           "email",
           "mobile_number",
-          "consultation_fee",
           "bio",
         ].includes(key)
       ) {
@@ -729,22 +723,6 @@ const Profile = () => {
                 ))}
                 <span className="text-red-500 block mt-2">
                   {errors.languages_spoken?.message}
-                </span>
-              </div>
-
-              <div className="col-span-6">
-                <div className="input-label calibre-regular mb-4">
-                  Consultation Fee
-                </div>
-                <input
-                  disabled={processing}
-                  type="text"
-                  className="disabled:opacity-50 custom-input ca-width input-border-color border"
-                  placeholder="Enter Consultation Fee"
-                  {...register("consultation_fee")}
-                />
-                <span className="text-red-500 block mt-2">
-                  {errors.consultation_fee?.message}
                 </span>
               </div>
 

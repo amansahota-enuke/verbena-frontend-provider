@@ -39,6 +39,8 @@ const SignUpForm = (props) => {
 
   const [validToken, setToken] = useState("");
 
+  const ratingNumbers = [1, 2, 3, 4, 5];
+
   const fetchReferenceData = async () => {
     try {
       const responseType = await CommonService.getTypes();
@@ -114,15 +116,13 @@ const SignUpForm = (props) => {
           .required()
       )
       .min(1),
-    awards_publications: Yup.array()
-      .of(
-        Yup.object()
-          .shape({
-            value: Yup.string(),
-          })
-          .required()
-      )
-      .min(1),
+    awards_publications: Yup.array().of(
+      Yup.object()
+        .shape({
+          value: Yup.string(),
+        })
+        .required()
+    ),
     languages_spoken: Yup.array()
       .of(
         Yup.object()
@@ -132,6 +132,16 @@ const SignUpForm = (props) => {
           .required()
       )
       .min(1),
+    patient_testimonial: Yup.array().of(
+      Yup.object()
+        .shape({
+          value: Yup.string().nullable(),
+          rating: Yup.number().nullable(),
+          patient_name: Yup.string().nullable(),
+        })
+        .required()
+    ),
+    bio: Yup.string().nullable(),
     address_line1: Yup.string().required("Address is a required field"),
     address_line2: Yup.string(),
     city: Yup.string().required("City is a required field"),
@@ -167,6 +177,8 @@ const SignUpForm = (props) => {
       board_certifications: [{}],
       awards_publications: [{}],
       languages_spoken: [{ value: "English" }],
+      patient_testimonial: [{}],
+      bio: "",
       address_line1: "",
       address_line2: "",
       city: "",
@@ -200,6 +212,11 @@ const SignUpForm = (props) => {
     name: "board_certifications",
   });
 
+  const patientTestimonial = useFieldArray({
+    control,
+    name: "patient_testimonial",
+  });
+
   const signUp = async (payload) => {
     setProcessing(true);
     const formData = new FormData(); // Currently empty
@@ -211,6 +228,7 @@ const SignUpForm = (props) => {
           "languages_spoken",
           "hospital_affiliations",
           "board_certifications",
+          "patient_testimonial",
         ].includes(key)
       ) {
         formData.append(key, JSON.stringify(payload[key]));
@@ -645,6 +663,99 @@ const SignUpForm = (props) => {
                     ))}
                     <span className="text-red-500 block mt-2">
                       {errors.languages_spoken?.message}
+                    </span>
+                  </div>
+
+                  <div className="col-span-6">
+                    <div className="input-label calibre-regular mb-4">Bio</div>
+                    <textarea
+                      {...register("bio")}
+                      disabled={processing}
+                      className="disabled:opacity-50 rounded-md ca-width input-border-color border h-28 p-4 font-18"
+                    ></textarea>
+                    <span className="text-red-500 block mt-2">
+                      {errors.bio?.message}
+                    </span>
+                  </div>
+
+                  <div className="col-span-6">
+                    <div className="input-label calibre-regular mb-4">
+                      Patient Testimonial
+                      {patientTestimonial.fields.length < 3 ? (
+                        <button
+                          disabled={processing}
+                          className="disabled:opacity-50 w-6 h-6 text-white primary-bg-color rounded-full calibre-bold font-18 ml-3"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            patientTestimonial.append({});
+                          }}
+                        >
+                          +
+                        </button>
+                      ) : (
+                        ""
+                      )}
+                    </div>
+                    {patientTestimonial.fields.map((field, index) => (
+                      <Fragment key={field.id}>
+                        <input
+                          disabled={processing}
+                          type="text"
+                          className="disabled:opacity-50 custom-input ca-width input-border-color border mt-6"
+                          placeholder="Enter patient testimonials"
+                          {...register(`patient_testimonial.${index}.value`)}
+                        />
+                        <button
+                          disabled={processing}
+                          onClick={(e) => {
+                            e.preventDefault();
+                            patientTestimonial.remove(index);
+                          }}
+                        >
+                          &ensp; Remove
+                        </button>
+                        <span className="text-red-500 block mt-2">
+                          {errors.patient_testimonial &&
+                            errors.patient_testimonial[index]?.value?.message}
+                        </span>
+                        <div className="input-label calibre-regular mb-4">
+                          Testimonial
+                        </div>
+                        <Controller
+                          name={`patient_testimonial.${index}.rating`}
+                          control={control}
+                          render={({ field }) => (
+                            <select
+                              disabled={processing}
+                              className="disabled:opacity-50 input-border-color ca-width border custom-select"
+                              {...field}
+                            >
+                              <option value={0}>Rating</option>
+                              {ratingNumbers.map((number) => (
+                                <option>{number}</option>
+                              ))}
+                            </select>
+                          )}
+                        />
+                        <div className="input-label calibre-regular mb-4">
+                          Rating
+                        </div>
+                        <input
+                          disabled={processing}
+                          type="text"
+                          className="disabled:opacity-50 custom-input ca-width input-border-color border"
+                          placeholder="Enter patient testimonials"
+                          {...register(
+                            `patient_testimonial.${index}.patient_name`
+                          )}
+                        />
+                        <div className="input-label calibre-regular mb-4">
+                          Patient Name
+                        </div>
+                      </Fragment>
+                    ))}
+                    <span className="text-red-500 block mt-2">
+                      {errors.patient_testimonial?.message}
                     </span>
                   </div>
 
