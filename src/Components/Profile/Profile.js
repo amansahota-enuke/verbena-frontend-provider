@@ -53,28 +53,31 @@ const validationSchema = Yup.object({
     .of(
       Yup.object()
         .shape({
-          value: Yup.string().required(),
+          value: Yup.string().required(
+            "Hospital affiliations field must have at least 1 items"
+          ),
         })
-        .required()
+        .required("Hospital affiliations field must have at least 1 items")
     )
-    .min(1),
+    .min("1"),
   board_certifications: Yup.array()
     .of(
       Yup.object()
         .shape({
-          value: Yup.string().required(),
+          value: Yup.string().required(
+            "Board certifications field must have at least 1 items"
+          ),
         })
-        .required()
+        .required("Board certifications field must have at least 1 items")
     )
-    .min(1),
-  awards_publications: Yup.array()
-    .of(
-      Yup.object()
-        .shape({
-          value: Yup.string(),
-        })
-        .required()
-    ),
+    .min("1"),
+  awards_publications: Yup.array().of(
+    Yup.object()
+      .shape({
+        value: Yup.string(),
+      })
+      .required()
+  ),
   languages_spoken: Yup.array()
     .of(
       Yup.object()
@@ -161,13 +164,9 @@ const Profile = () => {
       }
 
       if (
-        [
-          "first_name",
-          "last_name",
-          "email",
-          "mobile_number",
-          "bio",
-        ].includes(key)
+        ["first_name", "last_name", "email", "mobile_number", "bio"].includes(
+          key
+        )
       ) {
         setValue(key, user[key]);
       }
@@ -351,7 +350,7 @@ const Profile = () => {
                   {...register("first_name")}
                 />
                 <span className="text-red-500 block mt-2">
-                  {errors.first_name?.message}
+                  {errors.first_name ? `*${errors.first_name.message}` : ""}
                 </span>
               </div>
 
@@ -367,7 +366,7 @@ const Profile = () => {
                   {...register("last_name")}
                 />
                 <span className="text-red-500 block mt-2">
-                  {errors.last_name?.message}
+                  {errors.last_name ? `*${errors.last_name.message}` : ""}
                 </span>
               </div>
 
@@ -483,7 +482,9 @@ const Profile = () => {
                   )}
                 />
                 <span className="text-red-500 block mt-2">
-                  {errors.mobile_number?.message}
+                  {errors.mobile_number
+                    ? `*${errors.mobile_number.message}`
+                    : ""}
                 </span>
               </div>
 
@@ -497,7 +498,7 @@ const Profile = () => {
                   {...register("email")}
                 />
                 <span className="text-red-500 block mt-2">
-                  {errors.email?.message}
+                  {errors.email ? `*${errors.email.message}` : ""}
                 </span>
               </div>
               <div className="col-span-6">
@@ -523,7 +524,9 @@ const Profile = () => {
                   )}
                 />
                 <span className="text-red-500 block mt-2">
-                  {errors.provider_type?.message}
+                  {errors.provider_type
+                    ? `*${errors.provider_type.message}`
+                    : ""}
                 </span>
               </div>
               <div className="col-span-6">
@@ -549,7 +552,9 @@ const Profile = () => {
                   )}
                 />
                 <span className="text-red-500 block mt-2">
-                  {errors.provider_speciality?.message}
+                  {errors.provider_speciality
+                    ? `*${errors.provider_speciality.message}`
+                    : ""}
                 </span>
               </div>
               <div className="col-span-6">
@@ -587,7 +592,9 @@ const Profile = () => {
                     </button>
                     <span className="text-red-500 block mt-2">
                       {errors.hospital_affiliations &&
-                        errors.hospital_affiliations[index]?.value?.message}
+                      errors.hospital_affiliations[index]?.value
+                        ? `*${errors.hospital_affiliations[index].value.message}`
+                        : ""}
                     </span>
                   </Fragment>
                 ))}
@@ -631,7 +638,9 @@ const Profile = () => {
                     </button>
                     <span className="text-red-500 block mt-2">
                       {errors.board_certifications &&
-                        errors.board_certifications[index]?.value?.message}
+                      errors.board_certifications[index]?.value
+                        ? `*${errors.board_certifications[index].value.message}`
+                        : ""}
                     </span>
                   </Fragment>
                 ))}
@@ -674,7 +683,9 @@ const Profile = () => {
                     </button>
                     <span className="text-red-500 block mt-2">
                       {errors.awards_publications &&
-                        errors.awards_publications[index]?.value?.message}
+                      errors.awards_publications[index]?.value
+                        ? `*${errors.awards_publications[index].value.message}`
+                        : ""}
                     </span>
                   </Fragment>
                 ))}
@@ -717,7 +728,9 @@ const Profile = () => {
                     </button>
                     <span className="text-red-500 block mt-2">
                       {errors.languages_spoken &&
-                        errors.languages_spoken[index]?.value?.message}
+                      errors.languages_spoken[index]?.value
+                        ? `*${errors.languages_spoken[index].value.message}`
+                        : ""}
                     </span>
                   </Fragment>
                 ))}
@@ -738,7 +751,9 @@ const Profile = () => {
                   {...register("address_line1")}
                 />
                 <span className="text-red-500 block mt-2">
-                  {errors.address_line1?.message}
+                  {errors.address_line1
+                    ? `*${errors.address_line1.message}`
+                    : ""}
                 </span>
               </div>
 
@@ -754,7 +769,9 @@ const Profile = () => {
                   {...register("address_line2")}
                 />
                 <span className="text-red-500 block mt-2">
-                  {errors.address_line2?.message}
+                  {errors.address_line2
+                    ? `*${errors.address_line2.message}`
+                    : ""}
                 </span>
               </div>
 
@@ -768,7 +785,7 @@ const Profile = () => {
                   {...register("city")}
                 />
                 <span className="text-red-500 block mt-2">
-                  {errors.city?.message}
+                  {errors.city ? `*${errors.city.message}` : ""}
                 </span>
               </div>
 
@@ -793,7 +810,7 @@ const Profile = () => {
                   )}
                 />
                 <span className="text-red-500 block mt-2">
-                  {errors.state_id?.message}
+                  {errors.state_id ? `*${errors.state_id.message}` : ""}
                 </span>
               </div>
 
@@ -807,7 +824,7 @@ const Profile = () => {
                   {...register("zipcode")}
                 />
                 <span className="text-red-500 block mt-2">
-                  {errors.zipcode?.message}
+                  {errors.zipcode ? `*${errors.zipcode.message}` : ""}
                 </span>
               </div>
               <div className="col-span-6">
@@ -818,7 +835,7 @@ const Profile = () => {
                   className="disabled:opacity-50 rounded-md ca-width input-border-color border h-28 p-4 font-18"
                 ></textarea>
                 <span className="text-red-500 block mt-2">
-                  {errors.bio?.message}
+                  {errors.bio ? `*${errors.bio.message}` : ""}
                 </span>
               </div>
               <div className="col-span-6">
@@ -859,7 +876,9 @@ const Profile = () => {
                     </button>
                     <span className="text-red-500 block mt-2">
                       {errors.patient_testimonial &&
-                        errors.patient_testimonial[index]?.value?.message}
+                      errors.patient_testimonial[index]?.value
+                        ? `*${errors.patient_testimonial[index].value.message}`
+                        : ""}
                     </span>
                     <div className="input-label calibre-regular mb-4">
                       Testimonial
