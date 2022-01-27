@@ -503,6 +503,41 @@ const Profile = () => {
               </div>
               <div className="col-span-6">
                 <div className="input-label calibre-regular mb-4">
+                  Address Line 1
+                </div>
+                <input
+                  disabled={processing}
+                  type="text"
+                  className="disabled:opacity-50 custom-input ca-width input-border-color border"
+                  placeholder="Enter Address Line 1"
+                  {...register("address_line1")}
+                />
+                <span className="text-red-500 block mt-2">
+                  {errors.address_line1
+                    ? `*${errors.address_line1.message}`
+                    : ""}
+                </span>
+              </div>
+
+              <div className="col-span-6">
+                <div className="input-label calibre-regular mb-4">
+                  Address Line 2
+                </div>
+                <input
+                  disabled={processing}
+                  type="text"
+                  className="disabled:opacity-50 custom-input ca-width input-border-color border"
+                  placeholder="Enter Address Line 2"
+                  {...register("address_line2")}
+                />
+                <span className="text-red-500 block mt-2">
+                  {errors.address_line2
+                    ? `*${errors.address_line2.message}`
+                    : ""}
+                </span>
+              </div>
+              <div className="col-span-6">
+                <div className="input-label calibre-regular mb-4">
                   Provider Type
                 </div>
                 <Controller
@@ -736,42 +771,6 @@ const Profile = () => {
                 ))}
                 <span className="text-red-500 block mt-2">
                   {errors.languages_spoken?.message}
-                </span>
-              </div>
-
-              <div className="col-span-6">
-                <div className="input-label calibre-regular mb-4">
-                  Address Line 1
-                </div>
-                <input
-                  disabled={processing}
-                  type="text"
-                  className="disabled:opacity-50 custom-input ca-width input-border-color border"
-                  placeholder="Enter Address Line 1"
-                  {...register("address_line1")}
-                />
-                <span className="text-red-500 block mt-2">
-                  {errors.address_line1
-                    ? `*${errors.address_line1.message}`
-                    : ""}
-                </span>
-              </div>
-
-              <div className="col-span-6">
-                <div className="input-label calibre-regular mb-4">
-                  Address Line 2
-                </div>
-                <input
-                  disabled={processing}
-                  type="text"
-                  className="disabled:opacity-50 custom-input ca-width input-border-color border"
-                  placeholder="Enter Address Line 2"
-                  {...register("address_line2")}
-                />
-                <span className="text-red-500 block mt-2">
-                  {errors.address_line2
-                    ? `*${errors.address_line2.message}`
-                    : ""}
                 </span>
               </div>
 
