@@ -41,6 +41,10 @@ const SignUpForm = (props) => {
 
   const ratingNumbers = [1, 2, 3, 4, 5];
 
+  const [password, showPassword] = useState(false);
+
+  const [confirmPassword, showConfirmPassword] = useState(false);
+
   const fetchReferenceData = async () => {
     try {
       const responseType = await CommonService.getTypes();
@@ -273,6 +277,22 @@ const SignUpForm = (props) => {
     reader.readAsDataURL(file);
   };
 
+  const handleShowPassword = () => {
+    if (password === false) {
+      showPassword(true);
+    } else {
+      showPassword(false);
+    }
+  };
+
+  const handleShowConfirmPassword = () => {
+    if (confirmPassword === false) {
+      showConfirmPassword(true);
+    } else {
+      showConfirmPassword(false);
+    }
+  };
+
   return (
     <>
       {loader && <Loader />}
@@ -487,6 +507,54 @@ const SignUpForm = (props) => {
                       {errors.address_line2
                         ? `*${errors.address_line2.message}`
                         : ""}
+                    </span>
+                  </div>
+                  <div className="col-span-6">
+                    <div className="input-label calibre-regular mb-4">
+                      State
+                    </div>
+                    <select
+                      disabled={processing}
+                      className="disabled:opacity-50 input-border-color ca-width border custom-select"
+                      {...register("state_id")}
+                    >
+                      <option value={0}>Select State</option>
+                      {states.map((state) => (
+                        <option key={state.id} value={state.id}>
+                          {state.state_name}
+                        </option>
+                      ))}
+                    </select>
+                    <span className="text-red-500 block mt-2">
+                      {errors.state_id ? `*${errors.state_id.message}` : ""}
+                    </span>
+                  </div>
+                  <div className="col-span-6">
+                    <div className="input-label calibre-regular mb-4">City</div>
+                    <input
+                      disabled={processing}
+                      type="text"
+                      className="disabled:opacity-50 custom-input ca-width input-border-color border"
+                      placeholder="Enter City"
+                      {...register("city")}
+                    />
+                    <span className="text-red-500 block mt-2">
+                      {errors.city ? `*${errors.city.message}` : ""}
+                    </span>
+                  </div>
+                  <div className="col-span-6">
+                    <div className="input-label calibre-regular mb-4">
+                      Zip Code
+                    </div>
+                    <input
+                      disabled={processing}
+                      type="text"
+                      className="disabled:opacity-50 custom-input ca-width input-border-color border"
+                      placeholder="Enter Zip Code"
+                      {...register("zipcode")}
+                    />
+                    <span className="text-red-500 block mt-2">
+                      {errors.zipcode ? `*${errors.zipcode.message}` : ""}
                     </span>
                   </div>
                   <div className="col-span-6">
@@ -815,63 +883,13 @@ const SignUpForm = (props) => {
                   </div>
 
                   <div className="col-span-6">
-                    <div className="input-label calibre-regular mb-4">City</div>
-                    <input
-                      disabled={processing}
-                      type="text"
-                      className="disabled:opacity-50 custom-input ca-width input-border-color border"
-                      placeholder="Enter City"
-                      {...register("city")}
-                    />
-                    <span className="text-red-500 block mt-2">
-                      {errors.city ? `*${errors.city.message}` : ""}
-                    </span>
-                  </div>
-
-                  <div className="col-span-6">
-                    <div className="input-label calibre-regular mb-4">
-                      State
-                    </div>
-                    <select
-                      disabled={processing}
-                      className="disabled:opacity-50 input-border-color ca-width border custom-select"
-                      {...register("state_id")}
-                    >
-                      <option value={0}>Select State</option>
-                      {states.map((state) => (
-                        <option key={state.id} value={state.id}>
-                          {state.state_name}
-                        </option>
-                      ))}
-                    </select>
-                    <span className="text-red-500 block mt-2">
-                      {errors.state_id ? `*${errors.state_id.message}` : ""}
-                    </span>
-                  </div>
-
-                  <div className="col-span-6">
-                    <div className="input-label calibre-regular mb-4">
-                      Zip Code
-                    </div>
-                    <input
-                      disabled={processing}
-                      type="text"
-                      className="disabled:opacity-50 custom-input ca-width input-border-color border"
-                      placeholder="Enter Zip Code"
-                      {...register("zipcode")}
-                    />
-                    <span className="text-red-500 block mt-2">
-                      {errors.zipcode ? `*${errors.zipcode.message}` : ""}
-                    </span>
-                  </div>
-
-                  <div className="col-span-6">
                     <div className="input-label calibre-regular mb-4">
                       Password
                     </div>
+                    <div className="relative">
                     <input
                       disabled={processing}
-                      type="password"
+                      type={password ? "text" : "password"}
                       className="disabled:opacity-50 custom-input ca-width input-border-color border"
                       placeholder="Enter Password"
                       {...register("password")}
@@ -879,15 +897,25 @@ const SignUpForm = (props) => {
                     <span className="text-red-500 block mt-2">
                       {errors.password ? `*${errors.password.message}` : ""}
                     </span>
+                    <span
+                      className="cursor-pointer eye absolute right-40 top-4"
+                      onClick={handleShowPassword}
+                    >
+                      <i
+                        className={password ? "fas fa-eye-slash" : "fas fa-eye"}
+                      ></i>
+                    </span>
+                    </div>
                   </div>
 
                   <div className="col-span-6">
                     <div className="input-label calibre-regular mb-4">
                       Confirm Password
                     </div>
+                    <div className="relative">
                     <input
                       disabled={processing}
-                      type="password"
+                      type={confirmPassword ? "text" : "password"}
                       className="disabled:opacity-50 custom-input ca-width input-border-color border"
                       placeholder="Enter Confirm Password"
                       {...register("confirmPassword")}
@@ -897,6 +925,15 @@ const SignUpForm = (props) => {
                         ? `*${errors.confirmPassword.message}`
                         : ""}
                     </span>
+                    <span
+                      className="cursor-pointer eye absolute right-40 top-4"
+                      onClick={handleShowConfirmPassword}
+                    >
+                      <i
+                        className={confirmPassword ? "fas fa-eye-slash" : "fas fa-eye"}
+                      ></i>
+                    </span>
+                    </div>
                   </div>
                 </div>
               </div>

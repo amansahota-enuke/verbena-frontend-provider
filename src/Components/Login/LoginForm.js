@@ -25,6 +25,7 @@ const LoginForm = (props) => {
   const history = useHistory();
   const dispatch = useDispatch();
   const [test, setTest] = useState(false);
+  const [password, showPassword] = useState(false);
 
   const {
     register,
@@ -46,6 +47,14 @@ const LoginForm = (props) => {
         dispatch(SubscriptionActions.checkSubscription());
         history.push("/home");
       }
+    }
+  };
+
+  const handleShowPassword = () => {
+    if (password === false) {
+      showPassword(true);
+    } else {
+      showPassword(false);
     }
   };
 
@@ -81,15 +90,21 @@ const LoginForm = (props) => {
 
           <div className="flex xl:flex-nowrap lg:flex-nowrap md:flex-nowrap sm:flex-wrap flex-wrap items-center mb-10">
             <div className="input-label calibre-regular">Password</div>
-            <div className="w-full">
+            <div className="w-full relative">
               <input
-                type="password"
+                type={password ? "text" : "password"}
                 className="custom-input input-border-color border"
                 placeholder="Password"
                 {...register("password")}
               />
               <span className="text-red-500 block mt-2">
                 {errors.password?.message}
+              </span>
+              <span
+                className="cursor-pointer eye absolute right-2 top-4"
+                onClick={handleShowPassword}
+              >
+                <i className={password ? "fas fa-eye-slash" : "fas fa-eye"}></i>
               </span>
             </div>
           </div>

@@ -537,6 +537,58 @@ const Profile = () => {
                 </span>
               </div>
               <div className="col-span-6">
+                <div className="input-label calibre-regular mb-4">City</div>
+                <input
+                  disabled={processing}
+                  type="text"
+                  className="disabled:opacity-50 custom-input ca-width input-border-color border"
+                  placeholder="Enter City"
+                  {...register("city")}
+                />
+                <span className="text-red-500 block mt-2">
+                  {errors.city ? `*${errors.city.message}` : ""}
+                </span>
+              </div>
+
+              <div className="col-span-6">
+                <div className="input-label calibre-regular mb-4">State</div>
+                <Controller
+                  name="state_id"
+                  control={control}
+                  render={({ field }) => (
+                    <select
+                      disabled={processing}
+                      className="disabled:opacity-50 input-border-color ca-width border custom-select"
+                      {...field}
+                    >
+                      <option value={0}>Select State</option>
+                      {states.map((state) => (
+                        <option key={state.id} value={state.id}>
+                          {state.state_name}
+                        </option>
+                      ))}
+                    </select>
+                  )}
+                />
+                <span className="text-red-500 block mt-2">
+                  {errors.state_id ? `*${errors.state_id.message}` : ""}
+                </span>
+              </div>
+
+              <div className="col-span-6">
+                <div className="input-label calibre-regular mb-4">Zip Code</div>
+                <input
+                  disabled={processing}
+                  type="text"
+                  className="disabled:opacity-50 custom-input ca-width input-border-color border"
+                  placeholder="Enter Zip Code"
+                  {...register("zipcode")}
+                />
+                <span className="text-red-500 block mt-2">
+                  {errors.zipcode ? `*${errors.zipcode.message}` : ""}
+                </span>
+              </div>
+              <div className="col-span-6">
                 <div className="input-label calibre-regular mb-4">
                   Provider Type
                 </div>
@@ -774,58 +826,6 @@ const Profile = () => {
                 </span>
               </div>
 
-              <div className="col-span-6">
-                <div className="input-label calibre-regular mb-4">City</div>
-                <input
-                  disabled={processing}
-                  type="text"
-                  className="disabled:opacity-50 custom-input ca-width input-border-color border"
-                  placeholder="Enter City"
-                  {...register("city")}
-                />
-                <span className="text-red-500 block mt-2">
-                  {errors.city ? `*${errors.city.message}` : ""}
-                </span>
-              </div>
-
-              <div className="col-span-6">
-                <div className="input-label calibre-regular mb-4">State</div>
-                <Controller
-                  name="state_id"
-                  control={control}
-                  render={({ field }) => (
-                    <select
-                      disabled={processing}
-                      className="disabled:opacity-50 input-border-color ca-width border custom-select"
-                      {...field}
-                    >
-                      <option value={0}>Select State</option>
-                      {states.map((state) => (
-                        <option key={state.id} value={state.id}>
-                          {state.state_name}
-                        </option>
-                      ))}
-                    </select>
-                  )}
-                />
-                <span className="text-red-500 block mt-2">
-                  {errors.state_id ? `*${errors.state_id.message}` : ""}
-                </span>
-              </div>
-
-              <div className="col-span-6">
-                <div className="input-label calibre-regular mb-4">Zip Code</div>
-                <input
-                  disabled={processing}
-                  type="text"
-                  className="disabled:opacity-50 custom-input ca-width input-border-color border"
-                  placeholder="Enter Zip Code"
-                  {...register("zipcode")}
-                />
-                <span className="text-red-500 block mt-2">
-                  {errors.zipcode ? `*${errors.zipcode.message}` : ""}
-                </span>
-              </div>
               <div className="col-span-6">
                 <div className="input-label calibre-regular mb-4">Bio</div>
                 <textarea
