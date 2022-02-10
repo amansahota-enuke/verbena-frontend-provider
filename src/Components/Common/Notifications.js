@@ -6,22 +6,44 @@ import { useSelector } from "react-redux";
 import selector from "../../redux/selector";
 import { useDispatch } from "react-redux";
 import { ChatActions } from "../../redux/slice/chat.slice";
+import { UserService, AppointmentService } from "../../services";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function Example() {
+export default function Example({ socket }) {
   const location = useLocation();
   const dispatch = useDispatch();
   const notificationCount = useSelector(selector.notificationCount);
   const notifications = useSelector(selector.notifications);
 
   useEffect(() => {
-    setInterval(() => {
-      dispatch(ChatActions.getNotifications());
-    }, 5000);
+    dispatch(ChatActions.getNotifications());
   }, []);
+
+  useEffect(async () => {
+    try {
+      const user = await UserService.getProfile();
+      const response = await AppointmentService.fetchLatestAppointments();
+      response.data.data.map((each) => {
+        socket.emit("joinRoom", {
+          userId: user.data.data.id,
+          userName: user.data.data.first_name,
+          roomname: `${each.id}${user.data.data.id}`,
+        });
+      });
+      dispatch(ChatActions.UserSocket(socket));
+    } catch (error) {
+      console.log(error.response.data.message);
+    }
+  }, []);
+
+  useEffect(() => {
+    socket.on("message", () => {
+      dispatch(ChatActions.getNotifications());
+    });
+  }, [socket]);
 
   const updateNotification = async (notification, type) => {
     const actionResult = await dispatch(

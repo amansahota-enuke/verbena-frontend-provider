@@ -130,17 +130,6 @@ const completeAppointment = createAsyncThunk(
     }
 );
 
-export const AppointmentActions = {
-    fetchAppointmentCancelReasons,
-    fetchAppointmentList,
-    fetchAppointmentDetail,
-    updateAppointment,
-    updateAppointmentStatus,
-    rescheduleAppointment,
-    cancelAppointment,
-    completeAppointment,
-};
-
 const AppointmentSlice = createSlice({
     name: "appointment",
     initialState: {
@@ -149,6 +138,11 @@ const AppointmentSlice = createSlice({
         count: 0,
         list: [],
         selectedAppointment: {},
+    },
+    reducers: {
+        StoreAppointementDetails: (state, action) => {
+            state.selectedAppointment = action.payload;
+        },
     },
     extraReducers: {
         [fetchAppointmentCancelReasons.pending]: (state) => {
@@ -229,5 +223,17 @@ const AppointmentSlice = createSlice({
         },
     },
 });
+
+export const AppointmentActions = {
+    ...AppointmentSlice.actions,
+    fetchAppointmentCancelReasons,
+    fetchAppointmentList,
+    fetchAppointmentDetail,
+    updateAppointment,
+    updateAppointmentStatus,
+    rescheduleAppointment,
+    cancelAppointment,
+    completeAppointment,
+};
 
 export default AppointmentSlice.reducer;

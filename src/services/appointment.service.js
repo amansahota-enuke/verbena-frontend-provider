@@ -22,6 +22,7 @@ const AppointmentService = {
     saveAppointmentDetail: (id, body) =>
         ApiService.post(`/appointment/details/${id}`, body),
     getPdf: (id) => ApiService.get(`/appointment/pdf/${id}`),
+    fetchLatestAppointments: () => ApiService.get(`/appointment/latest-appointments`),
 };
 
 export default AppointmentService;

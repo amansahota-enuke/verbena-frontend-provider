@@ -6,7 +6,7 @@ import { AppointmentActions } from "../../../redux/slice/appointment.slice";
 import { AppointmentService } from "../../../services";
 import ChatBox from "./ChatBox";
 
-function Detail({ selectedAppointment }) {
+function Detail({ selectedAppointment, fetchAppointment }) {
   const location = useLocation();
   const dispatch = useDispatch();
   const [complaint, setComplaint] = useState("");
@@ -46,9 +46,7 @@ function Detail({ selectedAppointment }) {
       );
 
       toast.success("Details saved successfully");
-      dispatch(
-        AppointmentActions.fetchAppointmentDetail(selectedAppointment.id)
-      );
+      fetchAppointment();
     } catch (error) {
       toast.error("Error Saving Details");
     }

@@ -7,137 +7,128 @@ import { useParams } from "react-router";
 import { ButtonLoader } from "../..";
 
 const ChatBox = ({ chatBoxOpen, selectedAppointment }) => {
-    const { id, appointmentId } = useParams();
-    const messages = useSelector(selector.messages);
-    const user = useSelector(selector.user);
-    const [message, setMessage] = useState("");
-    const [messageList, setMessageList] = useState([]);
-    const dispatch = useDispatch();
-    const selectedId = id ? id : appointmentId
+  const { id, appointmentId } = useParams();
+  const messages = useSelector(selector.messages);
+  const user = useSelector(selector.user);
+  const [message, setMessage] = useState("");
+  const [messageList, setMessageList] = useState([]);
+  const dispatch = useDispatch();
+  const selectedId = id ? id : appointmentId;
+  const socket = useSelector(selector.chatSocket);
+  const notifications = useSelector(selector.notifications);
 
-    useEffect(() => {
-        let messageInterval = null;
-        if (selectedId && Number(selectedId)) {
-            messageInterval = setInterval(() => {
-                dispatch(ChatActions.getMessages(selectedId));
-            }, 1000);
-        }
+  useEffect(() => {
+    if (Object.keys(selectedAppointment).length !== 0) {
+      dispatch(ChatActions.getMessages(selectedAppointment.id));
+    }
+  }, [selectedAppointment]);
 
-        return () => {
-            clearInterval(messageInterval);
-        };
-    }, [selectedId]);
+  useEffect(() => {
+    if (messages.length !== messageList.length) {
+      setMessageList(messages);
+    }
+  }, [messages]);
 
-    useEffect(() => {
-        if (messages.length !== messageList.length) {
-            setMessageList(messages);
-        }
-    }, [messages]);
+  useEffect(() => {
+    if (Object.keys(selectedAppointment).length !== 0) {
+      dispatch(ChatActions.getMessages(selectedAppointment.id));
+    }
+  }, [notifications]);
+  const sendData = async () => {
+    if (message !== "") {
+      const requestBody = {
+        id: selectedId,
+        body: {
+          text: message,
+          created_by: "provider",
+        },
+      };
+      await ChatService.sendMessage(requestBody);
+      socket.emit("chat", {
+        roomName: `${selectedAppointment.patient.id}${selectedAppointment.provider.id}`,
+        appointment_id: selectedAppointment.id,
+      });
+      dispatch(ChatActions.getMessages(selectedAppointment.id));
+      setMessage("");
+    }
+  };
 
-    const sendData = async () => {
-        if (message !== "") {
-            const requestBody = {
-                id: selectedId,
-                body: {
-                    text: message,
-                    created_by: "provider",
-                },
-            };
-            console.log("reqbody",requestBody)
-            await ChatService.sendMessage(requestBody);
-            setMessage("");
-        }
-    };
+  const messagesEndRef = useRef();
+  const scrollToBottom = () => {
+    messagesEndRef.current.scrollIntoView();
+  };
 
-    const messagesEndRef = useRef();
-    const scrollToBottom = () => {
-        messagesEndRef.current.scrollIntoView();
-    };
+  useEffect(scrollToBottom, [messageList]);
 
-    useEffect(scrollToBottom, [messageList]);
-
-    return (
-        <div>
-            <div className={`chat-container ${!chatBoxOpen && "closed"}`}>
-                <div className="chat-container-body">
-                <div className="chat-header">
-                        <p>
-                        Patient/Provider chat box is active for 48 hours.
-                        </p>
-                        </div>
-                    {messageList.map((msg, index) => {
-                        if (msg.created_by === "provider") {
-                            return (
-                                <div
-                                    key={index}
-                                    className="msg-container to-msg-container"
-                                >
-                                    <img
-                                        src={
-                                            user.profile_logo
-                                                ? process.env
-                                                      .REACT_APP_API_SERVER_URL +
-                                                  user.profile_logo
-                                                : "https://res.cloudinary.com/dx94hnzfl/image/upload/v1612594885/Avatar_jarzmi.png"
-                                        }
-                                        className="from-msg-profile-pic"
-                                    />
-                                    <div className="msg-text-container from-msg-text-container">
-                                        <p className="msg-text from-msg-text">
-                                            {msg.text}
-                                        </p>
-                                    </div>
-                                </div>
-                            );
-                        } else {
-                            return (
-                                <div key={index} className="msg-container">
-                                    <img
-                                        src={
-                                            selectedAppointment.patient &&
-                                            selectedAppointment.patient
-                                                .profile_image_path
-                                                ? process.env
-                                                      .REACT_APP_API_SERVER_URL +
-                                                  selectedAppointment.patient
-                                                      .profile_image_path
-                                                : "https://res.cloudinary.com/dx94hnzfl/image/upload/v1612593409/Ellipse_1_2_uziel2.png"
-                                        }
-                                        className="to-msg-profile-pic"
-                                    />
-                                    <div className="msg-text-container to-msg-text-container">
-                                        <p className="msg-text to-msg-text">
-                                            {msg.text}
-                                        </p>
-                                    </div>
-                                </div>
-                            );
-                        }
-                    })}
-                    <div ref={messagesEndRef} />
+  return (
+    <div>
+      <div className={`chat-container ${!chatBoxOpen && "closed"}`}>
+        <div className="chat-container-body">
+          <div className="chat-header">
+            <p>Patient/Provider chat box is active for 48 hours.</p>
+          </div>
+          {messageList.map((msg, index) => {
+            if (msg.created_by === "provider") {
+              return (
+                <div key={index} className="msg-container to-msg-container">
+                  <img
+                    src={
+                      user.profile_logo
+                        ? process.env.REACT_APP_API_SERVER_URL +
+                          user.profile_logo
+                        : "https://res.cloudinary.com/dx94hnzfl/image/upload/v1612594885/Avatar_jarzmi.png"
+                    }
+                    className="from-msg-profile-pic"
+                  />
+                  <div className="msg-text-container from-msg-text-container">
+                    <p className="msg-text from-msg-text">{msg.text}</p>
+                  </div>
                 </div>
-
-                <div className="sc-user-input">
-                    <textarea
-                        className="border"
-                        placeholder="Enter your message"
-                        value={message}
-                        onChange={(e) => setMessage(e.target.value)}
-                        onKeyPress={(e) => {
-                            if (e.key === "Enter") {
-                                sendData();
-                            }
-                        }}
-                    ></textarea>
-                    <button
-                        className="px-6 calibre-regular primary-bg-color text-white font-16"
-                        onClick={sendData}
-                    >
-                        <i className="fas fa-paper-plane"></i>
-                    </button>
+              );
+            } else {
+              return (
+                <div key={index} className="msg-container">
+                  <img
+                    src={
+                      selectedAppointment.patient &&
+                      selectedAppointment.patient.profile_image_path
+                        ? process.env.REACT_APP_API_SERVER_URL +
+                          selectedAppointment.patient.profile_image_path
+                        : "https://res.cloudinary.com/dx94hnzfl/image/upload/v1612593409/Ellipse_1_2_uziel2.png"
+                    }
+                    className="to-msg-profile-pic"
+                  />
+                  <div className="msg-text-container to-msg-text-container">
+                    <p className="msg-text to-msg-text">{msg.text}</p>
+                  </div>
                 </div>
-            </div>
+              );
+            }
+          })}
+          <div ref={messagesEndRef} />
         </div>
-    );
+
+        <div className="sc-user-input">
+          <textarea
+            className="border"
+            placeholder="Enter your message"
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+            onKeyPress={(e) => {
+              if (e.key === "Enter") {
+                sendData();
+              }
+            }}
+          ></textarea>
+          <button
+            className="px-6 calibre-regular primary-bg-color text-white font-16"
+            onClick={sendData}
+          >
+            <i className="fas fa-paper-plane"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  );
 };
 export default ChatBox;

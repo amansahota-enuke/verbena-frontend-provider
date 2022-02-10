@@ -6,7 +6,7 @@ import { AppointmentService } from "../../../services";
 import { AppointmentActions } from "../../../redux/slice/appointment.slice";
 import { PlusIcon } from "@heroicons/react/solid";
 
-function Medication({ appointmentId, oldMedication, setOldMedication }) {
+function Medication({ appointmentId, oldMedication, setOldMedication, fetchAppointment }) {
   const dispatch = useDispatch();
   const [medication, setMedication] = useState([]);
 
@@ -36,7 +36,7 @@ function Medication({ appointmentId, oldMedication, setOldMedication }) {
         update: oldMedication,
       });
       toast.success("Medication saved successfully");
-      dispatch(AppointmentActions.fetchAppointmentDetail(appointmentId));
+      fetchAppointment()
       setMedication([]);
     } catch (error) {
       toast.error("Error Saving Medication");

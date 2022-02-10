@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 import { AppointmentActions } from "../../../redux/slice/appointment.slice";
 import { AppointmentService } from "../../../services";
 
-function Report({ appointmentId, oldReports, setOldReports }) {
+function Report({ appointmentId, oldReports, setOldReports, fetchAppointment }) {
   const dispatch = useDispatch();
   const [reports, setReports] = useState([]);
 
@@ -54,7 +54,7 @@ function Report({ appointmentId, oldReports, setOldReports }) {
       await AppointmentService.saveAppointmentReport(appointmentId, formData);
 
       toast.success("Reports saved successfully");
-      dispatch(AppointmentActions.fetchAppointmentDetail(appointmentId));
+      fetchAppointment()
       setReports([]);
     } catch (error) {
       toast.error("Error Saving Reports");
