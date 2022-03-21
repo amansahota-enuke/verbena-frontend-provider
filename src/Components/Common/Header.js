@@ -2,11 +2,6 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import Dropdown from "./Dropdown";
 import Notifications from "./Notifications";
-import io from "socket.io-client";
-
-const socket = io.connect(`${process.env.REACT_APP_SOCKET_SERVER}`, {
-  transports: ["websocket"],
-});
 
 const Header = ({ handleToggle }) => {
   return (
@@ -44,7 +39,7 @@ const Header = ({ handleToggle }) => {
             </div>
             <div className="flex items-center">
               <div className="xl:block lg:block md:block sm:hidden hidden">
-                <Notifications socket={socket} />
+                <Notifications />
               </div>
               <div>
                 <Dropdown />

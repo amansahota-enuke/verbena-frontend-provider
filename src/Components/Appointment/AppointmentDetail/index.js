@@ -25,12 +25,15 @@ function AppointmentDetail() {
   const [oldReports, setOldReports] = useState([]);
   const [oldMedication, setOldMedication] = useState([]);
   const [appointment, setAppointment] = useState({});
+  const [loader, setLoader] = useState(true);
 
   const fetchAppointment = async () => {
     try {
+      setLoader();
       const response = await AppointmentService.getAppointmentDetail(id);
       setAppointment(response.data.data);
       dispatch(AppointmentActions.StoreAppointementDetails(response.data.data));
+      setLoader(false);
     } catch (error) {
       toast.error(error.response.data.message);
     }
@@ -84,7 +87,7 @@ function AppointmentDetail() {
 
   return (
     <FullWidthContainer>
-      {appointmentStatus === statusConstants.PENDING && <Loader />}
+      {loader && <Loader />}
       <div className="">
         {/* Appoint ment Detail */}
         {appointment.status === "cancelled" && (

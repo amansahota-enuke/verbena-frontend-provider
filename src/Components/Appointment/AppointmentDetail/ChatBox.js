@@ -4,7 +4,6 @@ import { ChatActions } from "../../../redux/slice/chat.slice";
 import { ChatService } from "../../../services";
 import selector from "../../../redux/selector";
 import { useParams } from "react-router";
-import { ButtonLoader } from "../..";
 
 const ChatBox = ({ chatBoxOpen, selectedAppointment }) => {
   const { id, appointmentId } = useParams();
@@ -14,14 +13,19 @@ const ChatBox = ({ chatBoxOpen, selectedAppointment }) => {
   const [messageList, setMessageList] = useState([]);
   const dispatch = useDispatch();
   const selectedId = id ? id : appointmentId;
-  const socket = useSelector(selector.chatSocket);
-  const notifications = useSelector(selector.notifications);
 
   useEffect(() => {
-    if (Object.keys(selectedAppointment).length !== 0) {
-      dispatch(ChatActions.getMessages(selectedAppointment.id));
+    let messageInterval = null;
+    if (selectedId && Number(selectedId)) {
+      messageInterval = setInterval(() => {
+        dispatch(ChatActions.getMessages(selectedId));
+      }, 1000);
     }
-  }, [selectedAppointment]);
+
+    return () => {
+      clearInterval(messageInterval);
+    };
+  }, [selectedId]);
 
   useEffect(() => {
     if (messages.length !== messageList.length) {
@@ -29,11 +33,6 @@ const ChatBox = ({ chatBoxOpen, selectedAppointment }) => {
     }
   }, [messages]);
 
-  useEffect(() => {
-    if (Object.keys(selectedAppointment).length !== 0) {
-      dispatch(ChatActions.getMessages(selectedAppointment.id));
-    }
-  }, [notifications]);
   const sendData = async () => {
     if (message !== "") {
       const requestBody = {
@@ -44,11 +43,6 @@ const ChatBox = ({ chatBoxOpen, selectedAppointment }) => {
         },
       };
       await ChatService.sendMessage(requestBody);
-      socket.emit("chat", {
-        roomName: `${selectedAppointment.patient.id}${selectedAppointment.provider.id}`,
-        appointment_id: selectedAppointment.id,
-      });
-      dispatch(ChatActions.getMessages(selectedAppointment.id));
       setMessage("");
     }
   };
