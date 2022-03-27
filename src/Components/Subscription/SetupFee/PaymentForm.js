@@ -144,7 +144,7 @@ function PaymentForm() {
                 <div className="flex items-center mb-4">
                     <div className="dd w-12">
                         <h3 className="leading-none text-lg calibre-regular">
-                            Fee :-
+                            Fee :
                         </h3>
                     </div>
                     <div className="w-auto">

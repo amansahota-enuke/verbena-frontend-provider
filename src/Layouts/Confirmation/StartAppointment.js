@@ -93,7 +93,7 @@ function StartAppointment() {
                 Patient Name
               </h3>
             </div>
-            <div className="w-2.5 mr-4">:-</div>
+            <div className="w-2.5 mr-4">:</div>
             <div className="w-auto">
               <h3 className="leading-none text-lg calibre-bold">
                 {selectedAppointment.patient.first_name}{" "}
@@ -121,7 +121,7 @@ function StartAppointment() {
                 Reason for visit
               </h3>
             </div>
-            <div className="w-2.5 mr-4">:-</div>
+            <div className="w-2.5 mr-4">:</div>
             <div className="w-auto">
               <h3 className="leading-none text-lg calibre-bold">
                 {selectedAppointment.appointment_reason_text
