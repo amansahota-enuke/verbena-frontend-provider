@@ -60,8 +60,6 @@ function PaymentForm() {
             },
         });
 
-        console.log("payload", payload);
-
         setProcessing(false);
         if (payload.error) {
             toast.error(payload.error.message);

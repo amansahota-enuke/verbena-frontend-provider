@@ -35,7 +35,6 @@ const cancelSubscription = createAsyncThunk(
     "subscription/cancelSubscription",
     async (payload, thunkApi) => {
         try {
-            console.log(payload)
             const response = await PaymentService.cancelSubscription(
                 payload
             )
