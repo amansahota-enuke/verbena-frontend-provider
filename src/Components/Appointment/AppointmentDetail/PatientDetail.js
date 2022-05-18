@@ -63,7 +63,7 @@ function PatientDetail({ selectedAppointment }) {
                     )}
                   </div>
                   <div className="calibre-regular font-16 light-dark-gray-color leading-none">
-                  {moment(selectedAppointment.appointment_datetime).format(
+                    {moment(selectedAppointment.appointment_datetime).format(
                       "hh:mm A"
                     )}
                   </div>

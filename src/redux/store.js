@@ -1,4 +1,4 @@
-import { configureStore, getDefaultMiddleware} from "@reduxjs/toolkit";
+import { configureStore } from "@reduxjs/toolkit";
 import UserReducer from "./slice/user.slice";
 import ConfirmationReducer from "./slice/confirmation.slice";
 import AppointmentReducer from "./slice/appointment.slice";
@@ -16,10 +16,6 @@ const store = configureStore({
         chat: ChatReducer,
         subscription: SubscriptionReducer
     },
-    middleware: getDefaultMiddleware({
-        serializableCheck: false,
-      }),
-    
 });
 
 export default store;

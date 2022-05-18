@@ -42,7 +42,7 @@ function AccountDetails() {
                                 Patient Name
                             </h3>
                         </div>
-                        <div className="w-2.5 mr-4">:-</div>
+                        <div className="w-2.5 mr-4">:</div>
                         <div className="w-auto">
                             <h3 className="leading-none text-lg calibre-bold">
                                 {test && JSON.parse(test.res_body).latest_invoice.customer_name}
@@ -53,7 +53,7 @@ function AccountDetails() {
                         <div className="dd w-36">
                             <h3 className="leading-none text-lg calibre-regular">Email</h3>
                         </div>
-                        <div className="w-2.5 mr-4">:-</div>
+                        <div className="w-2.5 mr-4">:</div>
                         <div className="w-auto">
                             <h3 className="leading-none text-lg calibre-bold">
                                 {test && JSON.parse(test.res_body).latest_invoice.customer_email}
@@ -64,7 +64,7 @@ function AccountDetails() {
                         <div className="dd w-36">
                             <h3 className="leading-none text-lg calibre-regular">Type</h3>
                         </div>
-                        <div className="w-2.5 mr-4">:-</div>
+                        <div className="w-2.5 mr-4">:</div>
                         <div className="w-auto">
                             <h3 className="leading-none text-lg calibre-bold">
                                 Monthly
@@ -77,7 +77,7 @@ function AccountDetails() {
                                 Expiration
                             </h3>
                         </div>
-                        <div className="w-2.5 mr-4">:-</div>
+                        <div className="w-2.5 mr-4">:</div>
                         <div className="w-auto">
                             <h3 className="leading-none text-lg calibre-bold">
                                 {test && `${moment(
@@ -93,7 +93,7 @@ function AccountDetails() {
                                 Subscription Plan
                             </h3>
                         </div>
-                        <div className="w-2.5 mr-4">:-</div>
+                        <div className="w-2.5 mr-4">:</div>
                         <div className="w-auto">
                             <h3 className="leading-none text-lg calibre-bold">{`$${test &&
                                 JSON.parse(test.res_body).latest_invoice.amount_paid / 100

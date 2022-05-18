@@ -36,7 +36,7 @@ const QuestionnaireSlice = createSlice({
     name: "questionnaire",
     initialState: {
         status: null,
-        basicQuestionnaire: [],
+        basicQuestionnaire: {},
         answers: [],
     },
     extraReducers: {

@@ -42,7 +42,7 @@ function Subscribed() {
                 Provider Name
               </h3>
             </div>
-            <div className="w-2.5 mr-4">:-</div>
+            <div className="w-2.5 mr-4">:</div>
             <div className="w-auto">
               <h3 className="leading-none text-lg calibre-bold">
                 {subscriptionDetails &&
@@ -54,7 +54,7 @@ function Subscribed() {
             <div className="dd w-36">
               <h3 className="leading-none text-lg calibre-regular">Email</h3>
             </div>
-            <div className="w-2.5 mr-4">:-</div>
+            <div className="w-2.5 mr-4">:</div>
             <div className="w-auto">
               <h3 className="leading-none text-lg calibre-bold">
                 {subscriptionDetails &&
@@ -66,7 +66,7 @@ function Subscribed() {
             <div className="dd w-36">
               <h3 className="leading-none text-lg calibre-regular">Type</h3>
             </div>
-            <div className="w-2.5 mr-4">:-</div>
+            <div className="w-2.5 mr-4">:</div>
             <div className="w-auto">
               <h3 className="leading-none text-lg calibre-bold">Monthly</h3>
             </div>
@@ -77,7 +77,7 @@ function Subscribed() {
                 Expiration
               </h3>
             </div>
-            <div className="w-2.5 mr-4">:-</div>
+            <div className="w-2.5 mr-4">:</div>
             <div className="w-auto">
               <h3 className="leading-none text-lg calibre-bold">
                 {`${moment(
@@ -92,7 +92,7 @@ function Subscribed() {
                 Subscription Plan
               </h3>
             </div>
-            <div className="w-2.5 mr-4">:-</div>
+            <div className="w-2.5 mr-4">:</div>
             <div className="w-auto">
               <h3 className="leading-none text-lg calibre-bold">{`$${
                 subscriptionDetails &&

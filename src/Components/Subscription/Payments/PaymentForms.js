@@ -151,7 +151,7 @@ function PaymentForms() {
         <div className="flex items-center mb-4">
           <div className="dd w-32">
             <h3 className="leading-none text-lg calibre-regular">
-              Subscription :-
+              Subscription :
             </h3>
           </div>
           <div className="w-auto">
