@@ -1338,6 +1338,20 @@ img.profile-image{
   background: #009b98!important;
 }
 
+@media (max-width: 530px){
+  .quick-new11 .flex {
+      display: table;
+      width: 100%;
+  }
+  .quick-new11 button {
+      width: 100%;
+      margin: 6px 0px;
+      height: 40px;
+      line-height: 40px;
+      padding: 0px;
+  }
+  }
+
 
 @media (max-width: 415px){
   .quick-new1 .flex {

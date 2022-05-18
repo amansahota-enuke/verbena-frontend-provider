@@ -81,7 +81,7 @@ const Room = ({
             >
                 <i class="fas fa-comment"></i>
             </button>
-            <div class="px-4 py-6 rounded-lg border bg-white mt-10 border-t">
+            <div class="px-4 py-6 rounded-lg border bg-white mt-10 border-t quick-new11">
                 <div class="flex justify-between items-center">
                     <div className="flex justify-end">
                         {/* <button

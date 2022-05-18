@@ -5,9 +5,10 @@ import confirmationConstants from "../../../constants/confirmation.constants";
 import selector from "../../../redux/selector";
 import { ConfirmationActions } from "../../../redux/slice/confirmation.slice";
 import { AppointmentActions } from "../../../redux/slice/appointment.slice";
-import { Link, useHistory, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { UserActions } from "../../../redux/slice/user.slice";
 import { useEffect } from "react";
+import { toast } from "react-toastify";
 
 function DoctorDetail({ selectedAppointment }) {
   const dispatch = useDispatch();
@@ -20,12 +21,22 @@ function DoctorDetail({ selectedAppointment }) {
   };
 
   const startAppointment = () => {
-    dispatch(
-      ConfirmationActions.setConfirmationType(
-        confirmationConstants.START_APPOINTMENT
-      )
+    const diff = Math.abs(
+      new Date(selectedAppointment.appointment_datetime) - new Date()
     );
-    dispatch(ConfirmationActions.openConfirmation());
+    var minutes = Math.floor(diff / 1000 / 60);
+    if (minutes <= 5) {
+      dispatch(
+        ConfirmationActions.setConfirmationType(
+          confirmationConstants.START_APPOINTMENT
+        )
+      );
+      dispatch(ConfirmationActions.openConfirmation());
+    } else {
+      toast.success(
+        "You can only attend the video call prior to 5 minutes of scheduled appointment time"
+      );
+    }
   };
 
   const rescheduleAppointment = () => {
