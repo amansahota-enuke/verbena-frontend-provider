@@ -36,3 +36,17 @@
     transform: rotate(360deg);
   }
 }
+
+@media (max-width: 414px){
+  .quick-new1 .flex {
+      display: table;
+      width: 100%;
+  }
+  .quick-new1 button {
+      width: 100%;
+      margin: 6px 0px;
+      height: 40px;
+      line-height: 40px;
+      padding: 0px;
+  }
+  }

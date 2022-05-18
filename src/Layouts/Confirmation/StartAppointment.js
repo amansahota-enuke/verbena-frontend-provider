@@ -133,7 +133,7 @@ function StartAppointment() {
             </div>
           </div>
         </div>
-        <div className="p-10 px-5 py-5">
+        <div className="p-10 px-5 py-5 quick-new1">
           <div className="flex justify-end">
             <button
               type="button"
