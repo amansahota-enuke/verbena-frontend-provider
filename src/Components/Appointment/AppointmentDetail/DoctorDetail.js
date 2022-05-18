@@ -131,7 +131,7 @@ function DoctorDetail({ selectedAppointment }) {
             </div>
           </div>
           <div>
-            <div className="quick-btn">
+            <div className="quick-btn quick-new1">
               <div className="flex">
                 {["ongoing", "patientDone"].includes(
                   selectedAppointment.status
