@@ -21,11 +21,11 @@ function DoctorDetail({ selectedAppointment }) {
   };
 
   const startAppointment = () => {
-    const diff = Math.abs(
-      new Date(selectedAppointment.appointment_datetime) - new Date()
-    );
+    const diff =
+      new Date(selectedAppointment.appointment_datetime) - new Date();
+
     var minutes = Math.floor(diff / 1000 / 60);
-    if (minutes <= 5) {
+    if (minutes <= 5 && minutes >= -10) {
       dispatch(
         ConfirmationActions.setConfirmationType(
           confirmationConstants.START_APPOINTMENT
