@@ -34,7 +34,7 @@ function DoctorDetail({ selectedAppointment }) {
       dispatch(ConfirmationActions.openConfirmation());
     } else {
       toast.success(
-        "You can only attend the video call prior to 5 minutes of scheduled appointment time"
+        "You may log on to your visit 5 minutes prior to your scheduled appointment."
       );
     }
   };
