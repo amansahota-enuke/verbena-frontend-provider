@@ -107,7 +107,7 @@ export default function Example() {
                                         </Link>
                                     )}
                                 </Menu.Item>
-                                <Menu.Item>
+                                {/* <Menu.Item>
                                     {({ active }) => (
                                         <Link
                                             to="/home/account"
@@ -121,7 +121,7 @@ export default function Example() {
                                             Account
                                         </Link>
                                     )}
-                                </Menu.Item>
+                                </Menu.Item> */}
                                 <Menu.Item>
                                     {({ active }) => (
                                         <Link

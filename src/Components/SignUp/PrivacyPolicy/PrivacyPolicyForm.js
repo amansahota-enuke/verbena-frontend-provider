@@ -14,7 +14,7 @@ function PrivacyPolicyForm() {
   };
 
   const handleClick = (e) => {
-    history.push("/setupfee");
+    history.push("/home/dashboard");
   };
 
   const handleTermsandServices = () => {
