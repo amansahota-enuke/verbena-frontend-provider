@@ -6,6 +6,15 @@ import { useSelector } from "react-redux";
 import selector from "../../redux/selector";
 import { useDispatch } from "react-redux";
 import { ChatActions } from "../../redux/slice/chat.slice";
+import io from "socket.io-client";
+
+const socket = io.connect(`${process.env.REACT_APP_SOCKET_SERVER}`, {
+  transports: ["websocket"],
+});
+
+socket.on("connect_error", (err) => {
+  console.log(`connect_error due to ${err.message}`);
+});
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -16,12 +25,34 @@ export default function Example() {
   const dispatch = useDispatch();
   const notificationCount = useSelector(selector.notificationCount);
   const notifications = useSelector(selector.notifications);
+  const user = useSelector(selector.user);
+  const sendMessage = useSelector(selector.emitMessages);
 
   useEffect(() => {
-    setInterval(() => {
-      dispatch(ChatActions.getNotifications());
-    }, 5000);
+    if (Object.keys(user).length > 0) {
+      socket.emit("deleteUser", { roomname: `provider${user.id}` });
+      socket.emit("joinRoom", { roomname: `provider${user.id}` });
+    }
+  }, [user]);
+
+  useEffect(() => {
+    dispatch(ChatActions.getNotifications());
   }, []);
+
+  useEffect(() => {
+    socket.on("message", (data) => {
+      dispatch(ChatActions.getNotifications());
+      dispatch(
+        ChatActions.ReceiveMessage({ appointmentId: data.appointmentId })
+      );
+    });
+  }, [socket]);
+
+  useEffect(() => {
+    if (Object.keys(sendMessage).length > 0) {
+      socket.emit("chat", sendMessage);
+    }
+  }, [sendMessage]);
 
   const updateNotification = async (notification, type) => {
     const actionResult = await dispatch(
@@ -90,18 +121,21 @@ export default function Example() {
                           <div className="chat-user-img mr-3 bg-cover">
                             <img
                               src={
-                                notification.patient.profile_image_path
+                                notification.user_message.patient
+                                  .profile_image_path
                                   ? process.env.REACT_APP_API_SERVER_URL +
-                                    notification.patient.profile_image_path
+                                    notification.user_message.patient
+                                      .profile_image_path
                                   : "https://res.cloudinary.com/dx94hnzfl/image/upload/v1612593409/Ellipse_1_2_uziel2.png"
                               }
                             />
                           </div>
                           <div className="chat-user-content">
                             <h4 className="font-14">
-                              {notification.patient.first_name +
+                              {notification.user_message.patient.first_name +
                                 " " +
-                                notification.patient.last_name}{" "}
+                                notification.user_message.patient
+                                  .last_name}{" "}
                             </h4>
                             <span className="overflow-ellipsis overflow-hidden truncate inline-block max-w-120 align-middle">
                               {notification.user_message.text}

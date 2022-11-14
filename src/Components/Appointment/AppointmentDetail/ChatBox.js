@@ -9,41 +9,76 @@ const ChatBox = ({ chatBoxOpen, selectedAppointment }) => {
   const { id, appointmentId } = useParams();
   const messages = useSelector(selector.messages);
   const user = useSelector(selector.user);
-  const [message, setMessage] = useState("");
   const [messageList, setMessageList] = useState([]);
   const dispatch = useDispatch();
   const selectedId = id ? id : appointmentId;
+  const message = useRef("");
+  const appointment = useSelector(selector.receivemessages);
 
   useEffect(() => {
-    let messageInterval = null;
-    if (selectedId && Number(selectedId)) {
-      messageInterval = setInterval(() => {
-        dispatch(ChatActions.getMessages(selectedId));
-      }, 1000);
-    }
+    // let messageInterval = null;
+    // if (selectedId && Number(selectedId)) {
+    //   messageInterval = setInterval(() => {
+    //     dispatch(ChatActions.getMessages(selectedId));
+    //   }, 1000);
+    // }
 
-    return () => {
-      clearInterval(messageInterval);
-    };
-  }, [selectedId]);
+    // return () => {
+    //   clearInterval(messageInterval);
+    // };
+    if (selectedAppointment && Number(selectedAppointment.id)) {
+      dispatch(ChatActions.getMessages(selectedId));
+    }
+  }, [selectedAppointment]);
 
   useEffect(() => {
-    if (messages.length !== messageList.length) {
-      setMessageList(messages);
+    if (selectedAppointment && Number(selectedAppointment.id)) {
+      if (appointment.appointmentId === selectedAppointment.id) {
+        dispatch(ChatActions.getMessages(selectedAppointment.id));
+      }
     }
+  }, [appointment]);
+
+  useEffect(() => {
+    setMessageList(messages);
   }, [messages]);
 
   const sendData = async () => {
-    if (message !== "") {
+    if (message.current.value !== "") {
       const requestBody = {
-        id: selectedId,
+        id: selectedAppointment.id,
         body: {
-          text: message,
+          text: message.current.value,
           created_by: "provider",
         },
       };
       await ChatService.sendMessage(requestBody);
-      setMessage("");
+      dispatch(
+        ChatActions.EmitMessage({
+          appointmentId: selectedAppointment.id,
+          roomname: `patient${selectedAppointment.patient.id}`,
+          notification: {
+            user_message: {
+              appointment_id: selectedAppointment.id,
+              seen: false,
+              provider: {
+                ...(user.profile_logo && {
+                  profile_logo: user.profile_logo,
+                }),
+                first_name: user.first_name,
+                last_name: user.last_name,
+              },
+              text: requestBody.body.text,
+            },
+          },
+          message: {
+            text: message.current.value,
+            created_by: "provider",
+          },
+        })
+      );
+      setMessageList((prev) => [...prev, requestBody.body]);
+      message.current.value = "";
     }
   };
 
@@ -106,8 +141,7 @@ const ChatBox = ({ chatBoxOpen, selectedAppointment }) => {
           <textarea
             className="border"
             placeholder="Enter your message"
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
+            ref={message}
             onKeyPress={(e) => {
               if (e.key === "Enter") {
                 sendData();
