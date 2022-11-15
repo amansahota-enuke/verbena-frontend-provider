@@ -57,9 +57,9 @@ export default function Example() {
       dispatch(ChatActions.ReceiveMessage(data));
     });
 
-    // return () => {
-    //   socket.off("disconnect");
-    // };
+    return () => {
+      socket.off("disconnect");
+    };
   }, [socket]);
 
   useEffect(() => {
