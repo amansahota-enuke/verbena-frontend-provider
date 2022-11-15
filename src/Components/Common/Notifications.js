@@ -7,6 +7,8 @@ import selector from "../../redux/selector";
 import { useDispatch } from "react-redux";
 import { ChatActions } from "../../redux/slice/chat.slice";
 import io from "socket.io-client";
+import { ChatService } from "../../services";
+import { useState } from "react";
 
 const socket = io.connect(`${process.env.REACT_APP_SOCKET_SERVER}`, {
   transports: ["websocket"],
@@ -23,29 +25,39 @@ function classNames(...classes) {
 export default function Example() {
   const location = useLocation();
   const dispatch = useDispatch();
-  const notificationCount = useSelector(selector.notificationCount);
-  const notifications = useSelector(selector.notifications);
   const user = useSelector(selector.user);
   const sendMessage = useSelector(selector.emitMessages);
+  const [notificationsList, setNotificationList] = useState([]);
+  const [notificationCount, setNotificationCount] = useState(0);
 
   useEffect(() => {
     if (Object.keys(user).length > 0) {
-      socket.emit("deleteUser", { roomname: `provider${user.id}` });
+      // socket.emit("deleteUser", { roomname: `provider${user.id}` });
       socket.emit("joinRoom", { roomname: `provider${user.id}` });
     }
   }, [user]);
 
   useEffect(() => {
-    dispatch(ChatActions.getNotifications());
+    const fetchNotification = async () => {
+      const response = await ChatService.getNotifications();
+      setNotificationList(response.data.data.messages);
+      setNotificationCount(response.data.data.unseenMessagesCount);
+    };
+    fetchNotification();
   }, []);
 
   useEffect(() => {
     socket.on("message", (data) => {
-      dispatch(ChatActions.getNotifications());
-      dispatch(
-        ChatActions.ReceiveMessage({ appointmentId: data.appointmentId })
-      );
+      if (data.message.created_by === "patient") {
+        setNotificationList((prev) => [data.notification, ...prev]);
+        setNotificationCount((prev) => prev + 1);
+      }
+      dispatch(ChatActions.ReceiveMessage(data));
     });
+
+    return () => {
+      socket.off("disconnect");
+    };
   }, [socket]);
 
   useEffect(() => {
@@ -98,7 +110,7 @@ export default function Example() {
               static
               className="notification-wrapper origin-top-right absolute right-0 w-72 rounded-md shadow-lg bg-white"
             >
-              {notifications.map((notification, index) => (
+              {notificationsList.map((notification, index) => (
                 <div key={index} className="">
                   <Menu.Item>
                     {({ active }) => (

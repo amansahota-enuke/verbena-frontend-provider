@@ -33,8 +33,10 @@ const ChatBox = ({ chatBoxOpen, selectedAppointment }) => {
 
   useEffect(() => {
     if (selectedAppointment && Number(selectedAppointment.id)) {
-      if (appointment.appointmentId === selectedAppointment.id) {
-        dispatch(ChatActions.getMessages(selectedAppointment.id));
+      if (appointment.message.created_by === "provider") {
+        setMessageList((prev) => [...prev, appointment.message]);
+      } else if (appointment.appointmentId === selectedAppointment.id) {
+        setMessageList((prev) => [...prev, appointment.message]);
       }
     }
   }, [appointment]);
@@ -56,7 +58,8 @@ const ChatBox = ({ chatBoxOpen, selectedAppointment }) => {
       dispatch(
         ChatActions.EmitMessage({
           appointmentId: selectedAppointment.id,
-          roomname: `patient${selectedAppointment.patient.id}`,
+          receiver_roomname: `patient${selectedAppointment.patient.id}`,
+          sender_roomname: `provider${selectedAppointment.provider.id}`,
           notification: {
             user_message: {
               appointment_id: selectedAppointment.id,
@@ -77,7 +80,6 @@ const ChatBox = ({ chatBoxOpen, selectedAppointment }) => {
           },
         })
       );
-      setMessageList((prev) => [...prev, requestBody.body]);
       message.current.value = "";
     }
   };
