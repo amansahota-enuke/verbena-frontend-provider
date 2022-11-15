@@ -33,6 +33,8 @@ export default function Example() {
   useEffect(() => {
     if (Object.keys(user).length > 0) {
       // socket.emit("deleteUser", { roomname: `provider${user.id}` });
+      console.log("INTO PROVIDER JOINING ROOM");
+
       socket.emit("joinRoom", { roomname: `provider${user.id}` });
     }
   }, [user]);
@@ -55,9 +57,9 @@ export default function Example() {
       dispatch(ChatActions.ReceiveMessage(data));
     });
 
-    return () => {
-      socket.off("disconnect");
-    };
+    // return () => {
+    //   socket.off("disconnect");
+    // };
   }, [socket]);
 
   useEffect(() => {
