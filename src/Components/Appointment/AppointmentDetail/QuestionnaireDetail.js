@@ -54,38 +54,42 @@ const QuestionnaireDetail = () => {
             </Disclosure.Button>
             <Disclosure.Panel className="pt-0 pb-2">
               <div className="bg-white rounded-t-none mb-3">
-                {questionnaireAnswers.map((question, index) => {
-                  const showQuestion = checkQuestion(question);
-                  if (showQuestion) {
-                    return (
-                      <div key={question.id} className="health-info border-b-1">
-                        <h3 className="font-18 dark-color px-4 pt-2 pb-0 calibre-bold">
-                          {question.text}
-                        </h3>
-                        {question.patient_questionnaires.length > 0 ? (
-                          question.patient_questionnaires.map((response) => (
+                {questionnaireAnswers &&
+                  questionnaireAnswers.map((question, index) => {
+                    const showQuestion = checkQuestion(question);
+                    if (showQuestion) {
+                      return (
+                        <div
+                          key={question.id}
+                          className="health-info border-b-1"
+                        >
+                          <h3 className="font-18 dark-color px-4 pt-2 pb-0 calibre-bold">
+                            {question.text}
+                          </h3>
+                          {question.patient_questionnaires.length > 0 ? (
+                            question.patient_questionnaires.map((response) => (
+                              <p
+                                key={response.id}
+                                className="px-4 py-0 mb-3 calibre-regular font-16"
+                              >
+                                {response.answer_text
+                                  ? response.answer_text
+                                  : response.answer_option.text}
+                              </p>
+                            ))
+                          ) : (
                             <p
-                              key={response.id}
-                              className="px-4 py-0 mb-3 calibre-regular font-16"
+                              key={index}
+                              className="font-18 px-4 py-2 calibre-regular text-2x"
                             >
-                              {response.answer_text
-                                ? response.answer_text
-                                : response.answer_option.text}
+                              No Response
                             </p>
-                          ))
-                        ) : (
-                          <p
-                            key={index}
-                            className="font-18 px-4 py-2 calibre-regular text-2x"
-                          >
-                            No Response
-                          </p>
-                        )}
-                      </div>
-                    );
-                  }
-                  return null;
-                })}
+                          )}
+                        </div>
+                      );
+                    }
+                    return null;
+                  })}
               </div>
             </Disclosure.Panel>
           </>

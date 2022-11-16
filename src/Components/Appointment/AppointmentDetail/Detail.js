@@ -90,7 +90,7 @@ function Detail({ selectedAppointment, fetchAppointment }) {
           onChange={(e) => setAssesmentPlans(e.target.value)}
         ></textarea>
       </div>
-      {!["ongoing", "completed"].includes(selectedAppointment.status) && (
+      {/* {!["ongoing", "completed"].includes(selectedAppointment.status) && ( */}
         <>
           <ChatBox
             chatBoxOpen={chatBoxOpen}
@@ -103,7 +103,7 @@ function Detail({ selectedAppointment, fetchAppointment }) {
             <i className="fas fa-comment"></i>
           </button>
         </>
-      )}
+      {/* )} */}
       <button
         className="btn-login calibre-regular font-16 uppercase primary-bg-color text-white"
         onClick={() => saveDetail()}

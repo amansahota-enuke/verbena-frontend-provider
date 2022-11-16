@@ -33,10 +33,12 @@ const ChatBox = ({ chatBoxOpen, selectedAppointment }) => {
 
   useEffect(() => {
     if (selectedAppointment && Number(selectedAppointment.id)) {
-      if (appointment.message.created_by === "provider") {
-        setMessageList((prev) => [...prev, appointment.message]);
-      } else if (appointment.appointmentId === selectedAppointment.id) {
-        setMessageList((prev) => [...prev, appointment.message]);
+      if (appointment.message) {
+        if (appointment.message.created_by === "provider") {
+          setMessageList((prev) => [...prev, appointment.message]);
+        } else if (appointment.appointmentId === selectedAppointment.id) {
+          setMessageList((prev) => [...prev, appointment.message]);
+        }
       }
     }
   }, [appointment]);
